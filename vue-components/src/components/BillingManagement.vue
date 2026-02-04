@@ -1,6 +1,17 @@
 <template>
   <div class="space-y-10 animate-in fade-in slide-in-from-bottom-2 duration-500">
-    <!-- Header Card -->
+    <!-- Alert Banners -->
+    <div v-if="showResourceAlert" class="bg-amber-50/50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20 rounded-xl p-4 flex items-start">
+      <span class="material-icons-round text-amber-500 text-lg mt-0.5 mr-3">info</span>
+      <div class="flex-1 text-sm text-amber-800 dark:text-amber-200">
+        <span class="font-bold mr-1">资源预警:</span> 您企业当前的存储空间已使用 856GB (85%), 接近包年套餐上限，请关注资源消耗或及时扩容
+      </div>
+      <button class="text-amber-400 hover:text-amber-600 transition-colors" @click="showResourceAlert = false">
+        <span class="material-icons-round text-lg">close</span>
+      </button>
+    </div>
+
+    <!-- Current Bill Hero Card -->
     <div class="relative bg-slate-900 dark:bg-black rounded-xl p-12 text-white overflow-hidden shadow-2xl group transition-all hover:scale-[1.01]">
       <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-primary/20 blur-[100px] rounded-full group-hover:bg-primary/30 transition-all duration-1000"></div>
       <div class="absolute top-0 right-0 opacity-5 group-hover:opacity-10 transition-opacity duration-1000">
@@ -10,7 +21,7 @@
       <div class="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
         <div class="space-y-6">
           <div class="flex items-center gap-3">
-            <span class="text-xs font-black uppercase tracking-[0.3em] opacity-60">本期待支付账单</span>
+            <span class="text-xs font-black uppercase tracking-[0.3em] opacity-60">本期应结账单</span>
             <span class="px-2.5 py-1 bg-red-500 text-white text-[10px] font-black rounded-lg uppercase tracking-widest shadow-lg shadow-red-500/30 animate-pulse">Pending</span>
           </div>
           <div class="flex items-baseline gap-4">
@@ -46,7 +57,7 @@
         </div>
         <div class="flex items-center gap-3">
           <div class="relative group">
-            <select class="appearance-none bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white py-3 pl-6 pr-12 rounded-2xl text-[10px] font-black uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all shadow-sm cursor-pointer">
+            <select v-model="selectedYear" class="appearance-none bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white py-3 pl-6 pr-12 rounded-2xl text-[10px] font-black uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all shadow-sm cursor-pointer">
               <option>2023 FY</option>
               <option>2022 FY</option>
             </select>
@@ -110,7 +121,7 @@
           </tbody>
         </table>
         
-        <!-- Empty Space or Footer -->
+        <!-- Footer -->
         <div class="px-8 py-6 bg-slate-50/50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-slate-800">
           <p class="text-[10px] font-black text-slate-400 text-center uppercase tracking-widest">
             账单系统将于每月初 3 号自动生成上月结对账单，如有异议请联系财务专员。
@@ -123,9 +134,11 @@
 
 <script>
 export default {
-  name: 'BillingOverview',
+  name: 'BillingManagement',
   data() {
     return {
+      selectedYear: '2023 FY',
+      showResourceAlert: true,
       bills: [
         { month: '2023年10月', amount: 12450.00, paid: false, invoiced: false },
         { month: '2023年09月', amount: 11800.00, paid: true, invoiced: true },
