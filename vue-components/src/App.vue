@@ -39,6 +39,7 @@
         :total-seats="seatData.total"
         :stats="seatData.stats"
         @manage-seats="handleManageSeats"
+        @navigate-to-members="handleNavigateToMembers"
       />
 
       <!-- Dev Metrics -->
@@ -47,6 +48,7 @@
         :date-range="dateRange"
         :metrics="devMetrics"
         @custom-date="handleCustomDate"
+        @navigate-to-efficiency-detail="handleNavigateToEfficiencyDetail"
       />
 
       <!-- Resources Section -->
@@ -57,29 +59,47 @@
         :ci-failure-rate="ciData.failureRate"
         :ci-peak-value="ciData.peakValue"
         :ci-metrics="ciData.metrics"
+        @navigate-to-resource-center="handleNavigateToResourceCenter"
+        @navigate-to-usage-report="handleNavigateToUsageReport"
       />
     </main>
 
     <!-- Resource Center View -->
-    <ResourceCenter v-if="activeNav === 'resources'" />
+    <ResourceCenter
+      v-if="activeNav === 'resources'"
+      :key="`resource-${resourceCategory}`"
+      :initial-category="resourceCategory"
+    />
 
     <!-- Operation Center View -->
     <OperationCenter v-if="activeNav === 'community'" />
 
     <!-- Pipeline Center View -->
-    <PipelineCenter v-if="activeNav === 'pipeline'" />
+    <PipelineCenter
+      v-if="activeNav === 'pipeline'"
+      :key="`pipeline-${pipelineCategory}`"
+      :initial-category="pipelineCategory"
+    />
 
     <!-- Compliance Center View -->
     <ComplianceCenter v-if="activeNav === 'security'" />
 
     <!-- Data Center View -->
-    <DataCenter v-if="activeNav === 'data'" />
+    <DataCenter
+      v-if="activeNav === 'data'"
+      :key="`data-${dataCategory}-${dataView || 'overview'}`"
+      :initial-category="dataCategory"
+      :initial-view="dataView"
+    />
 
     <!-- Billing Center View -->
     <BillingCenter v-if="activeNav === 'billing'" />
 
     <!-- Settings Center View -->
-    <SettingsCenter v-if="activeNav === 'admin'" />
+    <SettingsCenter
+      v-if="activeNav === 'admin'"
+      :initial-category="settingsCategory"
+    />
   </div>
 </template>
 
@@ -121,6 +141,11 @@ export default {
       userInitials: 'JS',
       hasNotifications: true,
       activeNav: 'dashboard',
+      settingsCategory: 'members',
+      dataCategory: 'traffic',
+      dataView: null,
+      resourceCategory: 'issues',
+      pipelineCategory: 'logs',
       alerts: [
         {
           type: 'warning',
@@ -264,6 +289,23 @@ export default {
     },
     handleCustomDate() {
       console.log('Custom date picker')
+    },
+    handleNavigateToMembers() {
+      this.settingsCategory = 'members'
+      this.activeNav = 'admin'
+    },
+    handleNavigateToEfficiencyDetail() {
+      this.dataCategory = 'efficiency'
+      this.dataView = 'detail'
+      this.activeNav = 'data'
+    },
+    handleNavigateToResourceCenter(category) {
+      this.resourceCategory = category
+      this.activeNav = 'resources'
+    },
+    handleNavigateToUsageReport() {
+      this.pipelineCategory = 'usage'
+      this.activeNav = 'pipeline'
     }
   }
 }

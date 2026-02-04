@@ -26,6 +26,50 @@
       </div>
     </div>
 
+    <!-- Search and Filter Section -->
+    <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
+      <div class="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+        <!-- Search Input -->
+        <div class="flex-1 w-full lg:w-auto">
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+              <span class="material-icons-round text-slate-400 text-xl">search</span>
+            </div>
+            <input
+              v-model="searchQuery"
+              type="text"
+              class="focus:ring-primary focus:border-primary block w-full pl-10 pr-4 py-3 sm:text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-white rounded-lg transition-all shadow-sm placeholder-slate-400"
+              placeholder="搜索用户名、昵称或企业别名..."
+            />
+            <button
+              v-if="searchQuery"
+              @click="searchQuery = ''"
+              class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+            >
+              <span class="material-icons-round text-lg">close</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Role Filter -->
+        <div class="flex items-center gap-3">
+          <span class="text-sm font-bold text-slate-500 dark:text-slate-400 whitespace-nowrap">角色筛选：</span>
+          <div class="relative group">
+            <select
+              v-model="selectedRole"
+              class="appearance-none bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white py-3 pl-4 pr-10 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm cursor-pointer min-w-[160px]"
+            >
+              <option value="">全部角色</option>
+              <option v-for="role in availableRoles" :key="role" :value="role">{{ role }}</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-400">
+              <span class="material-icons-round text-lg">expand_more</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Members Table -->
     <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
       <table class="w-full text-left border-collapse">
@@ -40,7 +84,16 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
-          <tr v-for="member in members" :key="member.email" class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors group">
+          <tr v-if="filteredMembers.length === 0" class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+            <td colspan="5" class="px-8 py-12 text-center">
+              <div class="flex flex-col items-center justify-center">
+                <span class="material-icons-round text-5xl text-slate-300 dark:text-slate-600 mb-3">search_off</span>
+                <p class="text-sm font-bold text-slate-500 dark:text-slate-400">未找到匹配的成员</p>
+                <p class="text-xs text-slate-400 dark:text-slate-500 mt-1">请尝试调整搜索条件或筛选条件</p>
+              </div>
+            </td>
+          </tr>
+          <tr v-for="member in filteredMembers" :key="member.email" class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors group">
             <td class="px-8 py-6">
               <div class="flex items-center">
                 <div class="flex-shrink-0 h-10 w-10 bg-blue-100 dark:bg-blue-900/50 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-300 font-black text-xs ring-2 ring-white dark:ring-slate-800">
@@ -114,7 +167,13 @@
       <!-- Pagination -->
       <div class="px-8 py-6 bg-slate-50/50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-          显示 <span class="text-slate-900 dark:text-white">{{ members.length }}</span> 条，共 <span class="text-slate-900 dark:text-white">{{ totalRecords }}</span> 条记录
+          显示 <span class="text-slate-900 dark:text-white">{{ filteredMembers.length }}</span> 条
+          <span v-if="hasActiveFilters" class="text-slate-500 dark:text-slate-500">
+            （共 <span class="text-slate-900 dark:text-white">{{ totalRecords }}</span> 条记录）
+          </span>
+          <span v-else>
+            ，共 <span class="text-slate-900 dark:text-white">{{ totalRecords }}</span> 条记录
+          </span>
         </p>
         <div class="flex items-center gap-2">
           <button class="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-300 text-[10px] font-black opacity-50 cursor-not-allowed">‹</button>
@@ -149,6 +208,8 @@ export default {
     return {
       showInviteModal: false,
       inviteType: 'member',
+      searchQuery: '',
+      selectedRole: '',
       totalRecords: 128,
       members: [
         {
@@ -207,6 +268,36 @@ export default {
           isExpiring: false
         }
       ]
+    }
+  },
+  computed: {
+    availableRoles() {
+      const roles = new Set(this.members.map(m => m.role))
+      return Array.from(roles).sort()
+    },
+    filteredMembers() {
+      let result = this.members
+
+      // Role filter
+      if (this.selectedRole) {
+        result = result.filter(member => member.role === this.selectedRole)
+      }
+
+      // Search filter
+      if (this.searchQuery.trim()) {
+        const query = this.searchQuery.trim().toLowerCase()
+        result = result.filter(member => {
+          const nameMatch = member.name.toLowerCase().includes(query)
+          const emailMatch = member.email.toLowerCase().includes(query)
+          const aliasMatch = member.alias && member.alias.toLowerCase().includes(query)
+          return nameMatch || emailMatch || aliasMatch
+        })
+      }
+
+      return result
+    },
+    hasActiveFilters() {
+      return this.searchQuery.trim() !== '' || this.selectedRole !== ''
     }
   },
   methods: {

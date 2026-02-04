@@ -1,5 +1,8 @@
 <template>
-  <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-10 shadow-sm border border-border-light dark:border-border-dark relative flex flex-col justify-between min-h-[420px]">
+  <div
+    class="bg-surface-light dark:bg-surface-dark rounded-xl p-10 shadow-sm border border-border-light dark:border-border-dark relative flex flex-col justify-between min-h-[420px] cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
+    @click="handleClick"
+  >
     <!-- Header -->
     <div class="flex flex-row items-start justify-between mb-12">
       <div class="flex items-center gap-4">
@@ -125,6 +128,12 @@ export default {
           warning: '资源浪费风险提示'
         }
       ]
+    }
+  },
+  emits: ['click'],
+  methods: {
+    handleClick() {
+      this.$emit('click')
     }
   }
 }

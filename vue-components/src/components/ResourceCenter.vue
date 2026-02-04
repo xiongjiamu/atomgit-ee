@@ -98,10 +98,32 @@ export default {
     LfsList,
     ResourceStats
   },
+  props: {
+    initialCategory: {
+      type: String,
+      default: 'issues'
+    }
+  },
   data() {
     return {
-      currentCategory: 'issues',
+      currentCategory: this.initialCategory,
       selectedKanban: null
+    }
+  },
+  watch: {
+    initialCategory: {
+      handler(newVal) {
+        if (newVal) {
+          this.currentCategory = newVal
+        }
+      },
+      immediate: true
+    }
+  },
+  mounted() {
+    // 确保在组件挂载时也检查 initialCategory
+    if (this.initialCategory) {
+      this.currentCategory = this.initialCategory
     }
   },
   methods: {

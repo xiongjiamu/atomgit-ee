@@ -10,33 +10,27 @@
     >
       <div
         v-if="show"
-        class="fixed inset-0 z-[9999] overflow-y-auto"
+        class="fixed top-0 left-0 right-0 bottom-0 z-[9999] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm overflow-y-auto"
+        style="min-height: 100vh; min-height: 100dvh; margin: 0 !important;"
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
+        @click.self="$emit('close')"
       >
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-          <!-- Overlay -->
+        <!-- Panel -->
+        <Transition
+          enter-active-class="transition-all duration-200 ease-out"
+          enter-from-class="opacity-0 scale-95 translate-y-4"
+          enter-to-class="opacity-100 scale-100 translate-y-0"
+          leave-active-class="transition-all duration-150 ease-in"
+          leave-from-class="opacity-100 scale-100 translate-y-0"
+          leave-to-class="opacity-0 scale-95 translate-y-4"
+        >
           <div
-            class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity"
-            aria-hidden="true"
-            @click="$emit('close')"
-          ></div>
-
-          <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
-          <!-- Panel -->
-          <Transition
-            enter-active-class="transition-all duration-200 ease-out"
-            enter-from-class="opacity-0 scale-95 translate-y-4 sm:translate-y-0 sm:scale-95"
-            enter-to-class="opacity-100 scale-100 translate-y-0 sm:scale-100"
-            leave-active-class="transition-all duration-150 ease-in"
-            leave-from-class="opacity-100 scale-100 translate-y-0 sm:scale-100"
-            leave-to-class="opacity-0 scale-95 translate-y-4 sm:translate-y-0 sm:scale-95"
+            v-if="show"
+            class="bg-white dark:bg-[#1C2128] rounded-xl text-left overflow-hidden shadow-2xl transform transition-all w-full max-w-2xl border border-gray-200 dark:border-gray-700 flex flex-col max-h-[90vh]"
+            @click.stop
           >
-            <div
-              class="inline-block align-bottom bg-white dark:bg-[#1C2128] rounded-xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full border border-gray-200 dark:border-gray-700 flex flex-col max-h-[90vh]"
-            >
               <!-- Header -->
               <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-[#161B22] shrink-0">
                 <h3 class="text-lg leading-6 font-semibold text-gray-900 dark:text-white" id="modal-title">
@@ -83,6 +77,22 @@
                       <option value="protected">保护分支 (Protected Branches)</option>
                       <option value="fnmatch">自定义模式 (fnmatch)</option>
                     </select>
+                    <!-- Custom Pattern Input -->
+                    <div v-if="formData.target === 'fnmatch'" class="mt-3">
+                      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="custom-pattern">
+                        通配符模式 <span class="text-red-500">*</span>
+                      </label>
+                      <input
+                        id="custom-pattern"
+                        v-model="formData.customPattern"
+                        type="text"
+                        class="block w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-colors font-mono"
+                        placeholder="例如：release/*, feature/*, hotfix/*"
+                      />
+                      <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                        支持通配符：<code class="bg-gray-100 dark:bg-gray-700 px-1 rounded">*</code> 匹配任意字符，<code class="bg-gray-100 dark:bg-gray-700 px-1 rounded">?</code> 匹配单个字符，多个模式用逗号分隔
+                      </p>
+                    </div>
                   </div>
 
                   <!-- Protection Options -->
@@ -208,7 +218,6 @@
               </div>
             </div>
           </Transition>
-        </div>
       </div>
     </Transition>
   </Teleport>
@@ -226,6 +235,7 @@ export default {
       formData: {
         name: '',
         target: 'default',
+        customPattern: '',
         options: {
           codeReview: true,
           restrictPush: false,
@@ -257,6 +267,10 @@ export default {
     handleSubmit() {
       if (!this.formData.name) {
         alert('请输入规则集名称')
+        return
+      }
+      if (this.formData.target === 'fnmatch' && !this.formData.customPattern.trim()) {
+        alert('请输入通配符模式')
         return
       }
       this.$emit('submit', { ...this.formData })

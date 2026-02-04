@@ -25,7 +25,12 @@
             </div>
           </div>
           <div class="flex items-baseline gap-3 mb-6">
-            <span class="text-5xl font-bold text-slate-900 dark:text-white tracking-tight">{{ usedSeats }}</span>
+            <button
+              @click="handleNavigateToMembers"
+              class="text-5xl font-bold text-slate-900 dark:text-white tracking-tight hover:text-primary transition-colors cursor-pointer"
+            >
+              {{ usedSeats }}
+            </button>
             <span class="text-2xl text-slate-400 font-medium">/ {{ totalSeats }}</span>
           </div>
           <div class="h-4 w-full bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden mb-5">
@@ -38,7 +43,10 @@
             使用率 <span class="text-primary font-bold">{{ usagePercentage }}%</span>
             <span class="mx-3 text-slate-300 dark:text-slate-600">|</span>
             <span class="text-slate-500 dark:text-slate-400 font-normal">
-              剩余 <span class="font-bold text-slate-900 dark:text-white">{{ remainingSeats }}</span> 个可用
+              剩余 <button
+                @click="handleNavigateToMembers"
+                class="font-bold text-slate-900 dark:text-white hover:text-primary transition-colors cursor-pointer"
+              >{{ remainingSeats }}</button> 个可用
             </span>
           </p>
         </div>
@@ -56,7 +64,19 @@
                 {{ stat.label }}
               </div>
             </div>
-            <div class="text-4xl font-bold text-slate-900 dark:text-white mb-2">{{ stat.value }}</div>
+            <button
+              v-if="stat.label !== '待处理邀请'"
+              @click="handleNavigateToMembers"
+              class="text-4xl font-bold text-slate-900 dark:text-white mb-2 hover:text-primary transition-colors cursor-pointer block"
+            >
+              {{ stat.value }}
+            </button>
+            <div
+              v-else
+              class="text-4xl font-bold text-slate-900 dark:text-white mb-2"
+            >
+              {{ stat.value }}
+            </div>
             <div class="text-sm text-slate-400">{{ stat.description }}</div>
           </div>
         </div>
@@ -103,6 +123,9 @@ export default {
   methods: {
     handleManageSeats() {
       this.$emit('manage-seats')
+    },
+    handleNavigateToMembers() {
+      this.$emit('navigate-to-members')
     }
   }
 }

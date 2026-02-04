@@ -10,7 +10,8 @@
   >
     <div
       v-if="show"
-      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm"
+      class="fixed top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm overflow-y-auto"
+      style="min-height: 100vh; min-height: 100dvh; margin: 0 !important;"
       @click.self="$emit('close')"
     >
       <!-- Modal Card -->

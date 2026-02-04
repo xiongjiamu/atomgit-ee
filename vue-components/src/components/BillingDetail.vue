@@ -44,7 +44,7 @@
           </div>
           <span class="text-[10px] font-black uppercase tracking-widest opacity-90">应付总额</span>
         </div>
-        <p class="text-3xl font-black tracking-tighter italic">{{ totalAmount }}</p>
+        <p class="text-3xl font-black text-white/100 tracking-tighter italic">{{ totalAmount }}</p>
       </div>
 
       <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-6 hover:shadow-lg transition-all group">

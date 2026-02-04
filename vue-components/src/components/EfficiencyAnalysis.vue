@@ -190,10 +190,32 @@ export default {
     EfficiencyDetail,
     ViewSelector
   },
+  props: {
+    initialView: {
+      type: String,
+      default: null
+    }
+  },
   data() {
     return {
-      currentView: 'overview', // 'overview' or 'detail'
+      currentView: this.initialView || 'overview', // 'overview' or 'detail'
       selectedView: { id: 'enterprise', label: '全企业视图 (Enterprise)', orgId: 'enterprise' }
+    }
+  },
+  watch: {
+    initialView: {
+      handler(newVal) {
+        if (newVal && newVal !== this.currentView) {
+          this.currentView = newVal
+        }
+      },
+      immediate: true
+    }
+  },
+  mounted() {
+    // 确保在组件挂载时也检查 initialView
+    if (this.initialView && this.initialView !== 'overview') {
+      this.currentView = this.initialView
     }
   },
   methods: {

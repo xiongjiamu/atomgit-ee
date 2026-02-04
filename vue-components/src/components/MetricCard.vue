@@ -1,5 +1,8 @@
 <template>
-  <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-8 shadow-sm border border-border-light dark:border-border-dark hover:shadow-xl hover:-translate-y-1 transition duration-300 group">
+  <div
+    class="bg-surface-light dark:bg-surface-dark rounded-xl p-8 shadow-sm border border-border-light dark:border-border-dark hover:shadow-xl hover:-translate-y-1 transition duration-300 group cursor-pointer"
+    @click="handleClick"
+  >
     <div class="flex justify-between items-start mb-8">
       <div class="flex flex-col">
         <div class="text-sm font-semibold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-wide">
@@ -65,6 +68,12 @@ export default {
       type: String,
       default: 'blue',
       validator: (value) => ['blue', 'indigo', 'emerald', 'orange'].includes(value)
+    }
+  },
+  emits: ['click'],
+  methods: {
+    handleClick() {
+      this.$emit('click')
     }
   },
   computed: {

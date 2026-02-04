@@ -10,6 +10,7 @@
     <div
       v-if="show"
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm"
+      style="min-height: 100vh; min-height: 100dvh; margin: 0 !important;"
       @click.self="$emit('close')"
     >
       <Transition

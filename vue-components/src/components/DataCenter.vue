@@ -17,7 +17,7 @@
           <ContributionAnalysis />
         </template>
         <template v-else-if="currentCategory === 'efficiency'">
-          <EfficiencyAnalysis />
+          <EfficiencyAnalysis :initial-view="initialView" />
         </template>
         <template v-else-if="currentCategory === 'cost'">
           <CostAnalysis />
@@ -59,9 +59,35 @@ export default {
     EfficiencyAnalysis,
     CostAnalysis
   },
+  props: {
+    initialCategory: {
+      type: String,
+      default: 'traffic'
+    },
+    initialView: {
+      type: String,
+      default: null
+    }
+  },
   data() {
     return {
-      currentCategory: 'traffic'
+      currentCategory: this.initialCategory
+    }
+  },
+  watch: {
+    initialCategory: {
+      handler(newVal) {
+        if (newVal) {
+          this.currentCategory = newVal
+        }
+      },
+      immediate: true
+    }
+  },
+  mounted() {
+    // 确保在组件挂载时也检查 initialCategory
+    if (this.initialCategory) {
+      this.currentCategory = this.initialCategory
     }
   },
   computed: {

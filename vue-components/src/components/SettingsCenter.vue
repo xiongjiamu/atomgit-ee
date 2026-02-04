@@ -110,9 +110,20 @@ export default {
     AnnouncementManagement,
     WikiSettings
   },
+  props: {
+    initialCategory: {
+      type: String,
+      default: 'members'
+    }
+  },
   data() {
     return {
-      currentCategory: 'members'
+      currentCategory: this.initialCategory
+    }
+  },
+  watch: {
+    initialCategory(newVal) {
+      this.currentCategory = newVal
     }
   },
   computed: {

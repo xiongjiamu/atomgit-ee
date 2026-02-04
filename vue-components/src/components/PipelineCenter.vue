@@ -47,10 +47,32 @@ export default {
     UsageReport,
     QualityReport
   },
+  props: {
+    initialCategory: {
+      type: String,
+      default: 'logs'
+    }
+  },
   data() {
     return {
-      currentCategory: 'logs',
+      currentCategory: this.initialCategory,
       selectedView: { id: 'enterprise', label: '全企业视图 (Enterprise)', orgId: 'enterprise' }
+    }
+  },
+  watch: {
+    initialCategory: {
+      handler(newVal) {
+        if (newVal) {
+          this.currentCategory = newVal
+        }
+      },
+      immediate: true
+    }
+  },
+  mounted() {
+    // 确保在组件挂载时也检查 initialCategory
+    if (this.initialCategory) {
+      this.currentCategory = this.initialCategory
     }
   },
   methods: {

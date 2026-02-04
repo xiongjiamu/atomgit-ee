@@ -29,6 +29,7 @@
         :stats="metric.stats"
         :chart-path="metric.chartPath"
         :color="metric.color"
+        @click="handleMetricClick"
       />
     </div>
   </section>
@@ -100,6 +101,9 @@ export default {
   methods: {
     handleCustomDate() {
       this.$emit('custom-date')
+    },
+    handleMetricClick() {
+      this.$emit('navigate-to-efficiency-detail')
     }
   }
 }

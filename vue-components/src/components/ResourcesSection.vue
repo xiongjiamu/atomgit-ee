@@ -21,6 +21,7 @@
           :badge="card.badge"
           :show-chart="card.showChart"
           :chart-path="card.chartPath"
+          @click="handleCardClick(card.icon)"
         />
       </div>
 
@@ -32,6 +33,7 @@
           :failure-rate="ciFailureRate"
           :peak-value="ciPeakValue"
           :metrics="ciMetrics"
+          @click="handleCIInsightsClick"
         />
       </div>
     </div>
@@ -114,6 +116,18 @@ export default {
           warning: '资源浪费风险提示'
         }
       ]
+    }
+  },
+  methods: {
+    handleCardClick(icon) {
+      if (icon === 'storage') {
+        this.$emit('navigate-to-resource-center', 'warning')
+      } else if (icon === 'code') {
+        this.$emit('navigate-to-resource-center', 'projects')
+      }
+    },
+    handleCIInsightsClick() {
+      this.$emit('navigate-to-usage-report')
     }
   }
 }

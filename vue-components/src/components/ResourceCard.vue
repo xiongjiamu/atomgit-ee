@@ -1,5 +1,8 @@
 <template>
-  <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-8 shadow-sm border border-border-light dark:border-border-dark flex justify-between items-end h-48">
+  <div
+    class="bg-surface-light dark:bg-surface-dark rounded-xl p-8 shadow-sm border border-border-light dark:border-border-dark flex justify-between items-end h-48 cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
+    @click="handleClick"
+  >
     <div class="flex flex-col justify-between h-full">
       <div class="flex items-center gap-2.5 text-lg font-bold text-slate-600 dark:text-slate-300">
         <span class="material-icons-round text-xl">{{ icon }}</span>
@@ -73,6 +76,12 @@ export default {
     chartPath: {
       type: String,
       default: 'M0 35 Q 50 30 100 20'
+    }
+  },
+  emits: ['click'],
+  methods: {
+    handleClick() {
+      this.$emit('click')
     }
   },
   data() {
