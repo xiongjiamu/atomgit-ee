@@ -46,6 +46,9 @@
         <template v-else-if="currentCategory === 'issue_conf'">
           <IssueConfig />
         </template>
+        <template v-else-if="currentCategory === 'announcements'">
+          <AnnouncementManagement />
+        </template>
         
         <!-- Placeholder for other categories -->
         <template v-else>
@@ -82,6 +85,7 @@ import IpAllowlistManagement from './IpAllowlistManagement.vue'
 import ClaConfig from './ClaConfig.vue'
 import AuditLogs from './AuditLogs.vue'
 import IssueConfig from './IssueConfig.vue'
+import AnnouncementManagement from './AnnouncementManagement.vue'
 
 export default {
   name: 'SettingsCenter',
@@ -98,7 +102,8 @@ export default {
     IpAllowlistManagement,
     ClaConfig,
     AuditLogs,
-    IssueConfig
+    IssueConfig,
+    AnnouncementManagement
   },
   data() {
     return {
