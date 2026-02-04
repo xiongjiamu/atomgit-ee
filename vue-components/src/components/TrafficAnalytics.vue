@@ -21,7 +21,10 @@
           </div>
         </div>
         <p class="text-sm text-slate-500 dark:text-slate-400 font-medium mt-1">
-          {{ viewMode === 'overview' ? '监控企业社区访问趋势、用户活跃度及画像分布。' : '查看详细的 PV、UV 及 DAU 变化趋势与每日明细数据。' }}
+          <span v-if="viewMode === 'overview'">监控企业社区访问趋势、用户活跃度及画像分布。</span>
+          <span v-else-if="activeDetailType === 'trend'">查看详细的 PV、UV 及 DAU 变化趋势与每日明细数据。</span>
+          <span v-else-if="activeDetailType === 'geo'">分析全球用户来源地域分布与访问延迟数据。</span>
+          <span v-else-if="activeDetailType === 'stack'">洞察项目技术栈构成与语言趋势变化。</span>
         </p>
       </div>
       <div class="flex flex-wrap items-center gap-3">
@@ -49,7 +52,7 @@
     <div v-if="viewMode === 'overview'" class="space-y-8 animate-in fade-in duration-500">
       <!-- Stats Summary Cards -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div v-for="stat in mainStats" :key="stat.label" class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-8 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1 group cursor-pointer" @click="viewMode = 'detail'">
+        <div v-for="stat in mainStats" :key="stat.label" class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-8 shadow-sm hover:shadow-xl transition-all hover:-translate-y-1 group cursor-pointer" @click="openDetail('trend')">
           <div class="flex items-center justify-between mb-6">
             <span class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{{ stat.label }}</span>
             <span :class="['material-icons-round text-slate-300 group-hover:scale-110 transition-transform', stat.iconColor]">{{ stat.icon }}</span>
@@ -91,7 +94,7 @@
       <!-- Secondary Metrics Section -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Geographic Distribution -->
-        <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-10 shadow-sm relative overflow-hidden group">
+        <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-10 shadow-sm relative overflow-hidden group cursor-pointer hover:shadow-xl transition-all hover:-translate-y-1" @click="openDetail('geo')">
           <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-blue-500/5 blur-[100px] rounded-full group-hover:bg-blue-500/10 transition-all"></div>
           <div class="flex items-center justify-between mb-10 relative z-10">
             <div class="flex items-center gap-3">
@@ -126,7 +129,7 @@
         </div>
 
         <!-- Tech Stack Distribution -->
-        <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-10 shadow-sm relative overflow-hidden group">
+        <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-10 shadow-sm relative overflow-hidden group cursor-pointer hover:shadow-xl transition-all hover:-translate-y-1" @click="openDetail('stack')">
           <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-amber-500/5 blur-[100px] rounded-full group-hover:bg-amber-500/10 transition-all"></div>
           <div class="flex items-center gap-3 mb-10 relative z-10">
             <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
@@ -195,151 +198,202 @@
 
     <!-- Detail Content -->
     <div v-else class="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
-      <!-- Main Trend Chart -->
-      <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-8 shadow-sm">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-10 gap-4">
-          <h3 class="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
-            <span class="w-1.5 h-6 bg-primary rounded-full"></span>
-            流量走势深度分析
-            <span class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-black text-slate-500 tracking-widest">2023-10-01 ~ 10-30</span>
-          </h3>
-          <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-900/50 p-1 rounded-xl border border-slate-100 dark:border-slate-800">
-            <button v-for="metric in metrics" :key="metric.id" @click="activeMetric = metric.id" :class="['px-4 py-2 rounded-lg text-xs font-black transition-all flex items-center gap-2', activeMetric === metric.id ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm' : 'text-slate-400 hover:text-slate-600']">
-              <span class="w-2.5 h-2.5 rounded-full" :class="metric.color"></span>
-              {{ metric.name }}
-            </button>
+      
+      <!-- Trend Detail (Existing) -->
+      <template v-if="activeDetailType === 'trend'">
+        <!-- Main Trend Chart -->
+        <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-8 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-10 gap-4">
+            <h3 class="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
+              <span class="w-1.5 h-6 bg-primary rounded-full"></span>
+              流量走势深度分析
+              <span class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-[10px] font-black text-slate-500 tracking-widest">2023-10-01 ~ 10-30</span>
+            </h3>
+            <div class="flex items-center gap-4 bg-slate-50 dark:bg-slate-900/50 p-1 rounded-xl border border-slate-100 dark:border-slate-800">
+              <button v-for="metric in metrics" :key="metric.id" @click="activeMetric = metric.id" :class="['px-4 py-2 rounded-lg text-xs font-black transition-all flex items-center gap-2', activeMetric === metric.id ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm' : 'text-slate-400 hover:text-slate-600']">
+                <span class="w-2.5 h-2.5 rounded-full" :class="metric.color"></span>
+                {{ metric.name }}
+              </button>
+            </div>
           </div>
-        </div>
 
-        <div class="relative h-[420px] w-full select-none mt-10" id="chart-detail-container">
-          <!-- Floating Tooltip Simulation -->
-          <div class="absolute left-[65%] top-12 z-20 group">
-            <div class="bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl shadow-2xl rounded-xl border border-slate-200 dark:border-slate-700 p-5 text-xs w-64 ring-4 ring-primary/5 animate-in zoom-in-95 duration-200">
-              <div class="text-slate-400 mb-4 font-black border-b border-slate-100 dark:border-slate-700 pb-3 flex justify-between items-center uppercase tracking-widest">
-                <span>2023-10-24 (周二)</span>
-                <span class="text-[9px] bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded font-black tracking-tighter">PEAK DAY</span>
-              </div>
-              <div class="space-y-4">
-                <div v-for="m in metrics" :key="m.id" class="flex justify-between items-center group/tooltip">
-                  <div class="flex items-center gap-3">
-                    <span :class="['w-2.5 h-2.5 rounded-full shadow-sm', m.color]"></span>
-                    <span class="text-slate-500 dark:text-slate-400 font-bold">{{ m.name }}</span>
+          <div class="relative h-[420px] w-full select-none mt-10" id="chart-detail-container">
+            <!-- Floating Tooltip Simulation -->
+            <div class="absolute left-[65%] top-12 z-20 group">
+              <div class="bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl shadow-2xl rounded-xl border border-slate-200 dark:border-slate-700 p-5 text-xs w-64 ring-4 ring-primary/5 animate-in zoom-in-95 duration-200">
+                <div class="text-slate-400 mb-4 font-black border-b border-slate-100 dark:border-slate-700 pb-3 flex justify-between items-center uppercase tracking-widest">
+                  <span>2023-10-24 (周二)</span>
+                  <span class="text-[9px] bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded font-black tracking-tighter">PEAK DAY</span>
+                </div>
+                <div class="space-y-4">
+                  <div v-for="m in metrics" :key="m.id" class="flex justify-between items-center group/tooltip">
+                    <div class="flex items-center gap-3">
+                      <span :class="['w-2.5 h-2.5 rounded-full shadow-sm', m.color]"></span>
+                      <span class="text-slate-500 dark:text-slate-400 font-bold">{{ m.name }}</span>
+                    </div>
+                    <span class="font-black text-slate-900 dark:text-white text-sm tabular-nums transition-transform group-hover/tooltip:scale-110">{{ m.mockValue }}</span>
                   </div>
-                  <span class="font-black text-slate-900 dark:text-white text-sm tabular-nums transition-transform group-hover/tooltip:scale-110">{{ m.mockValue }}</span>
                 </div>
               </div>
+              <div class="absolute left-0 top-[160px] h-[200px] w-px bg-gradient-to-b from-primary/40 to-transparent mx-auto -ml-px"></div>
             </div>
-            <div class="absolute left-0 top-[160px] h-[200px] w-px bg-gradient-to-b from-primary/40 to-transparent mx-auto -ml-px"></div>
-          </div>
 
-          <svg class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 1200 400">
-            <!-- Grid Lines -->
-            <g class="stroke-slate-100 dark:stroke-slate-800/50" stroke-dasharray="6 4" stroke-width="1">
-              <line v-for="i in 5" :key="i" x1="0" x2="1200" :y1="i * 80 - 40" :y2="i * 80 - 40" />
-            </g>
-            <!-- Labels -->
-            <g class="text-[10px] fill-slate-400 font-black uppercase tracking-tighter select-none">
-              <text v-for="(val, idx) in ['60K', '45K', '30K', '15K', '0']" :key="val" x="0" :y="idx * 80 + 45">{{ val }}</text>
-            </g>
-            <!-- Curves -->
-            <defs>
-              <linearGradient id="grad-primary-main" x1="0%" x2="0%" y1="0%" y2="100%">
-                <stop offset="0%" style="stop-color:#D92D20;stop-opacity:0.25" />
-                <stop offset="100%" style="stop-color:#D92D20;stop-opacity:0" />
-              </linearGradient>
-            </defs>
-            <path d="M0 250 C150 220, 300 100, 450 120 C600 140, 750 80, 816 190 C900 240, 1050 100, 1200 80 V 400 H 0 Z" fill="url(#grad-primary-main)"></path>
-            <path d="M0 250 C150 220, 300 100, 450 120 C600 140, 750 80, 816 190 C900 240, 1050 100, 1200 80" fill="none" class="stroke-primary" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path>
-            <path d="M0 300 C150 290, 300 220, 450 240 C600 260, 750 220, 816 270 C900 300, 1050 200, 1200 180" fill="none" class="stroke-blue-400" stroke-dasharray="10 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
-            <path d="M0 340 C150 335, 300 280, 450 300 C600 320, 750 290, 816 325 C900 340, 1050 280, 1200 260" fill="none" class="stroke-emerald-400" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
-          </svg>
+            <svg class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 1200 400">
+              <!-- Grid Lines -->
+              <g class="stroke-slate-100 dark:stroke-slate-800/50" stroke-dasharray="6 4" stroke-width="1">
+                <line v-for="i in 5" :key="i" x1="0" x2="1200" :y1="i * 80 - 40" :y2="i * 80 - 40" />
+              </g>
+              <!-- Labels -->
+              <g class="text-[10px] fill-slate-400 font-black uppercase tracking-tighter select-none">
+                <text v-for="(val, idx) in ['60K', '45K', '30K', '15K', '0']" :key="val" x="0" :y="idx * 80 + 45">{{ val }}</text>
+              </g>
+              <!-- Curves -->
+              <defs>
+                <linearGradient id="grad-primary-main" x1="0%" x2="0%" y1="0%" y2="100%">
+                  <stop offset="0%" style="stop-color:#D92D20;stop-opacity:0.25" />
+                  <stop offset="100%" style="stop-color:#D92D20;stop-opacity:0" />
+                </linearGradient>
+              </defs>
+              <path d="M0 250 C150 220, 300 100, 450 120 C600 140, 750 80, 816 190 C900 240, 1050 100, 1200 80 V 400 H 0 Z" fill="url(#grad-primary-main)"></path>
+              <path d="M0 250 C150 220, 300 100, 450 120 C600 140, 750 80, 816 190 C900 240, 1050 100, 1200 80" fill="none" class="stroke-primary" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path>
+              <path d="M0 300 C150 290, 300 220, 450 240 C600 260, 750 220, 816 270 C900 300, 1050 200, 1200 180" fill="none" class="stroke-blue-400" stroke-dasharray="10 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+              <path d="M0 340 C150 335, 300 280, 450 300 C600 320, 750 290, 816 325 C900 340, 1050 280, 1200 260" fill="none" class="stroke-emerald-400" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+            </svg>
+            
+            <div class="flex justify-between mt-8 text-[10px] font-black text-slate-400 uppercase tracking-widest px-4 border-t border-slate-50 dark:border-slate-800 pt-4">
+              <span v-for="d in ['10-01', '10-08', '10-15', '10-22', '10-24', '10-30']" :key="d" :class="d === '10-24' ? 'text-primary' : ''">{{ d }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Details Table -->
+        <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm overflow-hidden group">
+          <div class="px-8 py-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
+            <div class="flex items-center gap-3">
+              <span class="material-icons-round text-slate-400">table_rows</span>
+              <h3 class="font-black text-slate-900 dark:text-white tracking-tight">每日数据明细 · Time-Series Log</h3>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                Live Sync Enabled
+              </div>
+              <button class="p-2 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors">
+                <span class="material-icons-round">filter_list</span>
+              </button>
+            </div>
+          </div>
+          <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-100 dark:border-slate-800">
+                  <th class="px-8 py-5">日期 · Time</th>
+                  <th class="px-8 py-5 text-right">浏览量 (PV)</th>
+                  <th class="px-8 py-5 text-right">独立访客 (UV)</th>
+                  <th class="px-8 py-5 text-right">日活 (DAU)</th>
+                  <th class="px-8 py-5 text-right">周环比 (WoW)</th>
+                  <th class="px-8 py-5 text-right">月同比 (MoM)</th>
+                  <th class="px-8 py-5 text-center">状态</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
+                <tr v-for="day in dailyStats" :key="day.date" class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors group/row cursor-default">
+                  <td class="px-8 py-5">
+                    <div class="flex items-center gap-3">
+                      <span class="text-sm font-black text-slate-900 dark:text-white">{{ day.date }}</span>
+                      <span :class="['text-[9px] font-black uppercase tracking-tighter px-1.5 py-0.5 rounded', day.isWeekend ? 'bg-slate-100 text-slate-400' : 'bg-primary/10 text-primary']">
+                        {{ day.weekday }}
+                      </span>
+                    </div>
+                  </td>
+                  <td class="px-8 py-5 text-right font-black text-slate-700 dark:text-slate-300 font-mono text-sm tabular-nums">{{ day.pv }}</td>
+                  <td class="px-8 py-5 text-right font-black text-slate-700 dark:text-slate-300 font-mono text-sm tabular-nums">{{ day.uv }}</td>
+                  <td class="px-8 py-5 text-right font-black text-slate-700 dark:text-slate-300 font-mono text-sm tabular-nums">{{ day.dau }}</td>
+                  <td class="px-8 py-5 text-right">
+                    <div :class="['inline-flex items-center gap-1 px-3 py-1 rounded-lg text-[10px] font-black', day.wow > 0 ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500']">
+                      <span class="material-icons-round text-xs">{{ day.wow > 0 ? 'trending_up' : 'trending_down' }}</span>
+                      {{ Math.abs(day.wow) }}%
+                    </div>
+                  </td>
+                  <td class="px-8 py-5 text-right">
+                    <div :class="['inline-flex items-center gap-1 px-3 py-1 rounded-lg text-[10px] font-black', day.mom > 0 ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500']">
+                      <span class="material-icons-round text-xs">{{ day.mom > 0 ? 'trending_up' : 'trending_down' }}</span>
+                      {{ Math.abs(day.mom) }}%
+                    </div>
+                  </td>
+                  <td class="px-8 py-5 text-center">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           
-          <div class="flex justify-between mt-8 text-[10px] font-black text-slate-400 uppercase tracking-widest px-4 border-t border-slate-50 dark:border-slate-800 pt-4">
-            <span v-for="d in ['10-01', '10-08', '10-15', '10-22', '10-24', '10-30']" :key="d" :class="d === '10-24' ? 'text-primary' : ''">{{ d }}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Data Details Table -->
-      <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm overflow-hidden group">
-        <div class="px-8 py-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
-          <div class="flex items-center gap-3">
-            <span class="material-icons-round text-slate-400">table_rows</span>
-            <h3 class="font-black text-slate-900 dark:text-white tracking-tight">每日数据明细 · Time-Series Log</h3>
-          </div>
-          <div class="flex items-center gap-4">
-            <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-[10px] font-black text-slate-500 uppercase tracking-widest">
-              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              Live Sync Enabled
+          <!-- Pagination -->
+          <div class="px-8 py-4 bg-slate-50/50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+              Rows per page: <span class="text-slate-900 dark:text-white">10</span>
+            </p>
+            <div class="flex gap-2">
+              <button class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-white transition-all disabled:opacity-30" disabled>
+                <span class="material-icons-round text-sm">chevron_left</span>
+              </button>
+              <button class="w-8 h-8 rounded-lg flex items-center justify-center text-white bg-slate-900 dark:bg-primary shadow-lg shadow-primary/20 text-xs font-black">1</button>
+              <button class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-800 transition-all text-xs font-black">2</button>
+              <button class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-white transition-all">
+                <span class="material-icons-round text-sm">chevron_right</span>
+              </button>
             </div>
-            <button class="p-2 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors">
-              <span class="material-icons-round">filter_list</span>
-            </button>
           </div>
         </div>
-        <div class="overflow-x-auto custom-scrollbar">
-          <table class="w-full text-left border-collapse">
-            <thead>
-              <tr class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-100 dark:border-slate-800">
-                <th class="px-8 py-5">日期 · Time</th>
-                <th class="px-8 py-5 text-right">浏览量 (PV)</th>
-                <th class="px-8 py-5 text-right">独立访客 (UV)</th>
-                <th class="px-8 py-5 text-right">日活 (DAU)</th>
-                <th class="px-8 py-5 text-right">周环比 (WoW)</th>
-                <th class="px-8 py-5 text-right">月同比 (MoM)</th>
-                <th class="px-8 py-5 text-center">状态</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
-              <tr v-for="day in dailyStats" :key="day.date" class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors group/row cursor-default">
-                <td class="px-8 py-5">
-                  <div class="flex items-center gap-3">
-                    <span class="text-sm font-black text-slate-900 dark:text-white">{{ day.date }}</span>
-                    <span :class="['text-[9px] font-black uppercase tracking-tighter px-1.5 py-0.5 rounded', day.isWeekend ? 'bg-slate-100 text-slate-400' : 'bg-primary/10 text-primary']">
-                      {{ day.weekday }}
-                    </span>
-                  </div>
-                </td>
-                <td class="px-8 py-5 text-right font-black text-slate-700 dark:text-slate-300 font-mono text-sm tabular-nums">{{ day.pv }}</td>
-                <td class="px-8 py-5 text-right font-black text-slate-700 dark:text-slate-300 font-mono text-sm tabular-nums">{{ day.uv }}</td>
-                <td class="px-8 py-5 text-right font-black text-slate-700 dark:text-slate-300 font-mono text-sm tabular-nums">{{ day.dau }}</td>
-                <td class="px-8 py-5 text-right">
-                  <div :class="['inline-flex items-center gap-1 px-3 py-1 rounded-lg text-[10px] font-black', day.wow > 0 ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500']">
-                    <span class="material-icons-round text-xs">{{ day.wow > 0 ? 'trending_up' : 'trending_down' }}</span>
-                    {{ Math.abs(day.wow) }}%
-                  </div>
-                </td>
-                <td class="px-8 py-5 text-right">
-                  <div :class="['inline-flex items-center gap-1 px-3 py-1 rounded-lg text-[10px] font-black', day.mom > 0 ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500']">
-                    <span class="material-icons-round text-xs">{{ day.mom > 0 ? 'trending_up' : 'trending_down' }}</span>
-                    {{ Math.abs(day.mom) }}%
-                  </div>
-                </td>
-                <td class="px-8 py-5 text-center">
-                  <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        
-        <!-- Pagination -->
-        <div class="px-8 py-4 bg-slate-50/50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center">
-          <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-            Rows per page: <span class="text-slate-900 dark:text-white">10</span>
-          </p>
-          <div class="flex gap-2">
-            <button class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-white transition-all disabled:opacity-30" disabled>
-              <span class="material-icons-round text-sm">chevron_left</span>
-            </button>
-            <button class="w-8 h-8 rounded-lg flex items-center justify-center text-white bg-slate-900 dark:bg-primary shadow-lg shadow-primary/20 text-xs font-black">1</button>
-            <button class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-800 transition-all text-xs font-black">2</button>
-            <button class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-white transition-all">
-              <span class="material-icons-round text-sm">chevron_right</span>
-            </button>
+      </template>
+
+      <!-- Geo Detail -->
+      <template v-else-if="activeDetailType === 'geo'">
+        <div class="grid grid-cols-3 gap-6">
+          <div class="col-span-2 bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-8 shadow-sm flex flex-col items-center justify-center min-h-[400px]">
+             <span class="material-icons-round text-9xl text-slate-200 dark:text-slate-700 mb-4">public</span>
+             <p class="text-slate-400 font-medium">Interactive World Map Visualization</p>
+             <p class="text-xs text-slate-500 mt-2">Loading Map Data...</p>
+          </div>
+          <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm overflow-hidden">
+             <h3 class="text-sm font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest">City Ranking</h3>
+             <div class="space-y-4">
+                <div v-for="(city, idx) in regions" :key="city.name" class="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+                   <div class="flex items-center gap-3">
+                      <span class="text-xs font-black text-slate-300">#{{ idx + 1 }}</span>
+                      <span class="text-sm font-bold text-slate-700 dark:text-slate-200">{{ city.name }}</span>
+                   </div>
+                   <span class="text-xs font-mono font-black text-primary">{{ city.percent }}%</span>
+                </div>
+             </div>
           </div>
         </div>
-      </div>
+      </template>
+
+      <!-- Stack Detail -->
+      <template v-else-if="activeDetailType === 'stack'">
+        <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-8 shadow-sm">
+           <div class="flex items-center justify-between mb-8">
+             <h3 class="text-lg font-black text-slate-900 dark:text-white">技术栈使用率详情</h3>
+             <button class="text-primary text-xs font-black uppercase tracking-widest hover:underline">Scan New Projects</button>
+           </div>
+           <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div v-for="lang in techStack" :key="lang.name" class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-xl border border-slate-100 dark:border-slate-800">
+                 <div class="flex items-center gap-3 mb-4">
+                    <div :class="['w-3 h-3 rounded-full', lang.color]"></div>
+                    <span class="font-bold text-slate-700 dark:text-slate-200">{{ lang.name }}</span>
+                 </div>
+                 <div class="text-2xl font-black text-slate-900 dark:text-white mb-1">{{ lang.value }}%</div>
+                 <div class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest flex items-center gap-1">
+                   <span class="material-icons-round text-xs">trending_up</span>
+                   Growth {{ lang.growth }}%
+                 </div>
+              </div>
+           </div>
+        </div>
+      </template>
+
     </div>
   </div>
 </template>
@@ -362,6 +416,7 @@ export default {
     return {
       viewMode: 'overview', // 'overview' or 'detail'
       activeMetric: 'pv',
+      activeDetailType: 'trend', // 'trend', 'geo', 'stack'
       internalSelectedView: this.selectedView || { id: 'enterprise', label: '全企业视图 (Enterprise)', orgId: 'enterprise' },
       mainStats: [
         { 
@@ -430,6 +485,10 @@ export default {
     handleViewChange(view) {
       this.internalSelectedView = view
       this.$emit('view-change', view)
+    },
+    openDetail(type) {
+      this.activeDetailType = type
+      this.viewMode = 'detail'
     }
   },
   watch: {
