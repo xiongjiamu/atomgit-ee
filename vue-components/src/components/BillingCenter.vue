@@ -16,6 +16,9 @@
         <template v-else-if="currentCategory === 'overview' && currentView === 'detail'">
           <BillingDetail @back="currentView = 'list'" />
         </template>
+        <template v-else-if="currentCategory === 'records'">
+          <PaymentRecords />
+        </template>
         <!-- Placeholder for other categories -->
         <template v-else>
           <div class="flex flex-col items-center justify-center h-full py-20 text-center">
@@ -41,13 +44,15 @@
 import BillingSidebar from './BillingSidebar.vue'
 import BillingOverview from './BillingOverview.vue'
 import BillingDetail from './BillingDetail.vue'
+import PaymentRecords from './PaymentRecords.vue'
 
 export default {
   name: 'BillingCenter',
   components: {
     BillingSidebar,
     BillingOverview,
-    BillingDetail
+    BillingDetail,
+    PaymentRecords
   },
   data() {
     return {

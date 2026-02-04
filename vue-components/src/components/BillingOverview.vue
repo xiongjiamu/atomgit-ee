@@ -7,29 +7,29 @@
         <span class="material-icons-round text-[320px]">account_balance_wallet</span>
       </div>
       
-      <div class="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
-        <div class="space-y-6">
-          <div class="flex items-center gap-3">
-            <span class="text-xs font-black uppercase tracking-[0.3em] opacity-60">本期待支付账单</span>
-            <span class="px-2.5 py-1 bg-red-500 text-white text-[10px] font-black rounded-lg uppercase tracking-widest shadow-lg shadow-red-500/30 animate-pulse">Pending</span>
-          </div>
-          <div class="flex items-baseline gap-4">
-            <span class="text-6xl font-black tracking-tighter italic">¥ 12,450.00</span>
-          </div>
-          <div class="flex flex-wrap items-center gap-6">
+      <div class="relative z-10 flex items-center justify-between">
+        <div class="flex-1">
+          <p class="text-[10px] font-black text-white/60 uppercase tracking-[0.2em] mb-4">当前账单</p>
+          <h2 class="text-6xl font-black tracking-tighter mb-2 italic">¥ 12,450.00</h2>
+          <p class="text-sm text-white/80 font-medium mb-8">2023年10月账单 · 待支付</p>
+          
+          <div class="flex items-center gap-6 text-sm">
             <div class="flex items-center gap-2">
-              <span class="material-icons-round text-slate-500 text-sm">event</span>
-              <span class="text-xs font-bold text-slate-400">账单周期: 10/01 - 10/31</span>
+              <span class="material-icons-round text-white/60">schedule</span>
+              <span class="text-white/80 font-medium">到期日: 2023-11-15</span>
             </div>
             <div class="flex items-center gap-2">
-              <span class="material-icons-round text-rose-500 text-sm">schedule</span>
-              <span class="text-xs font-black text-rose-400 uppercase tracking-widest">最后还款日: 11/10</span>
+              <span class="material-icons-round text-white/60">receipt</span>
+              <span class="text-white/80 font-medium">BILL-20231001</span>
             </div>
           </div>
         </div>
         
         <div class="flex shrink-0">
-          <button class="bg-primary hover:bg-primary-dark text-white px-10 py-5 rounded-xl text-sm font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/40 transition-all hover:-translate-y-1 active:scale-95 flex items-center gap-3">
+          <button 
+            class="bg-primary hover:bg-primary-dark text-white px-10 py-5 rounded-xl text-sm font-black uppercase tracking-[0.2em] shadow-2xl shadow-primary/40 transition-all hover:-translate-y-1 active:scale-95 flex items-center gap-3"
+            @click="showPaymentModal = true"
+          >
             立即结算
             <span class="material-icons-round">arrow_forward</span>
           </button>
@@ -46,9 +46,10 @@
         </div>
         <div class="flex items-center gap-3">
           <div class="relative group">
-            <select class="appearance-none bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white py-3 pl-6 pr-12 rounded-2xl text-[10px] font-black uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all shadow-sm cursor-pointer">
-              <option>2023 FY</option>
-              <option>2022 FY</option>
+            <select v-model="selectedYear" class="appearance-none bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white py-3 pl-6 pr-12 rounded-2xl text-[10px] font-black uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all shadow-sm cursor-pointer">
+              <option value="2023 FY">2023 FY</option>
+              <option value="2022 FY">2022 FY</option>
+              <option value="2021 FY">2021 FY</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
               <span class="material-icons-round text-lg">expand_more</span>
@@ -65,33 +66,40 @@
           <thead>
             <tr class="bg-slate-50/50 dark:bg-slate-800/50 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-100 dark:border-slate-800">
               <th class="px-8 py-5">账单月份</th>
-              <th class="px-8 py-5">总金额</th>
-              <th class="px-8 py-5">结算状态</th>
-              <th class="px-8 py-5">开票状态</th>
+              <th class="px-8 py-5 text-right">账单金额</th>
+              <th class="px-8 py-5 text-right">支付状态</th>
+              <th class="px-8 py-5 text-right">发票状态</th>
               <th class="px-8 py-5 text-right">操作</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
-            <tr v-for="bill in bills" :key="bill.month" class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors group">
+            <tr v-for="(bill, index) in bills" :key="index" class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors group">
               <td class="px-8 py-6">
                 <span class="text-sm font-black text-slate-900 dark:text-white tracking-tight uppercase">{{ bill.month }}</span>
               </td>
-              <td class="px-8 py-6">
-                <span class="text-sm font-black text-slate-900 dark:text-white font-mono italic">¥ {{ bill.amount.toLocaleString('zh-CN', {minimumFractionDigits: 2}) }}</span>
+              <td class="px-8 py-6 text-right">
+                <span class="text-sm font-black text-slate-900 dark:text-white font-mono italic">¥ {{ bill.amount.toLocaleString('zh-CN', { minimumFractionDigits: 2 }) }}</span>
               </td>
-              <td class="px-8 py-6">
-                <div class="flex items-center gap-2">
-                  <div :class="['w-1.5 h-1.5 rounded-full', bill.paid ? 'bg-emerald-500' : 'bg-rose-500 animate-pulse']"></div>
-                  <span :class="['text-[10px] font-black uppercase tracking-widest', bill.paid ? 'text-emerald-500' : 'text-rose-500']">
-                    {{ bill.paid ? '已结清' : '待支付' }}
-                  </span>
-                </div>
-              </td>
-              <td class="px-8 py-6">
-                <span v-if="bill.invoiced" class="px-2.5 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-[9px] font-black rounded-lg uppercase tracking-widest border border-blue-100 dark:border-blue-900">
-                  已开票
+              <td class="px-8 py-6 text-right">
+                <span :class="[
+                  'inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border',
+                  bill.paid 
+                    ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-900'
+                    : 'bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 border-amber-100 dark:border-amber-900'
+                ]">
+                  <span :class="['w-1.5 h-1.5 rounded-full', bill.paid ? 'bg-emerald-500' : 'bg-amber-500 animate-pulse']"></span>
+                  {{ bill.paid ? '已结清' : '待支付' }}
                 </span>
-                <span v-else class="text-[10px] font-black text-slate-300 uppercase tracking-widest">-</span>
+              </td>
+              <td class="px-8 py-6 text-right">
+                <span :class="[
+                  'inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border',
+                  bill.invoiced 
+                    ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border-blue-100 dark:border-blue-900'
+                    : 'bg-slate-50 dark:bg-slate-800 text-slate-400 border-slate-200 dark:border-slate-700'
+                ]">
+                  {{ bill.invoiced ? '已开票' : '未开票' }}
+                </span>
               </td>
               <td class="px-8 py-6 text-right">
                 <div class="flex items-center justify-end gap-3">
@@ -118,19 +126,48 @@
         </div>
       </div>
     </div>
+
+    <!-- Payment Modal -->
+    <PaymentModal
+      :show="showPaymentModal"
+      amount="12,450.00"
+      bill-number="BILL-20231001"
+      @close="showPaymentModal = false"
+      @submit="handlePaymentSubmit"
+    />
   </div>
 </template>
 
 <script>
+import PaymentModal from './PaymentModal.vue'
+
 export default {
   name: 'BillingOverview',
+  components: {
+    PaymentModal
+  },
+  emits: ['view-detail'],
   data() {
     return {
+      selectedYear: '2023 FY',
+      showPaymentModal: false,
       bills: [
         { month: '2023年10月', amount: 12450.00, paid: false, invoiced: false },
         { month: '2023年09月', amount: 11800.00, paid: true, invoiced: true },
-        { month: '2023年08月', amount: 10500.00, paid: true, invoiced: false }
+        { month: '2023年08月', amount: 10500.00, paid: true, invoiced: true },
+        { month: '2023年07月', amount: 9200.00, paid: true, invoiced: false },
+        { month: '2023年06月', amount: 8800.00, paid: true, invoiced: true }
       ]
+    }
+  },
+  methods: {
+    handlePaymentSubmit(data) {
+      console.log('支付凭证提交:', data)
+      // TODO: 调用 API 提交凭证
+      // 提交成功后关闭弹窗
+      this.showPaymentModal = false
+      // 可以显示成功提示
+      alert('汇款凭证已提交，我们将在 1-2 个工作日内完成核销')
     }
   }
 }
