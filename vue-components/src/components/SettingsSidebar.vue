@@ -11,9 +11,9 @@
             @click.prevent="$emit('category-change', item.id)"
             :class="[
               activeCategory === item.id
-                ? 'bg-slate-900 text-white shadow-xl shadow-slate-200 dark:shadow-slate-900/20 active'
+                ? 'bg-slate-900 text-white shadow-xl shadow-slate-200 dark:shadow-slate-900/20 active:scale-95 active'
                 : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800',
-              'group flex items-center justify-between px-4 py-3 text-sm font-bold rounded-xl transition-all no-underline'
+              'group flex items-center justify-between px-4 py-3.5 text-sm font-bold rounded-xl transition-all no-underline'
             ]"
           >
             <div class="flex items-center">

@@ -11,7 +11,7 @@
         </button>
         <div>
           <nav class="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">
-            <span>财务中心</span>
+            <span>账单管理</span>
             <span class="material-icons-round text-[10px]">chevron_right</span>
             <span>发票管理</span>
           </nav>

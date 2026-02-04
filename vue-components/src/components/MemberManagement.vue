@@ -1,133 +1,264 @@
 <template>
-  <div class="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-500">
-    <!-- Header Area -->
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+  <div class="space-y-10 animate-in fade-in slide-in-from-bottom-2 duration-500">
+    <!-- Alert Banners -->
+    <div class="space-y-0">
+      <AlertBanner
+        v-model="showResourceAlert"
+        type="warning"
+        title="资源预警"
+        icon="info"
+        message="您企业当前的存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容"
+      />
+
+      <AlertBanner
+        v-model="showAnnouncementAlert"
+        type="info"
+        title="企业公告"
+        icon="campaign"
+        message="AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉"
+      />
+    </div>
+
+    <!-- Header -->
+    <div class="flex items-center justify-between px-2">
       <div>
-        <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">企业成员管理</h1>
-        <p class="text-slate-500 dark:text-slate-400 mt-2 font-medium">统一管理企业内部成员、外部协作者及其对应的权限范围。</p>
+        <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">成员管理</h1>
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">Member Management · Organization</p>
       </div>
       <div class="flex items-center gap-3">
-        <button class="px-6 py-3 bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 text-xs font-black rounded-xl uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm">
+        <button 
+          @click="openInviteModal('collaborator')"
+          class="px-6 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-xl text-sm font-black uppercase tracking-widest hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm active:scale-95"
+        >
           邀请外部协作者
         </button>
-        <button class="px-6 py-3 bg-primary text-white text-xs font-black rounded-xl uppercase tracking-widest shadow-lg shadow-primary/20 transition-all hover:-translate-y-1 active:scale-95 flex items-center gap-2">
+        <button 
+          @click="openInviteModal('member')"
+          class="px-6 py-3 bg-primary text-white rounded-xl text-sm font-black uppercase tracking-widest hover:bg-primary-dark transition-all shadow-lg shadow-primary/30 active:scale-95 flex items-center gap-2"
+        >
           <span class="material-icons-round text-lg">person_add</span>
           添加企业成员
         </button>
       </div>
     </div>
 
-    <!-- Alert / Tips (Simplified) -->
-    <div class="bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20 rounded-3xl px-8 py-5 flex items-start gap-4">
-      <div class="w-10 h-10 rounded-2xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center shrink-0">
-        <span class="material-icons-round text-amber-500">info</span>
-      </div>
-      <div class="flex-1 pt-0.5">
-        <p class="text-sm font-black text-amber-900 dark:text-amber-400">资源预警</p>
-        <p class="text-xs text-amber-700/70 dark:text-amber-400/70 font-bold mt-0.5">您企业当前的成员席位已使用 121/150 (80.6%)，接近上限，请及时关注。</p>
-      </div>
-      <button class="text-amber-400 hover:text-amber-600 transition-colors"><span class="material-icons-round">close</span></button>
-    </div>
-
-    <!-- Search & Filter Bar -->
-    <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-3xl p-4 shadow-sm">
-       <div class="flex flex-col md:flex-row gap-4">
-          <div class="relative flex-1 group">
-             <span class="material-icons-round absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">search</span>
-             <input 
-               type="text" 
-               class="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-slate-800/50 border-none rounded-2xl text-sm focus:ring-2 focus:ring-primary/20 transition-all font-medium text-slate-900 dark:text-white"
-               placeholder="通过姓名、邮箱或用户名搜索成员..."
-             />
-          </div>
-          <div class="flex items-center gap-2">
-             <button class="px-6 py-3.5 bg-slate-100 dark:bg-slate-800 text-slate-500 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">所有角色</button>
-             <button class="p-3.5 bg-slate-100 dark:bg-slate-800 text-slate-500 rounded-2xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
-                <span class="material-icons-round">filter_alt</span>
-             </button>
-          </div>
-       </div>
-    </div>
-
     <!-- Members Table -->
-    <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-[2.5rem] overflow-hidden shadow-sm">
+    <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
       <table class="w-full text-left border-collapse">
+        <!-- ... (table content unchanged) ... -->
         <thead>
           <tr class="bg-slate-50/50 dark:bg-slate-800/50 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-100 dark:border-slate-800">
-            <th class="px-8 py-5">用户信息</th>
-            <th class="px-8 py-5">企业角色</th>
-            <th class="px-8 py-5">组织机构</th>
-            <th class="px-8 py-5">状态</th>
-            <th class="px-8 py-5 text-right">操作</th>
+            <th class="px-8 py-5 w-4/12">用户</th>
+            <th class="px-8 py-5 w-2/12">角色</th>
+            <th class="px-8 py-5 w-2/12">组织</th>
+            <th class="px-8 py-5 w-2/12">有效期</th>
+            <th class="px-8 py-5 w-2/12 text-right">操作</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
           <tr v-for="member in members" :key="member.email" class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors group">
             <td class="px-8 py-6">
-              <div class="flex items-center gap-4">
-                <div :class="['w-12 h-12 rounded-2xl bg-gradient-to-br flex items-center justify-center text-white font-black shadow-lg', member.avatarBg]">
-                   {{ member.initials }}
+              <div class="flex items-center">
+                <div class="flex-shrink-0 h-10 w-10 bg-blue-100 dark:bg-blue-900/50 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-300 font-black text-xs ring-2 ring-white dark:ring-slate-800">
+                  {{ member.initials }}
                 </div>
-                <div class="flex flex-col">
-                  <span class="text-sm font-black text-slate-900 dark:text-white tracking-tight">{{ member.name }}</span>
-                  <span class="text-[10px] text-slate-400 font-bold font-mono">{{ member.email }}</span>
+                <div class="ml-4">
+                  <div class="flex items-center gap-2">
+                    <span class="text-sm font-bold text-slate-900 dark:text-white">{{ member.name }}</span>
+                    <span v-if="member.alias" class="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-[9px] font-bold text-slate-500 truncate max-w-[80px]">
+                      {{ member.alias }}
+                    </span>
+                  </div>
+                  <div class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-0.5">{{ member.email }}</div>
                 </div>
               </div>
             </td>
             <td class="px-8 py-6">
-               <span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-black rounded-lg uppercase tracking-widest border border-slate-200 dark:border-slate-700">
-                 {{ member.role }}
-               </span>
-            </td>
-            <td class="px-8 py-6 text-sm font-bold text-slate-500 dark:text-slate-400">
-               {{ member.org }}
+              <span :class="[
+                'inline-flex items-center px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border',
+                member.role === '企业管理员' 
+                  ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 border-purple-100 dark:border-purple-900/30'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700'
+              ]">
+                {{ member.role }}
+              </span>
             </td>
             <td class="px-8 py-6">
-               <div class="flex items-center gap-2">
-                 <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
-                 <span class="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Active</span>
-               </div>
+              <span class="text-sm font-bold text-slate-700 dark:text-slate-300 font-mono">{{ member.organization }}</span>
+            </td>
+            <td class="px-8 py-6">
+              <div class="flex items-center gap-2">
+                <span class="material-icons-round text-base text-slate-400">event</span>
+                <span :class="[
+                  'text-sm font-bold',
+                  member.expiry === '永久有效' ? 'text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-400'
+                ]">
+                  {{ member.expiry }}
+                </span>
+                <span v-if="member.isExpiring" class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" title="即将过期"></span>
+              </div>
             </td>
             <td class="px-8 py-6 text-right">
-               <button class="w-10 h-10 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-all text-slate-400">
-                  <span class="material-icons-round">more_horiz</span>
-               </button>
+              <div class="flex items-center justify-end gap-2">
+                <button 
+                  class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+                  title="设置企业别名"
+                  @click="handleSetAlias(member)"
+                >
+                  <span class="material-icons-round text-lg">badge</span>
+                </button>
+                <button 
+                  class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+                  title="设置有效期"
+                  @click="handleSetExpiry(member)"
+                >
+                  <span class="material-icons-round text-lg">edit_calendar</span>
+                </button>
+                <button 
+                  class="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all"
+                  title="移除成员"
+                  @click="handleRemoveMember(member)"
+                >
+                  <span class="material-icons-round text-lg">person_remove</span>
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
       
-      <!-- Table Footer -->
+      <!-- Pagination -->
       <div class="px-8 py-6 bg-slate-50/50 dark:bg-slate-800/30 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-           Showing <span class="text-slate-900 dark:text-white">5</span> of 121 Members
-         </p>
-         <div class="flex gap-2">
-           <button class="w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400 disabled:opacity-30" disabled>
-             <span class="material-icons-round">chevron_left</span>
-           </button>
-           <button class="w-10 h-10 rounded-xl bg-primary text-white text-xs font-black shadow-lg shadow-primary/20">1</button>
-           <button class="w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400">
-             <span class="material-icons-round">chevron_right</span>
-           </button>
-         </div>
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+          显示 <span class="text-slate-900 dark:text-white">{{ members.length }}</span> 条，共 <span class="text-slate-900 dark:text-white">{{ totalRecords }}</span> 条记录
+        </p>
+        <div class="flex items-center gap-2">
+          <button class="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-300 text-[10px] font-black opacity-50 cursor-not-allowed">‹</button>
+          <button class="w-8 h-8 rounded-lg bg-primary text-white text-[10px] font-black shadow-lg shadow-primary/20">1</button>
+          <button class="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-[10px] font-black hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">2</button>
+          <button class="w-8 h-8 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-[10px] font-black hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">›</button>
+        </div>
       </div>
     </div>
+
+    <!-- Invite Modal -->
+    <InviteMemberModal
+      :show="showInviteModal"
+      :type="inviteType"
+      @close="showInviteModal = false"
+      @submit="handleInviteSubmit"
+    />
   </div>
 </template>
 
 <script>
+import AlertBanner from './AlertBanner.vue'
+import InviteMemberModal from './InviteMemberModal.vue'
+
 export default {
   name: 'MemberManagement',
+  components: {
+    AlertBanner,
+    InviteMemberModal
+  },
   data() {
     return {
+      showResourceAlert: true,
+      showAnnouncementAlert: true,
+      showInviteModal: false,
+      inviteType: 'member',
+      totalRecords: 128,
       members: [
-        { name: 'Li Zhang', email: 'lizhang@atomgit.com', initials: 'LZ', role: '企业管理员', org: 'Root', avatarBg: 'from-blue-500 to-indigo-600' },
-        { name: 'Wang Wei', email: 'wangwei@atomgit.com', initials: 'WW', role: '架构师', org: 'DevOps Team', avatarBg: 'from-emerald-500 to-teal-600' },
-        { name: 'Chen Jie', email: 'chenjie@atomgit.com', initials: 'CJ', role: '研发工程师', org: 'Frontend Group', avatarBg: 'from-amber-500 to-orange-600' },
-        { name: 'Liu Yang', email: 'liuyang@atomgit.com', initials: 'LY', role: '测试工程师', org: 'QA Team', avatarBg: 'from-rose-500 to-pink-600' },
-        { name: 'Sun Bo', email: 'sunbo@atomgit.com', initials: 'SB', role: '运维人员', org: 'Cloud Infrastructure', avatarBg: 'from-violet-500 to-purple-600' }
+        {
+          id: 1,
+          name: 'Li Zhang',
+          email: 'lizhang@atomgit.com',
+          initials: 'LZ',
+          role: '企业管理员',
+          organization: 'Root',
+          alias: '总负责人',
+          expiry: '永久有效',
+          isExpiring: false
+        },
+        {
+          id: 2,
+          name: 'Wang Wei',
+          email: 'wangwei@atomgit.com',
+          initials: 'WW',
+          role: '开发者',
+          organization: 'Backend',
+          alias: '',
+          expiry: '2024-12-31',
+          isExpiring: false
+        },
+        {
+          id: 3,
+          name: 'Sarah Chen',
+          email: 'sarah@external.com',
+          initials: 'SC',
+          role: '外部协作者',
+          organization: 'Design',
+          alias: 'UI 设计顾问',
+          expiry: '2023-11-30',
+          isExpiring: true
+        },
+        {
+          id: 4,
+          name: 'Mike Ross',
+          email: 'mike@partner.com',
+          initials: 'MR',
+          role: '访客',
+          organization: 'Legal',
+          alias: '',
+          expiry: '2023-12-15',
+          isExpiring: true
+        },
+        {
+          id: 5,
+          name: 'Yu Liu',
+          email: 'yuliu@atomgit.com',
+          initials: 'YL',
+          role: '运维工程师',
+          organization: 'Infra',
+          alias: '',
+          expiry: '永久有效',
+          isExpiring: false
+        }
       ]
+    }
+  },
+  methods: {
+    openInviteModal(type) {
+      this.inviteType = type
+      this.showInviteModal = true
+    },
+    handleInviteSubmit(data) {
+      console.log('Invite submitted:', data)
+      // Mock adding the member
+      const newMember = {
+        name: data.identifier.split('@')[0], // Simple mock name
+        email: data.identifier.includes('@') ? data.identifier : `${data.identifier}@atomgit.com`,
+        initials: data.identifier.substring(0, 2).toUpperCase(),
+        role: data.role === 'admin' ? '企业管理员' : 
+              data.role === 'developer' ? '开发者' : 
+              data.role === 'ops' ? '运维工程师' : '访客',
+        organization: 'Pending',
+        alias: '',
+        expiry: data.expiry === 'forever' ? '永久有效' : data.expiry,
+        isExpiring: false
+      }
+      this.members.unshift(newMember)
+      // Trigger a success alert (optional, but good UX)
+      // alert(`Invitation sent to ${data.identifier}`)
+    },
+    handleSetAlias(member) {
+      console.log('Set alias for:', member.name)
+    },
+    handleSetExpiry(member) {
+      console.log('Set expiry for:', member.name)
+    },
+    handleRemoveMember(member) {
+      console.log('Remove member:', member.name)
     }
   }
 }

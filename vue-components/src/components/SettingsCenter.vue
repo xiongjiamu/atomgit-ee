@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-1 overflow-hidden bg-background-light dark:bg-background-dark">
     <!-- Sidebar -->
-    <SettingsSidebar
+    <SettingsSidebar 
       :active-category="currentCategory"
       @category-change="handleCategoryChange"
     />
-
+    
     <!-- Main Content Area -->
     <main class="flex-1 overflow-y-auto custom-scrollbar relative">
       <div class="max-w-[1920px] mx-auto p-12 h-full">
@@ -13,24 +13,19 @@
         <template v-if="currentCategory === 'members'">
           <MemberManagement />
         </template>
+        
         <!-- Placeholder for other categories -->
         <template v-else>
           <div class="flex flex-col items-center justify-center h-full py-20 text-center">
-             <div class="relative mb-10">
-                <div class="w-32 h-32 bg-slate-100 dark:bg-slate-800 rounded-[2.5rem] flex items-center justify-center shadow-inner">
-                  <span class="material-icons-round text-5xl text-slate-300">settings_suggest</span>
-                </div>
-                <div class="absolute -right-2 -bottom-2 w-10 h-10 bg-primary text-white rounded-2xl flex items-center justify-center shadow-lg animate-bounce">
-                  <span class="material-icons-round text-lg">build</span>
-                </div>
-             </div>
-            <h2 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{{ categoryName }} 配置升级中</h2>
-            <p class="text-slate-500 mt-4 font-medium max-w-lg mx-auto leading-relaxed">我们正致力于将该模块的配置体验升级到更高标准，以支撑更大规模的企业协同能力。</p>
+            <div class="w-32 h-32 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center mb-10 shadow-inner group">
+              <span class="material-icons-round text-5xl text-slate-300 group-hover:text-primary transition-colors duration-500">construction</span>
+            </div>
+            <h2 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{{ categoryName }} 模块完善中</h2>
+            <p class="text-slate-500 mt-4 font-medium max-w-md mx-auto">我们正在构建企业级设置功能，为您提供更精细的权限和资源控制。</p>
             <button 
               @click="currentCategory = 'members'"
-              class="mt-12 px-10 py-4 bg-slate-900 dark:bg-white text-white dark:text-black rounded-[1.25rem] text-[10px] font-black uppercase tracking-widest shadow-2xl transition-all hover:-translate-y-1 active:scale-95 flex items-center gap-3"
+              class="mt-12 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-black rounded-xl text-[10px] font-black uppercase tracking-widest shadow-2xl transition-all hover:-translate-y-1 active:scale-95"
             >
-              <span class="material-icons-round text-sm">arrow_back</span>
               返回成员管理
             </button>
           </div>
@@ -58,20 +53,21 @@ export default {
   computed: {
     categoryName() {
       const names = {
-        'members': '成员管理',
-        'roles': '角色权限',
+        'members': '企业成员管理',
+        'roles': '角色与权限',
         'orgs': '组织管理',
         'runners': '构建资源',
-        'webhooks': 'WebHooks',
+        'webhooks': '企业 WebHooks',
         'tokens': 'Token 管理',
         'rulesets': '规则集',
         'ip_whitelist': 'IP 白名单',
         'cla_config': '合规设置',
         'audit_logs': '审计日志',
-        'issue_conf': 'Issue 字段',
-        'announcements': '企业公告'
+        'issue_conf': 'Issue 配置',
+        'announcements': '企业公告',
+        'knowledge_sync': '知识库同步'
       }
-      return names[this.currentCategory] || '企业设置'
+      return names[this.currentCategory] || '设置'
     }
   },
   methods: {
@@ -91,10 +87,10 @@ export default {
   background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.1);
+  background: rgba(148, 163, 184, 0.2);
   border-radius: 0.75rem;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.2);
+  background: rgba(148, 163, 184, 0.3);
 }
 </style>
