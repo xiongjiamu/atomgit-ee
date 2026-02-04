@@ -9,14 +9,16 @@
             返回概览
           </button>
           <span class="text-slate-300">/</span>
-          <span class="text-slate-900 dark:text-white">流量趋势下钻</span>
+          <span class="text-slate-900 dark:text-white">
+            {{ activeDetailType === 'geo' ? '用户地域分布' : (activeDetailType === 'stack' ? '技术栈分布' : '流量趋势下钻') }}
+          </span>
         </div>
         <div class="flex items-center gap-4">
           <ViewSelector :selected-view="internalSelectedView" @change="handleViewChange" />
           <div class="w-px h-8 bg-slate-200 dark:bg-slate-800"></div>
           <div>
             <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-              {{ viewMode === 'overview' ? '流量与用户数据' : '流量趋势分析' }}
+              {{ viewMode === 'overview' ? '流量与用户数据' : (activeDetailType === 'geo' ? '用户地域分布' : (activeDetailType === 'stack' ? '技术栈分布' : '流量趋势分析')) }}
             </h1>
           </div>
         </div>
@@ -135,7 +137,7 @@
             <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
               <span class="material-icons-round text-amber-500">code</span>
             </div>
-            <h3 class="text-xl font-black text-slate-900 dark:text-white tracking-tight">技术栈分布</h3>
+            <h3 class="text-xl font-black text-slate-900 dark:text-white tracking-tight">用户技术栈分布</h3>
           </div>
 
           <div class="flex flex-col md:flex-row items-center justify-center gap-12 relative z-10">
@@ -375,8 +377,8 @@
       <template v-else-if="activeDetailType === 'stack'">
         <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-8 shadow-sm">
            <div class="flex items-center justify-between mb-8">
-             <h3 class="text-lg font-black text-slate-900 dark:text-white">技术栈使用率详情</h3>
-             <button class="text-primary text-xs font-black uppercase tracking-widest hover:underline">Scan New Projects</button>
+             <h3 class="text-lg font-black text-slate-900 dark:text-white">用户技术栈偏好详情</h3>
+             <button class="text-primary text-xs font-black uppercase tracking-widest hover:underline">Scan User Profiles</button>
            </div>
            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div v-for="lang in techStack" :key="lang.name" class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-xl border border-slate-100 dark:border-slate-800">
@@ -463,9 +465,10 @@ export default {
         { name: 'Hangzhou', percent: 14 }
       ],
       techStack: [
-        { name: 'Java Ecosystem', value: 45, color: 'bg-blue-500', growth: 12 },
-        { name: 'Go Microservices', value: 30, color: 'bg-amber-500', growth: 8 },
-        { name: 'Other Stack', value: 25, color: 'bg-slate-300 dark:bg-slate-700', growth: -2 }
+        { name: 'Vue.js Developers', value: 42, color: 'bg-emerald-500', growth: 15 },
+        { name: 'React Developers', value: 35, color: 'bg-blue-500', growth: 8 },
+        { name: 'Java/Spring', value: 12, color: 'bg-amber-500', growth: -2 },
+        { name: 'Python/AI', value: 11, color: 'bg-purple-500', growth: 24 }
       ],
       metrics: [
         { id: 'pv', name: '浏览量 (PV)', color: 'bg-primary', mockValue: '42,538' },
