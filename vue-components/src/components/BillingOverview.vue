@@ -10,7 +10,7 @@
       <div class="relative z-10 flex items-center justify-between">
         <div class="flex-1">
           <p class="text-[10px] font-black text-white/60 uppercase tracking-[0.2em] mb-4">当前账单</p>
-          <h2 class="text-6xl font-black tracking-tighter mb-2 italic">¥ 12,450.00</h2>
+          <h2 class="text-6xl font-black text-white tracking-tighter mb-2 italic">¥ 12,450.00</h2>
           <p class="text-sm text-white/80 font-medium mb-8">2023年10月账单 · 待支付</p>
           
           <div class="flex items-center gap-6 text-sm">

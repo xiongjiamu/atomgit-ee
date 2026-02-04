@@ -49,6 +49,9 @@
         <template v-else-if="currentCategory === 'announcements'">
           <AnnouncementManagement />
         </template>
+        <template v-else-if="currentCategory === 'wiki_sync'">
+          <WikiSettings />
+        </template>
         
         <!-- Placeholder for other categories -->
         <template v-else>
@@ -86,6 +89,7 @@ import ClaConfig from './ClaConfig.vue'
 import AuditLogs from './AuditLogs.vue'
 import IssueConfig from './IssueConfig.vue'
 import AnnouncementManagement from './AnnouncementManagement.vue'
+import WikiSettings from './WikiSettings.vue'
 
 export default {
   name: 'SettingsCenter',
@@ -103,7 +107,8 @@ export default {
     ClaConfig,
     AuditLogs,
     IssueConfig,
-    AnnouncementManagement
+    AnnouncementManagement,
+    WikiSettings
   },
   data() {
     return {

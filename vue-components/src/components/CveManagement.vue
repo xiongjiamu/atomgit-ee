@@ -120,187 +120,13 @@
       </div>
     </div>
 
-    <!-- CVE Detail Drawer (Popup Animation) -->
-    <transition
-      enter-active-class="transition ease-out duration-300"
-      enter-from-class="translate-x-full"
-      enter-to-class="translate-x-0"
-      leave-active-class="transition ease-in duration-200"
-      leave-from-class="translate-x-0"
-      leave-to-class="translate-x-full"
-    >
-      <div v-if="showDetail && selectedCve" class="fixed inset-y-0 right-0 w-[800px] bg-white dark:bg-surface-dark shadow-high-end z-[150] border-l border-slate-100 dark:border-slate-800 flex flex-col pointer-events-auto overflow-hidden">
-        <!-- Drawer Header -->
-        <div class="px-10 py-8 border-b border-slate-50 dark:border-slate-800 flex justify-between items-start bg-slate-50/20 dark:bg-slate-900/20">
-          <div class="space-y-2">
-            <div class="flex items-center gap-3">
-              <span class="w-2 h-8 bg-primary rounded-full"></span>
-              <h2 class="text-3xl font-black text-slate-900 dark:text-white tracking-tighter">{{ selectedCve.id }}</h2>
-              <span :class="['px-3 py-1 rounded-full text-[10px] font-black border uppercase tracking-[0.2em] ml-2', selectedCve.severityClass]">
-                {{ selectedCve.severityLabel }}
-              </span>
-            </div>
-            <div class="flex items-center gap-6 text-xs font-bold text-slate-400">
-              <span class="flex items-center gap-1.5 uppercase tracking-widest">
-                <span class="material-icons-round text-sm">event</span>
-                Detected: {{ selectedCve.lastSeen }}
-              </span>
-              <span class="flex items-center gap-1.5 uppercase tracking-widest">
-                <span class="material-icons-round text-sm">category</span>
-                Type: {{ selectedCve.type }}
-              </span>
-            </div>
-          </div>
-          <button @click="showDetail = false" class="p-3 bg-white dark:bg-slate-800 rounded-2xl hover:text-primary transition-all border border-slate-100 dark:border-slate-700 shadow-sm">
-            <span class="material-icons-round">close</span>
-          </button>
-        </div>
-
-        <!-- Drawer Content -->
-        <div class="flex-1 overflow-y-auto px-10 py-10 space-y-12 custom-scrollbar">
-          <!-- Summary Section -->
-          <section class="space-y-8">
-            <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">漏洞摘要 · Summary</h3>
-            
-            <div class="space-y-6">
-              <!-- Name & Intro -->
-              <div class="grid grid-cols-1 gap-6">
-                <div>
-                  <h4 class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">漏洞名称 · Vulnerability Name</h4>
-                  <p class="text-base font-black text-slate-900 dark:text-white leading-tight underline decoration-primary/20 underline-offset-4">
-                    {{ selectedCve.name || 'Rapid Reset: HTTP/2 Stream Multiplexing Resource Exhaustion' }}
-                  </p>
-                </div>
-                <div>
-                  <h4 class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">详情简介 · Description</h4>
-                  <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-300 font-medium bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
-                    {{ selectedCve.fullDescription || '该漏洞利用了 HTTP/2 协议中的流复用机制。攻击者可以通过发送大量的 RST_STREAM 帧来快速重置流，从而在不建立完整连接的情况下消耗服务器端的大量 CPU 和内存资源。这种“快速重置”攻击比传统的 DDoS 攻击效率更高。' }}
-                  </p>
-                </div>
-              </div>
-
-              <!-- Associated & Links -->
-              <div class="grid grid-cols-2 gap-8 pt-4">
-                <div>
-                  <h4 class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-2">
-                    <span class="material-icons-round text-xs">link</span>
-                    关联漏洞编号 · Ref IDs
-                  </h4>
-                  <div class="flex flex-wrap gap-2">
-                    <span v-for="ref in (selectedCve.associatedCves || ['GHSA-m425-mqhc-4p43'])" :key="ref" class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] font-mono font-black text-slate-500 rounded-lg">
-                      {{ ref }}
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <h4 class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-3 flex items-center gap-2">
-                    <span class="material-icons-round text-xs">launch</span>
-                    额外参考信息 · External Links
-                  </h4>
-                  <div class="flex flex-col gap-2">
-                    <a v-for="link in (selectedCve.externalLinks || [{label: 'Official Advisory', url: '#'}])" :key="link.label" :href="link.url" target="_blank" class="text-[11px] font-bold text-primary hover:underline flex items-center gap-1">
-                      {{ link.label }}
-                      <span class="material-icons-round text-[10px]">open_in_new</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Affected Component Card -->
-            <div class="grid grid-cols-2 gap-4 mt-6">
-              <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 group hover:border-primary/20 transition-all">
-                <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Affected Component</span>
-                <span class="text-sm font-black text-slate-900 dark:text-white font-mono">{{ selectedCve.component }}</span>
-              </div>
-              <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 group hover:border-primary/20 transition-all">
-                <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-2">Fix Version Target</span>
-                <span class="text-sm font-black text-emerald-500 uppercase">>= v2.3.4 (Next Release)</span>
-              </div>
-            </div>
-          </section>
-
-          <!-- Severity Details -->
-          <section class="space-y-6">
-            <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">危害评估 · Severity Assessment</h3>
-            <div class="grid grid-cols-4 gap-4">
-              <div v-for="metric in selectedCve.vectorMetrics" :key="metric.label" class="flex flex-col gap-2 p-5 bg-white dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-800 text-center shadow-sm">
-                <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">{{ metric.label }}</span>
-                <span :class="['text-sm font-black uppercase tracking-tight', metric.color]">{{ metric.value }}</span>
-              </div>
-            </div>
-            <!-- CVSS Scale -->
-            <div class="p-6 bg-slate-900 dark:bg-black rounded-3xl relative overflow-hidden group">
-              <div class="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-primary/10 to-transparent"></div>
-              <div class="flex items-center justify-between relative z-10">
-                <div>
-                  <h4 class="text-lg font-black text-white tracking-tighter">CVSS 3.1 Base Score</h4>
-                  <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Vector: AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H</p>
-                </div>
-                <div class="flex items-center gap-4">
-                  <span class="text-5xl font-black text-white tracking-tighter">{{ selectedCve.score }}</span>
-                  <div class="w-px h-12 bg-white/20"></div>
-                  <span class="text-xl font-black uppercase tracking-widest text-primary">{{ selectedCve.severityLabel }}</span>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- Affected Projects List -->
-          <section class="space-y-6 pb-10">
-            <div class="flex items-center justify-between">
-              <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">关联受影响项目 · Impacted Assets</h3>
-              <div class="flex items-center gap-4">
-                <span class="text-[10px] font-bold text-slate-400">Showing {{ impactProjects.length }} Critical Projects</span>
-                <button @click="showProjectsModal = true" class="text-[10px] font-black text-primary uppercase tracking-widest hover:underline flex items-center gap-1 transition-all">
-                  查看全部
-                  <span class="material-icons-round text-sm">open_in_new</span>
-                </button>
-              </div>
-            </div>
-            <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
-               <table class="w-full text-left text-sm">
-                 <thead class="bg-slate-50 dark:bg-slate-900/50 text-[9px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-slate-800">
-                   <tr>
-                     <th class="px-6 py-4">Project Repository</th>
-                     <th class="px-6 py-4">Scan Build</th>
-                     <th class="px-6 py-4 text-right">Action</th>
-                   </tr>
-                 </thead>
-                 <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
-                   <tr v-for="proj in impactProjects" :key="proj.name" class="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors group/proj">
-                     <td class="px-6 py-4">
-                       <div class="flex items-center gap-3">
-                         <div class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 group-hover/proj:text-primary transition-colors">
-                           <span class="material-icons-round text-sm">folder_open</span>
-                         </div>
-                         <span class="text-sm font-black text-slate-900 dark:text-white group-hover/proj:text-primary transition-colors">{{ proj.name }}</span>
-                       </div>
-                     </td>
-                     <td class="px-6 py-4 font-bold text-xs text-slate-400">{{ proj.build }}</td>
-                     <td class="px-6 py-4 text-right">
-                       <button class="text-xs font-black text-primary uppercase tracking-widest hover:underline">Inspect</button>
-                     </td>
-                   </tr>
-                 </tbody>
-               </table>
-            </div>
-          </section>
-        </div>
-
-        <!-- Drawer Footer -->
-        <div class="px-10 py-6 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
-          <div class="flex gap-4">
-            <button class="px-6 py-3 bg-slate-900 dark:bg-slate-700 text-white rounded-xl text-[10px] font-black uppercase tracking-widest hover:shadow-xl shadow-slate-900/20 active:scale-95 transition-all">导出完整报告</button>
-            <button class="px-6 py-3 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-50 active:scale-95 transition-all shadow-sm">忽略漏洞</button>
-          </div>
-          <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">GitCode Premium Security Agent</p>
-        </div>
-      </div>
-    </transition>
-
-    <!-- Drawer Backdrop -->
-    <div v-if="showDetail" class="fixed inset-0 bg-slate-900/20 dark:bg-black/60 backdrop-blur-sm z-[140]" @click="showDetail = false"></div>
+    <!-- CVE Detail Drawer (Unified Style) -->
+    <CveDetailDrawer 
+      :show="showDetail" 
+      :cveData="selectedCve || {}" 
+      :impactProjects="impactProjects"
+      @close="showDetail = false"
+    />
 
     <!-- Projects Full List Modal (Same as SBOM) -->
     <transition
@@ -345,7 +171,7 @@
               <span class="material-icons-round text-sm">download</span>
               导出 CSV 清单
             </button>
-            <button @click="showProjectsModal = false" class="flex-1 py-4 bg-slate-900 dark:bg-slate-700 text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-slate-900/20 active:scale-95 transition-all">确认关闭</button>
+            <button @click="showProjectsModal = false" class="flex-1 py-4 bg-slate-900 dark:bg-slate-700 text-white rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-lg shadow-slate-900/20 active:scale-95 transition-all">确认关闭</button>
           </div>
         </div>
       </div>
@@ -355,11 +181,13 @@
 
 <script>
 import ViewSelector from './ViewSelector.vue'
+import CveDetailDrawer from './CveDetailDrawer.vue'
 
 export default {
   name: 'CveManagement',
   components: {
-    ViewSelector
+    ViewSelector,
+    CveDetailDrawer
   },
   props: {
     selectedView: {

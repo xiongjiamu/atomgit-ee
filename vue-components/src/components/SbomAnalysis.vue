@@ -198,148 +198,13 @@
       </div>
     </div>
 
-    <!-- Detail Drawer (Overlay) -->
-    <transition
-      @enter="(el) => el.classList.add('transition-all', 'duration-500')"
-      enter-active-class="transition duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]"
-      enter-from-class="translate-x-full opacity-0"
-      enter-to-class="translate-x-0 opacity-100"
-      leave-active-class="transition duration-400 ease-[cubic-bezier(0.3,0,0.8,0.15)]"
-      leave-from-class="translate-x-0 opacity-100"
-      leave-to-class="translate-x-full opacity-0"
-    >
-      <div v-if="showDetailDrawer && selectedComponent" class="fixed inset-0 z-[120] flex items-center justify-end pointer-events-none">
-        <!-- Backdrop with individual transition -->
-        <transition
-          appear
-          enter-active-class="transition duration-700 ease-out"
-          enter-from-class="opacity-0"
-          enter-to-class="opacity-100"
-        >
-          <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-[6px] pointer-events-auto" @click="showDetailDrawer = false"></div>
-        </transition>
-
-        <aside class="relative w-[460px] h-[calc(100vh-2rem)] m-4 bg-white dark:bg-surface-dark rounded-xl shadow-[0_32px_64px_-12px_rgba(0,0,0,0.2)] border border-slate-200 dark:border-slate-800 pointer-events-auto flex flex-col overflow-hidden transform-gpu">
-          <!-- Content inner with subtle slide-up stagger effect -->
-          <div class="flex flex-col h-full animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150 fill-mode-both">
-            <!-- Drawer Header -->
-            <div class="p-8 border-b border-slate-100 dark:border-slate-800 flex items-start justify-between bg-white dark:bg-surface-dark relative z-10">
-              <div class="flex items-start gap-5">
-                <div :class="['size-14 rounded-xl flex items-center justify-center text-white shrink-0 shadow-2xl transition-transform hover:rotate-6', selectedComponent.avatarColor]">
-                  <span class="material-icons-round text-4xl">{{ selectedComponent.icon }}</span>
-                </div>
-                <div class="space-y-1.5">
-                  <h2 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight leadng-tight">{{ selectedComponent.name }}</h2>
-                  <div class="flex items-center gap-2">
-                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] font-mono opacity-70">{{ selectedComponent.packageName }}</span>
-                    <span class="w-1 h-1 rounded-full bg-slate-300"></span>
-                    <span class="text-[10px] font-black text-primary uppercase tracking-widest">{{ selectedComponent.version }}</span>
-                  </div>
-                </div>
-              </div>
-              <button @click="showDetailDrawer = false" class="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all text-slate-400 border border-transparent hover:border-slate-100 dark:hover:border-slate-700 hover:rotate-90">
-                <span class="material-icons-round text-xl">close</span>
-              </button>
-            </div>
-
-          <!-- Drawer Content -->
-          <div class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
-            
-            <!-- Status Banner -->
-            <div 
-              v-if="selectedComponent.vulnerabilities?.length"
-              class="rounded-xl bg-rose-50 dark:bg-rose-900/10 border border-rose-100 dark:border-rose-900/20 p-5 flex gap-4"
-            >
-              <div class="size-8 rounded-lg bg-rose-500 flex items-center justify-center text-white shrink-0 animate-pulse">
-                <span class="material-icons-round text-lg">gpp_maybe</span>
-              </div>
-              <div>
-                <h4 class="text-sm font-black text-rose-800 dark:text-rose-300">发现 {{ selectedComponent.vulnerabilities.length }} 个安全漏洞</h4>
-                <p class="text-[10px] text-rose-600 dark:text-rose-400 mt-1.5 font-bold leading-relaxed uppercase tracking-wide">
-                  建议尽快升级至 v{{ selectedComponent.latestVersion }} 或更高版本以消除已知的安全风险。
-                </p>
-              </div>
-            </div>
-
-            <!-- Basic Info Grid -->
-            <div class="space-y-4">
-              <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">组件基本信息 · Basic Intelligence</h3>
-              <div class="grid grid-cols-2 gap-4">
-                <div class="p-4 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-slate-100 dark:border-slate-800 space-y-1 group hover:border-primary/20 transition-colors">
-                  <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest block">当前版本</span>
-                  <span class="text-sm font-black text-slate-900 dark:text-white font-mono">{{ selectedComponent.version }}</span>
-                </div>
-                <div class="p-4 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-slate-100 dark:border-slate-800 space-y-1 group hover:border-primary/20 transition-colors">
-                  <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest block">最新版本</span>
-                  <span class="text-sm font-black text-primary font-mono">{{ selectedComponent.latestVersion }}</span>
-                </div>
-                <div class="p-4 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-slate-100 dark:border-slate-800 space-y-1 group hover:border-primary/20 transition-colors cursor-pointer" @click="showProjectsModal = true">
-                  <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest block">关联项目数量</span>
-                  <div class="flex items-center justify-between">
-                    <span class="text-sm font-black text-slate-900 dark:text-white">{{ selectedComponent.projectCount }} 个项目</span>
-                    <span class="material-icons-round text-xs text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                  </div>
-                </div>
-                <div class="p-4 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-slate-100 dark:border-slate-800 space-y-1 group hover:border-primary/20 transition-colors">
-                  <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest block">公开许可证</span>
-                  <div class="flex items-center gap-1.5 text-slate-900 dark:text-white">
-                    <span class="material-icons-round text-sm text-slate-400">balance</span>
-                    <span class="text-sm font-black font-mono">{{ selectedComponent.license }}</span>
-                  </div>
-                </div>
-                <div class="p-4 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-slate-100 dark:border-slate-800 space-y-1 group hover:border-primary/20 transition-colors">
-                  <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest block">引用深度</span>
-                  <span class="text-sm font-black text-slate-900 dark:text-white">Level {{ selectedComponent.depth }} (Direct)</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="h-px bg-slate-100 dark:bg-slate-800"></div>
-
-            <!-- Vulnerabilities List -->
-            <div class="space-y-6">
-              <div class="flex items-center justify-between">
-                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">关联安全漏洞 · CVE Alerts</h3>
-                <button class="text-[9px] font-black text-primary uppercase tracking-widest hover:underline">查看全部详情</button>
-              </div>
-              
-              <div v-if="selectedComponent.vulnerabilities?.length" class="space-y-3">
-                <div 
-                  v-for="v in selectedComponent.vulnerabilities" 
-                  :key="v.id"
-                  class="group p-4 bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 rounded-xl hover:border-rose-500/30 hover:shadow-lg hover:shadow-rose-500/5 transition-all cursor-pointer"
-                >
-                  <div class="flex justify-between items-start mb-3">
-                    <span class="px-2 py-0.5 bg-rose-500 text-white text-[9px] font-black rounded uppercase tracking-widest">High ({{ v.score || '8.8' }})</span>
-                    <span class="text-[9px] font-black text-slate-400 font-mono">{{ v.id }}</span>
-                  </div>
-                  <p class="text-xs font-black text-slate-800 dark:text-slate-200 group-hover:text-primary transition-colors leading-relaxed">
-                    {{ v.title }}
-                  </p>
-                </div>
-              </div>
-              <div v-else class="flex flex-col items-center justify-center py-10 opacity-30">
-                <span class="material-icons-round text-4xl mb-2 text-slate-400 tracking-tighter">verified_user</span>
-                <p class="text-[10px] font-black uppercase tracking-widest">该组件暂无已知安全漏洞</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Drawer Footer -->
-          <div class="p-6 border-t border-slate-100 dark:border-slate-800 bg-slate-100/50 dark:bg-slate-900">
-            <div class="flex gap-3">
-              <button class="flex-1 px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-[10px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest hover:bg-slate-50 transition-all shadow-sm">
-                查看依赖路径
-              </button>
-              <button class="flex-1 px-4 py-3 bg-primary text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
-                开启修复加速
-              </button>
-            </div>
-          </div>
-        </div>
-      </aside>
-      </div>
-    </transition>
+    <!-- Detail Drawer (Unified Style) -->
+    <SbomDetailDrawer 
+      :show="showDetailDrawer" 
+      :component="selectedComponent || {}" 
+      @close="showDetailDrawer = false"
+      @open-projects="openProjectsModal(selectedComponent)"
+    />
 
     <!-- Associated Projects Modal -->
     <transition
@@ -394,11 +259,13 @@
 
 <script>
 import ViewSelector from './ViewSelector.vue'
+import SbomDetailDrawer from './SbomDetailDrawer.vue'
 
 export default {
   name: 'SbomAnalysis',
   components: {
-    ViewSelector
+    ViewSelector,
+    SbomDetailDrawer
   },
   props: {
     selectedView: {

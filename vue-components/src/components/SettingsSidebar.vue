@@ -83,7 +83,8 @@ export default {
           title: '运营配置',
           items: [
             { id: 'issue_conf', name: 'Issue 字段配置', icon: 'settings_applications' },
-            { id: 'announcements', name: '企业公告', icon: 'campaign' }
+            { id: 'announcements', name: '企业公告', icon: 'campaign' },
+            { id: 'wiki_sync', name: '知识库同步', icon: 'sync' }
           ]
         }
       ]
