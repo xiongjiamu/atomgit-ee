@@ -19,6 +19,9 @@
         <template v-else-if="currentCategory === 'orgs'">
           <OrgManagement />
         </template>
+        <template v-else-if="currentCategory === 'runners'">
+          <RunnerManagement />
+        </template>
         
         <!-- Placeholder for other categories -->
         <template v-else>
@@ -46,6 +49,7 @@ import SettingsSidebar from './SettingsSidebar.vue'
 import MemberManagement from './MemberManagement.vue'
 import RoleManagement from './RoleManagement.vue'
 import OrgManagement from './OrgManagement.vue'
+import RunnerManagement from './RunnerManagement.vue'
 
 export default {
   name: 'SettingsCenter',
@@ -53,7 +57,8 @@ export default {
     SettingsSidebar,
     MemberManagement,
     RoleManagement,
-    OrgManagement
+    OrgManagement,
+    RunnerManagement
   },
   data() {
     return {
