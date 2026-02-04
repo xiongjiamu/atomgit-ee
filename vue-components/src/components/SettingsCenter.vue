@@ -31,6 +31,9 @@
         <template v-else-if="currentCategory === 'rulesets'">
           <RulesetManagement />
         </template>
+        <template v-else-if="currentCategory === 'ip_whitelist'">
+          <IpAllowlistManagement />
+        </template>
         
         <!-- Placeholder for other categories -->
         <template v-else>
@@ -62,6 +65,7 @@ import RunnerManagement from './RunnerManagement.vue'
 import WebhookManagement from './WebhookManagement.vue'
 import TokenManagement from './TokenManagement.vue'
 import RulesetManagement from './RulesetManagement.vue'
+import IpAllowlistManagement from './IpAllowlistManagement.vue'
 
 export default {
   name: 'SettingsCenter',
@@ -73,7 +77,8 @@ export default {
     RunnerManagement,
     WebhookManagement,
     TokenManagement,
-    RulesetManagement
+    RulesetManagement,
+    IpAllowlistManagement
   },
   data() {
     return {
