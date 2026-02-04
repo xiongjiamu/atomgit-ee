@@ -22,6 +22,9 @@
         <template v-else-if="currentCategory === 'runners'">
           <RunnerManagement />
         </template>
+        <template v-else-if="currentCategory === 'webhooks'">
+          <WebhookManagement />
+        </template>
         
         <!-- Placeholder for other categories -->
         <template v-else>
@@ -50,6 +53,7 @@ import MemberManagement from './MemberManagement.vue'
 import RoleManagement from './RoleManagement.vue'
 import OrgManagement from './OrgManagement.vue'
 import RunnerManagement from './RunnerManagement.vue'
+import WebhookManagement from './WebhookManagement.vue'
 
 export default {
   name: 'SettingsCenter',
@@ -58,7 +62,8 @@ export default {
     MemberManagement,
     RoleManagement,
     OrgManagement,
-    RunnerManagement
+    RunnerManagement,
+    WebhookManagement
   },
   data() {
     return {
