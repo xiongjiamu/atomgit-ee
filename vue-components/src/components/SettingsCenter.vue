@@ -10,7 +10,10 @@
     <main class="flex-1 overflow-y-auto custom-scrollbar relative">
       <div class="max-w-[1920px] mx-auto p-12 h-full">
         <!-- Render current category component -->
-        <template v-if="currentCategory === 'members'">
+        <template v-if="currentCategory === 'basic_info'">
+          <BasicSettings />
+        </template>
+        <template v-else-if="currentCategory === 'members'">
           <MemberManagement />
         </template>
         <template v-else-if="currentCategory === 'roles'">
@@ -33,6 +36,12 @@
         </template>
         <template v-else-if="currentCategory === 'ip_whitelist'">
           <IpAllowlistManagement />
+        </template>
+        <template v-else-if="currentCategory === 'cla_config'">
+          <ClaConfig />
+        </template>
+        <template v-else-if="currentCategory === 'audit_logs'">
+          <AuditLogs />
         </template>
         
         <!-- Placeholder for other categories -->
@@ -58,6 +67,7 @@
 
 <script>
 import SettingsSidebar from './SettingsSidebar.vue'
+import BasicSettings from './BasicSettings.vue'
 import MemberManagement from './MemberManagement.vue'
 import RoleManagement from './RoleManagement.vue'
 import OrgManagement from './OrgManagement.vue'
@@ -66,11 +76,14 @@ import WebhookManagement from './WebhookManagement.vue'
 import TokenManagement from './TokenManagement.vue'
 import RulesetManagement from './RulesetManagement.vue'
 import IpAllowlistManagement from './IpAllowlistManagement.vue'
+import ClaConfig from './ClaConfig.vue'
+import AuditLogs from './AuditLogs.vue'
 
 export default {
   name: 'SettingsCenter',
   components: {
     SettingsSidebar,
+    BasicSettings,
     MemberManagement,
     RoleManagement,
     OrgManagement,
@@ -78,7 +91,9 @@ export default {
     WebhookManagement,
     TokenManagement,
     RulesetManagement,
-    IpAllowlistManagement
+    IpAllowlistManagement,
+    ClaConfig,
+    AuditLogs
   },
   data() {
     return {
@@ -88,6 +103,7 @@ export default {
   computed: {
     categoryName() {
       const names = {
+        'basic_info': '企业信息',
         'members': '企业成员管理',
         'roles': '角色与权限',
         'orgs': '组织管理',

@@ -56,6 +56,7 @@ export default {
         {
           title: '组织与成员',
           items: [
+            { id: 'basic_info', name: '企业信息', icon: 'business' },
             { id: 'members', name: '企业成员管理', icon: 'group', count: 121 },
             { id: 'roles', name: '角色与权限', icon: 'badge', count: 12 },
             { id: 'orgs', name: '组织管理', icon: 'domain', count: 121 }
