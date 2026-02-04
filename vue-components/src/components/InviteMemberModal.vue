@@ -60,27 +60,27 @@
             <!-- Role Selection -->
             <div class="space-y-2">
               <label class="block text-xs font-black text-slate-500 uppercase tracking-widest">设置角色</label>
-              <div class="grid grid-cols-2 gap-3">
-                <label 
-                  v-for="role in roles" 
-                  :key="role.value"
-                  class="cursor-pointer relative"
+              <div class="relative">
+                <select
+                  v-model="form.role"
+                  class="w-full appearance-none pl-4 pr-10 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all cursor-pointer"
                 >
-                  <input 
-                    type="radio" 
-                    v-model="form.role" 
+                  <option 
+                    v-for="role in roles" 
+                    :key="role.value" 
                     :value="role.value"
-                    class="peer sr-only"
-                  />
-                  <div class="p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 hover:bg-white dark:hover:bg-slate-800 peer-checked:border-primary peer-checked:bg-primary/5 peer-checked:ring-1 peer-checked:ring-primary transition-all h-full">
-                    <div class="flex items-center gap-2 mb-1">
-                      <span class="material-icons-round text-base" :class="form.role === role.value ? 'text-primary' : 'text-slate-400'">{{ role.icon }}</span>
-                      <span class="text-sm font-black" :class="form.role === role.value ? 'text-primary' : 'text-slate-700 dark:text-slate-300'">{{ role.label }}</span>
-                    </div>
-                    <p class="text-[10px] text-slate-500 leading-tight">{{ role.desc }}</p>
-                  </div>
-                </label>
+                  >
+                    {{ role.label }}
+                  </option>
+                </select>
+                <div class="absolute right-4 top-3.5 pointer-events-none">
+                  <span class="material-icons-round text-slate-400">expand_more</span>
+                </div>
               </div>
+              <!-- Role Description Helper -->
+              <p class="text-[10px] text-slate-500 dark:text-slate-400 px-1">
+                {{ roles.find(r => r.value === form.role)?.desc }}
+              </p>
             </div>
 
             <!-- Expiry Selection -->

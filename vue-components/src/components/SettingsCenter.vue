@@ -13,6 +13,9 @@
         <template v-if="currentCategory === 'members'">
           <MemberManagement />
         </template>
+        <template v-else-if="currentCategory === 'roles'">
+          <RoleManagement />
+        </template>
         
         <!-- Placeholder for other categories -->
         <template v-else>
@@ -38,12 +41,14 @@
 <script>
 import SettingsSidebar from './SettingsSidebar.vue'
 import MemberManagement from './MemberManagement.vue'
+import RoleManagement from './RoleManagement.vue'
 
 export default {
   name: 'SettingsCenter',
   components: {
     SettingsSidebar,
-    MemberManagement
+    MemberManagement,
+    RoleManagement
   },
   data() {
     return {
