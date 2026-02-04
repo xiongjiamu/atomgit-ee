@@ -1,33 +1,7 @@
 <template>
   <div class="ip-allowlist-management">
-    <!-- Banners Section -->
-    <div class="space-y-3 mb-6">
-      <div v-if="showResourceAlert" class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-md p-3 flex items-start gap-3">
-        <span class="material-icons-outlined text-amber-600 dark:text-amber-500 text-lg mt-0.5">warning</span>
-        <div class="flex-1 text-sm text-amber-800 dark:text-amber-400">
-          <span class="font-bold">资源预警：</span> 您企业当前的存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容
-        </div>
-        <button 
-          class="text-amber-600 dark:text-amber-400 hover:opacity-75 transition-opacity"
-          @click="showResourceAlert = false"
-        >
-          <span class="material-icons-outlined text-lg">close</span>
-        </button>
-      </div>
-
-      <div v-if="showAnnouncementAlert" class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-md p-3 flex items-start gap-3">
-        <span class="material-icons-outlined text-blue-600 dark:text-blue-400 text-lg mt-0.5">info</span>
-        <div class="flex-1 text-sm text-blue-800 dark:text-blue-400">
-          <span class="font-bold">企业公告：</span> AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务会有短时闪断，请知悉
-        </div>
-        <button 
-          class="text-blue-600 dark:text-blue-400 hover:opacity-75 transition-opacity"
-          @click="showAnnouncementAlert = false"
-        >
-          <span class="material-icons-outlined text-lg">close</span>
-        </button>
-      </div>
-    </div>
+    <!-- Global Alerts -->
+    <GlobalAlerts page-name="ip-allowlist" />
 
     <!-- Header Section -->
     <div class="flex items-center justify-between mb-6">
@@ -115,17 +89,17 @@
 
 <script>
 import NewIpModal from './NewIpModal.vue'
+import GlobalAlerts from './GlobalAlerts.vue'
 
 export default {
   name: 'IpAllowlistManagement',
   components: {
-    NewIpModal
+    NewIpModal,
+    GlobalAlerts
   },
   data() {
     return {
       searchQuery: '',
-      showResourceAlert: true,
-      showAnnouncementAlert: true,
       showNewIpModal: false,
       ipList: [
         { id: 1, name: '北京办公室 VPN', cidr: '203.0.113.0/24', type: 'allow' },

@@ -1,15 +1,7 @@
 <template>
   <div class="space-y-10 animate-in fade-in slide-in-from-bottom-2 duration-500">
-    <!-- Alert Banners -->
-    <div class="space-y-0">
-      <AlertBanner
-        v-model="showResourceAlert"
-        type="warning"
-        title="资源预警"
-        icon="info"
-        message="您企业当前的存储空间已使用 856GB (85%), 接近包年套餐上限，请关注资源消耗或及时扩容"
-      />
-    </div>
+    <!-- Global Alerts -->
+    <GlobalAlerts page-name="billing-management" />
 
     <!-- Current Bill Hero Card -->
     <div class="relative bg-slate-900 dark:bg-black rounded-xl p-12 text-white overflow-hidden shadow-2xl group transition-all hover:scale-[1.01]">
@@ -133,17 +125,16 @@
 </template>
 
 <script>
-import AlertBanner from './AlertBanner.vue'
+import GlobalAlerts from './GlobalAlerts.vue'
 
 export default {
   name: 'BillingManagement',
   components: {
-    AlertBanner
+    GlobalAlerts
   },
   data() {
     return {
       selectedYear: '2023 FY',
-      showResourceAlert: true,
       bills: [
         { month: '2023年10月', amount: 12450.00, paid: false, invoiced: false },
         { month: '2023年09月', amount: 11800.00, paid: true, invoiced: true },

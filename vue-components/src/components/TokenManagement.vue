@@ -1,22 +1,7 @@
 <template>
   <div class="space-y-10 animate-in fade-in slide-in-from-bottom-2 duration-500">
-    <!-- Alert Banners -->
-    <div class="space-y-0">
-      <AlertBanner
-        v-model="showResourceAlert"
-        type="warning"
-        title="资源预警"
-        icon="warning"
-        message="您目前的企业存储空间已使用 856GB (85%), 接近包年套餐上限, 请关注资源消耗或及时扩容"
-      />
-      <AlertBanner
-        v-model="showAnnouncementAlert"
-        type="info"
-        title="企业公告"
-        icon="info"
-        message="AtomGit 将于本周五 22:00 进行版本升级, 届时 CI/CD 服务可能会有短时闪断, 请知悉"
-      />
-    </div>
+    <!-- Global Alerts -->
+    <GlobalAlerts page-name="token-management" />
 
     <div class="space-y-6">
       <!-- Header -->
@@ -163,19 +148,17 @@
 </template>
 
 <script>
-import AlertBanner from './AlertBanner.vue'
+import GlobalAlerts from './GlobalAlerts.vue'
 import TokenModal from './TokenModal.vue'
 
 export default {
   name: 'TokenManagement',
   components: {
-    AlertBanner,
+    GlobalAlerts,
     TokenModal
   },
   data() {
     return {
-      showResourceAlert: true,
-      showAnnouncementAlert: true,
       activeTab: 'pending',
       showModal: false,
       modalMode: 'create',

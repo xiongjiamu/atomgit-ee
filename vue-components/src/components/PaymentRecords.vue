@@ -1,23 +1,7 @@
 <template>
   <div class="space-y-10 animate-in fade-in slide-in-from-bottom-2 duration-500">
-    <!-- Alert Banners -->
-    <div class="space-y-0">
-      <AlertBanner
-        v-model="showResourceAlert"
-        type="warning"
-        title="资源预警"
-        icon="info"
-        message="您企业当前的存储空间已使用 856GB (85%), 接近包年套餐上限，请关注资源消耗或及时扩容"
-      />
-
-      <AlertBanner
-        v-model="showAnnouncementAlert"
-        type="info"
-        title="企业公告"
-        icon="campaign"
-        message="AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉"
-      />
-    </div>
+    <!-- Global Alerts -->
+    <GlobalAlerts page-name="payment-records" />
 
     <!-- Page Header -->
     <div class="flex items-center justify-between px-2">
@@ -101,17 +85,15 @@
 </template>
 
 <script>
-import AlertBanner from './AlertBanner.vue'
+import GlobalAlerts from './GlobalAlerts.vue'
 
 export default {
   name: 'PaymentRecords',
   components: {
-    AlertBanner
+    GlobalAlerts
   },
   data() {
     return {
-      showResourceAlert: true,
-      showAnnouncementAlert: true,
       totalRecords: 25,
       paymentRecords: [
         {

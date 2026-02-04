@@ -1,32 +1,7 @@
 <template>
   <div class="ruleset-management space-y-8">
-    <!-- Alerts -->
-    <div class="flex flex-col gap-4">
-      <div v-if="showResourceAlert" class="bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800 rounded-lg px-4 py-3 flex items-start justify-between text-sm transition-all shadow-sm">
-        <div class="flex items-start text-amber-800 dark:text-amber-200">
-          <span class="material-icons-outlined text-amber-600 dark:text-amber-400 mr-2 text-lg mt-0.5">warning</span>
-          <span><span class="font-bold">资源预警：</span> 您企业当前的存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容</span>
-        </div>
-        <button 
-          class="text-amber-500 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-200 ml-2"
-          @click="showResourceAlert = false"
-        >
-          <span class="material-icons-outlined text-lg">close</span>
-        </button>
-      </div>
-      <div v-if="showAnnouncementAlert" class="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-lg px-4 py-3 flex items-start justify-between text-sm transition-all shadow-sm">
-        <div class="flex items-start text-indigo-800 dark:text-indigo-200">
-          <span class="material-icons-outlined text-indigo-600 dark:text-indigo-400 mr-2 text-lg mt-0.5">info</span>
-          <span><span class="font-bold">企业公告：</span> AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉</span>
-        </div>
-        <button 
-          class="text-indigo-500 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-200 ml-2"
-          @click="showAnnouncementAlert = false"
-        >
-          <span class="material-icons-outlined text-lg">close</span>
-        </button>
-      </div>
-    </div>
+    <!-- Global Alerts -->
+    <GlobalAlerts page-name="ruleset-management" />
 
     <!-- Header -->
     <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-gray-200 dark:border-gray-700 pb-6">
@@ -112,19 +87,19 @@
 </template>
 
 <script>
+import GlobalAlerts from './GlobalAlerts.vue'
 import NewRuleModal from './NewRuleModal.vue'
 import PropertyModal from './PropertyModal.vue'
 
 export default {
   name: 'RulesetManagement',
   components: {
+    GlobalAlerts,
     NewRuleModal,
     PropertyModal
   },
   data() {
     return {
-      showResourceAlert: true,
-      showAnnouncementAlert: true,
       showNewRuleModal: false,
       showPropertyModal: false,
       rulesets: [

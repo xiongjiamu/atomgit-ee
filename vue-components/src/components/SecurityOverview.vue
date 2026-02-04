@@ -19,27 +19,8 @@
       </div>
     </div>
 
-    <!-- Alert Banners -->
-    <div class="space-y-3">
-      <div class="bg-amber-50/50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20 rounded-xl p-4 flex items-start">
-        <span class="material-icons-round text-amber-500 text-lg mt-0.5 mr-3">info</span>
-        <div class="flex-1 text-sm text-amber-800 dark:text-amber-200">
-          <span class="font-bold mr-1">资源预警:</span> 您企业当前的存储空间已使用 856GB (85%), 接近包年套餐上限，请关注资源消耗或及时扩容
-        </div>
-        <button class="text-amber-400 hover:text-amber-600 transition-colors">
-          <span class="material-icons-round text-lg">close</span>
-        </button>
-      </div>
-      <div class="bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/20 rounded-xl p-4 flex items-start">
-        <span class="material-icons-round text-blue-600 dark:text-blue-400 text-lg mt-0.5 mr-3">campaign</span>
-        <div class="flex-1 text-sm text-blue-800 dark:text-blue-200">
-          <span class="font-bold mr-1">企业公告:</span> AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉
-        </div>
-        <button class="text-blue-400 hover:text-blue-600 transition-colors">
-          <span class="material-icons-round text-lg">close</span>
-        </button>
-      </div>
-    </div>
+    <!-- Global Alerts -->
+    <GlobalAlerts page-name="security-overview" />
 
     <!-- KPI Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -136,11 +117,13 @@
 
 <script>
 import ViewSelector from './ViewSelector.vue'
+import GlobalAlerts from './GlobalAlerts.vue'
 
 export default {
   name: 'SecurityOverview',
   components: {
-    ViewSelector
+    ViewSelector,
+    GlobalAlerts
   },
   props: {
     selectedView: {
