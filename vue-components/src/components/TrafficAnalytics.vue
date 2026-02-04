@@ -17,7 +17,7 @@
           <ViewSelector :selected-view="internalSelectedView" @change="handleViewChange" />
           <div class="w-px h-8 bg-slate-200 dark:bg-slate-800"></div>
           <div>
-            <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+            <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight" style="margin-bottom: 0px;">
               {{ viewMode === 'overview' ? '流量与用户数据' : (activeDetailType === 'geo' ? '用户地域分布' : (activeDetailType === 'stack' ? '技术栈分布' : '流量趋势分析')) }}
             </h1>
           </div>

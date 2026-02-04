@@ -3,9 +3,12 @@
     <div v-if="currentView === 'overview'" class="space-y-6 animate-in fade-in duration-500">
       <!-- Overview Header -->
       <div class="flex items-end justify-between mb-8">
-        <div>
-          <h1 class="text-2xl font-bold text-slate-900 dark:text-white">贡献与生态排行</h1>
-          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">核心贡献者画像、社区活跃度及企业 CLA 签署情况。</p>
+        <div class="flex items-center gap-4">
+          <ViewSelector :selected-view="selectedView" @change="handleViewChange" />
+          <div class="w-px h-8 bg-slate-200 dark:bg-slate-800"></div>
+          <div>
+            <h1 class="text-2xl font-bold text-slate-900 dark:text-white" style="margin-bottom: 0px;">贡献与生态排行</h1>
+          </div>
         </div>
         <div class="flex items-center space-x-2">
           <div class="relative">
@@ -176,16 +179,19 @@
 <script>
 import ContributorList from './ContributorList.vue'
 import ContributorDetail from './ContributorDetail.vue'
+import ViewSelector from './ViewSelector.vue'
 
 export default {
   name: 'ContributionAnalysis',
   components: {
     ContributorList,
-    ContributorDetail
+    ContributorDetail,
+    ViewSelector
   },
   data() {
     return {
       currentView: 'overview', // 'overview', 'list', 'detail'
+      selectedView: { id: 'enterprise', label: '全企业视图 (Enterprise)', orgId: 'enterprise' },
       selectedContributorId: null,
       activeContributorId: 1,
       topContributors: [
@@ -205,6 +211,10 @@ export default {
     viewDetail(id) {
       this.selectedContributorId = id
       this.currentView = 'detail'
+    },
+    handleViewChange(view) {
+      this.selectedView = view
+      // In a real app, you would fetch new data here based on the selected view
     }
   }
 }
