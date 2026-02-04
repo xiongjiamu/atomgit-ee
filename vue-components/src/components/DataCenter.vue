@@ -19,6 +19,9 @@
         <template v-else-if="currentCategory === 'efficiency'">
           <EfficiencyAnalysis />
         </template>
+        <template v-else-if="currentCategory === 'cost'">
+          <CostAnalysis />
+        </template>
         <!-- Placeholder for other categories -->
         <template v-else>
           <div class="flex flex-col items-center justify-center h-full py-20 text-center">
@@ -45,6 +48,7 @@ import DataSidebar from './DataSidebar.vue'
 import TrafficAnalytics from './TrafficAnalytics.vue'
 import ContributionAnalysis from './ContributionAnalysis.vue'
 import EfficiencyAnalysis from './EfficiencyAnalysis.vue'
+import CostAnalysis from './CostAnalysis.vue'
 
 export default {
   name: 'DataCenter',
@@ -52,7 +56,8 @@ export default {
     DataSidebar,
     TrafficAnalytics,
     ContributionAnalysis,
-    EfficiencyAnalysis
+    EfficiencyAnalysis,
+    CostAnalysis
   },
   data() {
     return {
