@@ -1,38 +1,26 @@
 <template>
-  <Transition
-    enter-active-class="transition-all duration-200 ease-out"
-    enter-from-class="opacity-0"
-    enter-to-class="opacity-100"
-    leave-active-class="transition-all duration-150 ease-in"
-    leave-from-class="opacity-100"
-    leave-to-class="opacity-0"
-  >
-    <div
-      v-if="show"
-      class="fixed inset-0 z-50 overflow-y-auto"
-      aria-labelledby="modal-title"
-      role="dialog"
-      aria-modal="true"
+  <Teleport to="body">
+    <Transition
+      enter-active-class="transition ease-out duration-200"
+      enter-from-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+      enter-to-class="opacity-100 translate-y-0 sm:scale-100"
+      leave-active-class="transition ease-in duration-150"
+      leave-from-class="opacity-100 translate-y-0 sm:scale-100"
+      leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
     >
-      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <!-- Overlay -->
-        <div
-          class="fixed inset-0 bg-slate-900/75 transition-opacity backdrop-blur-sm"
-          aria-hidden="true"
-          @click="$emit('close')"
-        ></div>
+      <div
+        v-if="show"
+        class="fixed z-[9999] inset-0 overflow-y-auto"
+        aria-labelledby="modal-title"
+        role="dialog"
+        aria-modal="true"
+      >
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+          <!-- Overlay -->
+          <div class="fixed inset-0 bg-gray-900/60 transition-opacity backdrop-blur-sm" aria-hidden="true" @click="$emit('close')"></div>
 
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+          <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-        <!-- Panel -->
-        <Transition
-          enter-active-class="transition-all duration-200 ease-out"
-          enter-from-class="opacity-0 scale-95 translate-y-4 sm:translate-y-0 sm:scale-95"
-          enter-to-class="opacity-100 scale-100 translate-y-0 sm:scale-100"
-          leave-active-class="transition-all duration-150 ease-in"
-          leave-from-class="opacity-100 scale-100 translate-y-0 sm:scale-100"
-          leave-to-class="opacity-0 scale-95 translate-y-4 sm:translate-y-0 sm:scale-95"
-        >
           <div
             class="inline-block align-bottom bg-white dark:bg-[#1C2128] rounded-xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full border border-slate-200 dark:border-slate-700"
           >
@@ -153,10 +141,10 @@
               </button>
             </div>
           </div>
-        </Transition>
+        </div>
       </div>
-    </div>
-  </Transition>
+    </Transition>
+  </Teleport>
 </template>
 
 <script>
