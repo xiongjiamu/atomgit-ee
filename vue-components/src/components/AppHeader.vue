@@ -59,8 +59,20 @@
           >
             <span class="material-icons-round text-2xl">help_outline</span>
           </button>
+          
+          <!-- Theme Toggle -->
+          <button
+            class="w-9 h-9 rounded-xl flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 group"
+            @click="toggleTheme"
+            :title="isDark ? '切换到亮色模式' : '切换到暗色模式'"
+          >
+            <span class="material-icons-round text-xl group-hover:rotate-12 transition-transform duration-300">
+              {{ isDark ? 'light_mode' : 'dark_mode' }}
+            </span>
+          </button>
+
           <div
-            class="w-9 h-9 rounded-full bg-pink-100 dark:bg-pink-900 flex items-center justify-center text-pink-600 dark:text-pink-300 font-bold text-sm cursor-pointer ring-2 ring-transparent hover:ring-pink-200 dark:hover:ring-pink-800 transition"
+            class="w-9 h-9 rounded-full bg-pink-100 dark:bg-pink-900 flex items-center justify-center text-pink-600 dark:text-pink-300 font-bold text-sm cursor-pointer ring-2 ring-transparent hover:ring-pink-200 dark:hover:ring-pink-800 transition overflow-hidden"
             @click="handleUserProfile"
           >
             {{ userInitials }}
@@ -94,10 +106,31 @@ export default {
   },
   data() {
     return {
-      searchQuery: ''
+      searchQuery: '',
+      isDark: false
+    }
+  },
+  mounted() {
+    // Initialize theme from localStorage or system preference
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      this.isDark = true
+      document.documentElement.classList.add('dark')
+    } else {
+      this.isDark = false
+      document.documentElement.classList.remove('dark')
     }
   },
   methods: {
+    toggleTheme() {
+      this.isDark = !this.isDark
+      if (this.isDark) {
+        document.documentElement.classList.add('dark')
+        localStorage.setItem('theme', 'dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+        localStorage.setItem('theme', 'light')
+      }
+    },
     handleSearch() {
       this.$emit('search', this.searchQuery)
     },
