@@ -16,6 +16,9 @@
         <template v-else-if="currentCategory === 'roles'">
           <RoleManagement />
         </template>
+        <template v-else-if="currentCategory === 'orgs'">
+          <OrgManagement />
+        </template>
         
         <!-- Placeholder for other categories -->
         <template v-else>
@@ -42,13 +45,15 @@
 import SettingsSidebar from './SettingsSidebar.vue'
 import MemberManagement from './MemberManagement.vue'
 import RoleManagement from './RoleManagement.vue'
+import OrgManagement from './OrgManagement.vue'
 
 export default {
   name: 'SettingsCenter',
   components: {
     SettingsSidebar,
     MemberManagement,
-    RoleManagement
+    RoleManagement,
+    OrgManagement
   },
   data() {
     return {
