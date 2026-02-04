@@ -1,14 +1,14 @@
 <template>
   <div class="space-y-10 animate-in fade-in slide-in-from-bottom-2 duration-500">
     <!-- Alert Banners -->
-    <div v-if="showResourceAlert" class="bg-amber-50/50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20 rounded-xl p-4 flex items-start">
-      <span class="material-icons-round text-amber-500 text-lg mt-0.5 mr-3">info</span>
-      <div class="flex-1 text-sm text-amber-800 dark:text-amber-200">
-        <span class="font-bold mr-1">资源预警:</span> 您企业当前的存储空间已使用 856GB (85%), 接近包年套餐上限，请关注资源消耗或及时扩容
-      </div>
-      <button class="text-amber-400 hover:text-amber-600 transition-colors" @click="showResourceAlert = false">
-        <span class="material-icons-round text-lg">close</span>
-      </button>
+    <div class="space-y-0">
+      <AlertBanner
+        v-model="showResourceAlert"
+        type="warning"
+        title="资源预警"
+        icon="info"
+        message="您企业当前的存储空间已使用 856GB (85%), 接近包年套餐上限，请关注资源消耗或及时扩容"
+      />
     </div>
 
     <!-- Current Bill Hero Card -->
@@ -133,8 +133,13 @@
 </template>
 
 <script>
+import AlertBanner from './AlertBanner.vue'
+
 export default {
   name: 'BillingManagement',
+  components: {
+    AlertBanner
+  },
   data() {
     return {
       selectedYear: '2023 FY',

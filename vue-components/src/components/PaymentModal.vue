@@ -85,14 +85,16 @@
             </div>
 
             <!-- Alert / Notice -->
-            <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 flex gap-3 mb-6">
-              <span class="material-icons-round text-amber-600 dark:text-amber-400 flex-shrink-0 text-xl">warning</span>
-              <div class="text-sm text-amber-900 dark:text-amber-200 leading-relaxed">
-                <span class="font-black">温馨提示：</span>请务必在转账备注中填写账单编号
-                <span class="font-mono bg-amber-100 dark:bg-amber-900/40 px-2 py-0.5 rounded mx-1 font-black">{{ billNumber }}</span>
-                或企业 ID，以便财务系统快速核销入账。
-              </div>
-            </div>
+            <AlertBanner
+              type="warning"
+              icon="warning"
+              :dismissible="false"
+              class="mb-6"
+            >
+              <span class="font-black">温馨提示：</span>请务必在转账备注中填写账单编号
+              <span class="font-mono bg-amber-100 dark:bg-amber-900/40 px-2 py-0.5 rounded mx-1 font-black">{{ billNumber }}</span>
+              或企业 ID，以便财务系统快速核销入账。
+            </AlertBanner>
 
             <!-- Upload Section -->
             <div class="space-y-3">
@@ -165,8 +167,13 @@
 </template>
 
 <script>
+import AlertBanner from './AlertBanner.vue'
+
 export default {
   name: 'PaymentModal',
+  components: {
+    AlertBanner
+  },
   props: {
     show: {
       type: Boolean,

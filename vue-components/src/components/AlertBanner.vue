@@ -1,25 +1,60 @@
 <template>
-  <div
-    v-if="!dismissed"
-    :class="[
-      'flex items-start gap-4 p-5 rounded-lg text-sm relative shadow-sm',
-      alertClasses[type]
-    ]"
+  <Transition
+    enter-active-class="transition-all duration-300 ease-out"
+    enter-from-class="opacity-0 -translate-y-2"
+    enter-to-class="opacity-100 translate-y-0"
+    leave-active-class="transition-all duration-200 ease-in"
+    leave-from-class="opacity-100 translate-y-0"
+    leave-to-class="opacity-0 -translate-y-2"
   >
-    <span :class="['material-icons-round text-2xl mt-0.5', iconClasses[type]]">
-      {{ icons[type] }}
-    </span>
-    <div class="flex-1 pr-8">
-      <span class="font-bold block mb-1 text-base">{{ title }}</span>
-      {{ message }}
-    </div>
-    <button
-      :class="['absolute top-5 right-5', closeButtonClasses[type]]"
-      @click="handleDismiss"
+    <div 
+      v-if="show" 
+      :class="[
+        'rounded-xl p-4 flex items-start border mb-4',
+        type === 'warning' ? 'bg-amber-50/50 dark:bg-amber-900/10 border-amber-100 dark:border-amber-900/20' : 
+        type === 'info' ? 'bg-blue-50/50 dark:bg-blue-900/10 border-blue-100 dark:border-blue-900/20' :
+        type === 'error' ? 'bg-red-50/50 dark:bg-red-900/10 border-red-100 dark:border-red-900/20' :
+        'bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700'
+      ]"
     >
-      <span class="material-icons-round text-xl">close</span>
-    </button>
-  </div>
+      <span 
+        class="material-icons-round text-lg mt-0.5 mr-3"
+        :class="[
+          type === 'warning' ? 'text-amber-500' : 
+          type === 'info' ? 'text-blue-500' :
+          type === 'error' ? 'text-red-500' :
+          'text-slate-500'
+        ]"
+      >{{ icon }}</span>
+      
+      <div 
+        class="flex-1 text-sm"
+        :class="[
+          type === 'warning' ? 'text-amber-800 dark:text-amber-200' : 
+          type === 'info' ? 'text-blue-800 dark:text-blue-200' :
+          type === 'error' ? 'text-red-800 dark:text-red-200' :
+          'text-slate-700 dark:text-slate-300'
+        ]"
+      >
+        <span v-if="title" class="font-bold mr-1">{{ title }}:</span>
+        <slot>{{ message }}</slot>
+      </div>
+      
+      <button 
+        v-if="dismissible"
+        class="transition-colors ml-2"
+        :class="[
+          type === 'warning' ? 'text-amber-400 hover:text-amber-600' : 
+          type === 'info' ? 'text-blue-400 hover:text-blue-600' :
+          type === 'error' ? 'text-red-400 hover:text-red-600' :
+          'text-slate-400 hover:text-slate-600'
+        ]"
+        @click="dismiss"
+      >
+        <span class="material-icons-round text-lg">close</span>
+      </button>
+    </div>
+  </Transition>
 </template>
 
 <script>
@@ -28,57 +63,56 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'info',
-      validator: (value) => ['warning', 'info', 'success', 'error'].includes(value)
+      default: 'info', // warning, info, error, default
+      validator: (value) => ['warning', 'info', 'error', 'default'].includes(value)
     },
     title: {
       type: String,
-      required: true
+      default: ''
     },
     message: {
       type: String,
-      required: true
+      default: ''
+    },
+    icon: {
+      type: String,
+      default: 'info'
     },
     dismissible: {
       type: Boolean,
       default: true
+    },
+    modelValue: {
+      type: Boolean,
+      default: true
     }
   },
+  emits: ['update:modelValue', 'close'],
   data() {
     return {
-      dismissed: false,
-      icons: {
-        warning: 'warning_amber',
-        info: 'info',
-        success: 'check_circle',
-        error: 'error'
+      internalShow: this.modelValue
+    }
+  },
+  computed: {
+    show: {
+      get() {
+        return this.modelValue !== undefined ? this.modelValue : this.internalShow
       },
-      alertClasses: {
-        warning: 'bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800/50 text-orange-800 dark:text-orange-200',
-        info: 'bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 text-blue-800 dark:text-blue-200',
-        success: 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800/50 text-green-800 dark:text-green-200',
-        error: 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800/50 text-red-800 dark:text-red-200'
-      },
-      iconClasses: {
-        warning: 'text-orange-500',
-        info: 'text-blue-500',
-        success: 'text-green-500',
-        error: 'text-red-500'
-      },
-      closeButtonClasses: {
-        warning: 'text-orange-400 hover:text-orange-600 dark:hover:text-orange-100',
-        info: 'text-blue-400 hover:text-blue-600 dark:hover:text-blue-100',
-        success: 'text-green-400 hover:text-green-600 dark:hover:text-green-100',
-        error: 'text-red-400 hover:text-red-600 dark:hover:text-red-100'
+      set(val) {
+        this.internalShow = val
+        this.$emit('update:modelValue', val)
       }
+    }
+  },
+  watch: {
+    modelValue(val) {
+      this.internalShow = val
     }
   },
   methods: {
-    handleDismiss() {
-      if (this.dismissible) {
-        this.dismissed = true
-        this.$emit('dismiss')
-      }
+    dismiss() {
+      this.show = false
+      this.$emit('close')
     }
   }
 }

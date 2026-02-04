@@ -43,8 +43,7 @@ export default {
       navItems: [
         { id: 'overview', name: '账单总览', icon: 'account_balance_wallet' },
         { id: 'records', name: '付费记录', icon: 'receipt' },
-        { id: 'invoice', name: '发票管理', icon: 'description' },
-        { id: 'payment', name: '支付设置', icon: 'credit_card' }
+        { id: 'invoice', name: '发票管理', icon: 'description' }
       ]
     }
   }
