@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>流水线 - 运行记录 - 企业级平台</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#000000",
+                        "background-light": "#f9fafb",
+                        "background-dark": "#111827",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "PingFang SC", "Microsoft YaHei", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "8px",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body { font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+        .sidebar-active { background-color: rgba(0,0,0,0.05); color: #ef4444; border-right: 3px solid #ef4444; }
+        .dark .sidebar-active { background-color: rgba(255,255,255,0.05); color: #f87171; border-right: 3px solid #f87171; }.nav-item {
+            display: flex;
+            align-items: center;
+            height: 3.5rem;padding: 0 0.5rem;
+            border-bottom: 2px solid transparent;
+            font-size: 0.875rem;font-weight: 500;
+            color: #6b7280;transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .dark .nav-item { color: #9ca3af;}
+        .nav-item:hover { color: #111827; }
+        .dark .nav-item:hover { color: #ffffff; }
+        .nav-active {
+            border-bottom-color: #ef4444;color: #111827 !important;
+        }
+        .dark .nav-active {
+            border-bottom-color: #f87171;color: #ffffff !important;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px !important; 
+        }.icon-sm { font-size: 18px !important; }
+        .icon-xs { font-size: 16px !important; }
+        .icon-lg { font-size: 24px !important; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+<header class="h-14 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 flex items-center px-4 justify-between sticky top-0 z-50">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-gray-500 cursor-pointer icon-lg">menu</span>
+<div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-sm">
+                LOGO
+            </div>
+<span class="font-semibold text-sm tracking-tight">这是一个企业名称</span>
+<span class="bg-gray-100 dark:bg-gray-800 text-gray-500 text-[10px] font-medium px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-700 uppercase">企业版</span>
+</div>
+<nav class="flex items-center gap-6 ml-2">
+<a class="nav-item gap-1.5" href="#">
+<span class="material-symbols-outlined">home</span>概览
+            </a>
+<a class="nav-item gap-1.5" href="#">
+<span class="material-symbols-outlined">dns</span>资源中心
+            </a>
+<a class="nav-item gap-1.5" href="#">
+<span class="material-symbols-outlined">groups</span>社区运营
+            </a>
+<a class="nav-item nav-active gap-1.5" href="#">
+<span class="material-symbols-outlined">account_tree</span>流水线
+            </a>
+<a class="nav-item gap-1.5" href="#">
+<span class="material-symbols-outlined">verified_user</span>安全与合规
+            </a>
+<a class="nav-item gap-1.5" href="#">
+<span class="material-symbols-outlined">analytics</span>数据看板
+            </a>
+<a class="nav-item gap-1.5" href="#">
+<span class="material-symbols-outlined">receipt_long</span>账单管理
+            </a>
+<a class="nav-item gap-1.5" href="#">
+<span class="material-symbols-outlined">domain</span>企业管理
+            </a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 icon-sm group-focus-within:text-primary transition-colors">search</span>
+<input class="pl-9 pr-4 py-1.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full text-xs w-64 focus:outline-none focus:ring-1 focus:ring-primary focus:bg-white dark:focus:bg-gray-900 transition-all placeholder-gray-400" placeholder="按下 / 快速开启搜索" type="text"/>
+</div>
+<button class="bg-primary hover:bg-gray-800 text-white px-4 py-1.5 rounded-full text-sm font-medium flex items-center gap-1 transition-colors shadow-sm">
+<span class="material-symbols-outlined icon-sm">add</span>
+<span>新建</span>
+</button>
+<div class="relative cursor-pointer text-gray-500 hover:text-gray-900 dark:hover:text-gray-300 transition-colors">
+<span class="material-symbols-outlined icon-lg">notifications</span>
+<span class="absolute top-0 right-0.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-gray-900"></span>
+</div>
+<div class="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-orange-500 overflow-hidden cursor-pointer flex items-center justify-center text-white text-xs font-bold shadow-sm ring-2 ring-transparent hover:ring-gray-200 dark:hover:ring-gray-700 transition-all">
+            U
+        </div>
+</div>
+</header>
+<div class="bg-amber-50 dark:bg-amber-900/20 border-b border-amber-100 dark:border-amber-800/30 px-6 py-2 flex items-center justify-between text-xs">
+<div class="flex items-center gap-2 text-amber-800 dark:text-amber-200">
+<span class="material-symbols-outlined icon-sm">info</span>
+<span>资源预警：您企业当前存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容</span>
+</div>
+<span class="material-symbols-outlined icon-sm text-amber-400 cursor-pointer hover:text-amber-600">close</span>
+</div>
+<div class="bg-blue-50 dark:bg-blue-900/20 border-b border-blue-100 dark:border-blue-800/30 px-6 py-2 flex items-center justify-between text-xs text-blue-800 dark:text-blue-200">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined icon-sm">campaign</span>
+<span>企业公告：AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉</span>
+</div>
+<span class="material-symbols-outlined icon-sm text-blue-400 cursor-pointer hover:text-blue-600">close</span>
+</div>
+<div class="flex flex-1 overflow-hidden">
+<aside class="w-64 bg-gray-50 dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 py-4">
+<div class="px-2 space-y-1">
+<a class="sidebar-active flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium" href="#">
+<span class="material-symbols-outlined icon-lg">history</span>
+                运行记录
+            </a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined icon-lg">insights</span>
+                用量报告
+            </a>
+<a class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-symbols-outlined icon-lg">fact_check</span>
+                质量报告
+            </a>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto bg-white dark:bg-gray-950 p-6">
+<div class="flex items-center gap-2 mb-6 text-sm">
+<div class="flex items-center gap-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 px-3 py-1.5 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-blue-500 icon-sm">layers</span>
+<span class="font-medium text-gray-700 dark:text-gray-200">全企业视图 (Enterprise)</span>
+<span class="material-symbols-outlined text-gray-400 icon-sm">expand_more</span>
+</div>
+<span class="text-gray-400 px-2">/</span>
+<span class="text-gray-500 font-medium">运行记录</span>
+</div>
+<div class="grid grid-cols-4 gap-4 mb-8">
+<div class="bg-emerald-50/50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-800/30 p-5 rounded-2xl">
+<p class="text-emerald-600 dark:text-emerald-400 text-xs font-medium mb-1">今日成功</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold text-gray-900 dark:text-white">1,248</span>
+<span class="text-emerald-500 text-xs font-semibold">98.2%</span>
+</div>
+</div>
+<div class="bg-red-50/50 dark:bg-red-900/10 border border-red-100 dark:border-red-800/30 p-5 rounded-2xl">
+<p class="text-red-600 dark:text-red-400 text-xs font-medium mb-1">今日失败</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold text-gray-900 dark:text-white">24</span>
+<span class="text-red-500 text-xs font-semibold">1.8%</span>
+</div>
+</div>
+<div class="bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800/30 p-5 rounded-2xl">
+<p class="text-blue-600 dark:text-blue-400 text-xs font-medium mb-1">正在运行</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold text-gray-900 dark:text-white">12</span>
+</div>
+</div>
+<div class="bg-gray-50/50 dark:bg-gray-800/30 border border-gray-100 dark:border-gray-700/50 p-5 rounded-2xl">
+<p class="text-gray-500 dark:text-gray-400 text-xs font-medium mb-1">排队中</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold text-gray-900 dark:text-white">0</span>
+</div>
+</div>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden shadow-sm">
+<div class="p-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between bg-white dark:bg-gray-900">
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 icon-sm">search</span>
+<input class="pl-9 pr-4 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm w-80 bg-white dark:bg-gray-900 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary placeholder-gray-400" placeholder="搜索 Workflow 或 Commit..." type="text"/>
+</div>
+<div class="relative">
+<button class="flex items-center gap-2 px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-lg text-sm bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-300">
+<span>所有状态</span>
+<span class="material-symbols-outlined icon-sm">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+<table class="w-full text-left text-sm">
+<thead class="bg-gray-50 dark:bg-gray-900/50 text-gray-500 dark:text-gray-400 font-medium border-b border-gray-100 dark:border-gray-800">
+<tr>
+<th class="px-6 py-4 font-medium">状态 (Status)</th>
+<th class="px-6 py-4 font-medium">工作流名称</th>
+<th class="px-6 py-4 font-medium">作用域 (Scope)</th>
+<th class="px-6 py-4 font-medium">触发者</th>
+<th class="px-6 py-4 font-medium">运行时长</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-950">
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-medium">
+<span class="material-symbols-outlined text-[18px] filled text-emerald-500" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>#241 Success</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary transition-colors">Deploy-Production</span>
+<span class="text-gray-400 text-xs mt-0.5">feat: 新增支付网关</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-2.5 py-1 rounded text-xs font-medium border border-gray-200 dark:border-gray-700">AtomGit-Core</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 flex items-center justify-center text-[10px] font-bold">LZ</div>
+<span class="text-gray-600 dark:text-gray-400">Li Zhang</span>
+</div>
+</td>
+<td class="px-6 py-5 text-gray-500 font-mono">4m 12s</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-2 text-red-600 dark:text-red-400 font-medium">
+<span class="material-symbols-outlined text-[18px] filled text-red-500" style="font-variation-settings: 'FILL' 1;">cancel</span>
+<span>#240 Failure</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary transition-colors">Unit-Test-Suite</span>
+<span class="text-gray-400 text-xs mt-0.5">fix: 修复同步逻辑 Bug</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-2.5 py-1 rounded text-xs font-medium border border-gray-200 dark:border-gray-700">Frontend</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 flex items-center justify-center text-[10px] font-bold">W</div>
+<span class="text-gray-600 dark:text-gray-400">Wang Wu</span>
+</div>
+</td>
+<td class="px-6 py-5 text-gray-500 font-mono">1m 05s</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-900/50 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-medium">
+<span class="material-symbols-outlined text-[18px] filled text-emerald-500" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>#239 Success</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary transition-colors">Build-Docker-Image</span>
+<span class="text-gray-400 text-xs mt-0.5">chore: 更新依赖项</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-2.5 py-1 rounded text-xs font-medium border border-gray-200 dark:border-gray-700">Infrastructure</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-300 flex items-center justify-center text-[10px] font-bold">SC</div>
+<span class="text-gray-600 dark:text-gray-400">Sun Chao</span>
+</div>
+</td>
+<td class="px-6 py-5 text-gray-500 font-mono">2m 45s</td>
+</tr>
+</tbody>
+</table>
+</div>
+</main>
+</div>
+
+</body></html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AtomGit - 发票抬头设置</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#2b8cee",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            "display": ["Inter", "Noto Sans SC", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    /* Custom Scrollbar for modern feel */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-[#0d141b] overflow-hidden">
+<!-- Main Layout Wrapper -->
+<div class="relative flex h-screen w-full flex-col bg-slate-50 group/design-root overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e7edf3] bg-white px-10 py-3 z-10 shrink-0">
+<div class="flex items-center gap-4 text-[#0d141b]">
+<div class="size-6 text-primary">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M6 6H42L36 24L42 42H6L12 24L6 6Z" fill="currentColor"></path></svg>
+</div>
+<h2 class="text-[#0d141b] text-lg font-bold leading-tight tracking-[-0.015em]">AtomGit</h2>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="flex gap-2">
+<button class="flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-[#e7edf3] text-[#0d141b] hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-[#e7edf3] text-[#0d141b] hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+<button class="flex size-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-[#e7edf3] text-[#0d141b] hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined text-[20px]">help</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-slate-200" data-alt="User profile avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAJoDuZAnTl2v0vexeTTRR3LsAQKkYLax9JEXmXjkbcxEgh9cj-XOl6YpD06m1lNZXQadH3HYpvPt3iZ_7Y73hNNaiD_S-4dz3GdTzwszpibIZXYEPyKRk1u2atpovS-ElKF7uuT4ASdVWs5sydiGq66Eimmtl8Dz1Iu9nx2vMX2N4WsnYziWtpZizyg3YqIaHw7p6FdOBuuGKRIXpIqcl4jzFpVgDRjQ7d4mx53wonk8E_rrQwhtEboamnLow4fhgtv_leSmH7y3eH");'></div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Side Navigation -->
+<aside class="w-64 bg-slate-50 border-r border-[#e7edf3] flex flex-col shrink-0">
+<div class="p-4 flex flex-col gap-6">
+<div class="flex flex-col px-2">
+<h1 class="text-[#0d141b] text-base font-bold leading-normal">企业控制台</h1>
+<p class="text-[#4c739a] text-sm font-normal leading-normal">AtomGit Enterprise</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 text-[#0d141b] transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-500">dashboard</span>
+<p class="text-sm font-medium leading-normal">概览</p>
+</a>
+<div class="pt-2 pb-1 px-3">
+<p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">财务中心</p>
+</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 text-[#0d141b] transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-500">receipt_long</span>
+<p class="text-sm font-medium leading-normal">账单管理</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[#e7edf3] text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] fill-1">description</span>
+<p class="text-sm font-medium leading-normal">发票管理</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 text-[#0d141b] transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-500">pie_chart</span>
+<p class="text-sm font-medium leading-normal">消费明细</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 text-[#0d141b] transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-slate-500">credit_card</span>
+<p class="text-sm font-medium leading-normal">支付方式</p>
+</a>
+</nav>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-y-auto bg-white relative">
+<!-- Page Header -->
+<div class="px-8 pt-8 pb-4">
+<div class="flex flex-wrap justify-between gap-3 items-center">
+<div>
+<nav aria-label="Breadcrumb" class="flex text-sm text-slate-500 mb-1">
+<ol class="inline-flex items-center space-x-1 md:space-x-2">
+<li class="inline-flex items-center">财务中心</li>
+<li>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-[16px] mx-1">chevron_right</span>
+                      发票管理
+                    </div>
+</li>
+</ol>
+</nav>
+<h1 class="text-[#0d141b] text-[28px] font-bold leading-tight">发票管理</h1>
+</div>
+<button class="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-white text-sm font-medium hover:bg-blue-600 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>新建发票抬头</span>
+</button>
+</div>
+</div>
+<!-- Content Body (Table) -->
+<div class="px-8 pb-8 flex-1">
+<!-- Card for Info -->
+<div class="mb-6 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 p-6 flex items-center justify-between">
+<div>
+<h3 class="text-lg font-bold text-slate-800 mb-1">发票抬头设置</h3>
+<p class="text-sm text-slate-600">管理您的企业增值税发票信息，确保开票准确。</p>
+</div>
+<div class="bg-white/50 p-3 rounded-lg backdrop-blur-sm">
+<span class="material-symbols-outlined text-primary text-[32px]">domain</span>
+</div>
+</div>
+<!-- Table Container -->
+<div class="rounded-lg border border-[#cfdbe7] overflow-hidden shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50 border-b border-[#cfdbe7]">
+<tr>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">发票抬头</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">纳税人识别号</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">发票金额</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">开票时间</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">状态</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">操作</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#cfdbe7] bg-white">
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-[#0d141b]">北京某某科技有限公司</td>
+<td class="px-6 py-4 text-sm text-slate-500 font-mono">91110108MA000000</td>
+<td class="px-6 py-4 text-sm text-slate-500">¥1,200.00</td>
+<td class="px-6 py-4 text-sm text-slate-500">2023-10-01</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">已开票</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary text-sm font-medium hover:text-blue-700">下载</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-[#0d141b]">个人</td>
+<td class="px-6 py-4 text-sm text-slate-500 font-mono">N/A</td>
+<td class="px-6 py-4 text-sm text-slate-500">¥50.00</td>
+<td class="px-6 py-4 text-sm text-slate-500">2023-09-28</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-yellow-50 px-2.5 py-0.5 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">处理中</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary text-sm font-medium hover:text-blue-700">查看</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 transition-colors">
+<td class="px-6 py-4 text-sm font-medium text-[#0d141b]">上海创新网络技术有限公司</td>
+<td class="px-6 py-4 text-sm text-slate-500 font-mono">91310115MA1H2345</td>
+<td class="px-6 py-4 text-sm text-slate-500">¥8,500.00</td>
+<td class="px-6 py-4 text-sm text-slate-500">2023-09-15</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center rounded-full bg-green-50 px-2.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">已开票</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary text-sm font-medium hover:text-blue-700">下载</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- MODAL OVERLAY -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-[2px] transition-opacity duration-300">
+<!-- MODAL WINDOW -->
+<div class="w-full max-w-2xl transform rounded-xl bg-white shadow-2xl transition-all scale-100 opacity-100 animate-in fade-in zoom-in duration-200">
+<!-- Modal Header -->
+<div class="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+<h3 class="text-lg font-bold text-slate-900">发票抬头设置</h3>
+<button class="group rounded-full p-1 hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-slate-600">close</span>
+</button>
+</div>
+<!-- Modal Content (Scrollable if needed, but keeping clean for this view) -->
+<div class="p-6">
+<!-- Form -->
+<div class="flex flex-col gap-5">
+<!-- Radio Group: Type -->
+<div class="flex flex-col gap-2">
+<label class="text-sm font-medium text-slate-700">抬头类型</label>
+<div class="flex items-center gap-6 mt-1">
+<label class="flex items-center gap-2 cursor-pointer group">
+<div class="relative flex items-center">
+<input checked="" class="peer sr-only" name="title_type" type="radio"/>
+<div class="size-4 rounded-full border border-slate-300 peer-checked:border-primary peer-checked:border-[5px] transition-all"></div>
+</div>
+<span class="text-sm text-slate-900 font-medium">企业</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<div class="relative flex items-center">
+<input class="peer sr-only" name="title_type" type="radio"/>
+<div class="size-4 rounded-full border border-slate-300 peer-checked:border-primary peer-checked:border-[5px] transition-all"></div>
+</div>
+<span class="text-sm text-slate-600 group-hover:text-slate-900">个人/非企业单位</span>
+</label>
+</div>
+</div>
+<!-- Input Grid -->
+<div class="grid grid-cols-1 gap-5">
+<!-- Title -->
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-medium text-slate-700">
+                      发票抬头 <span class="text-red-500">*</span>
+</label>
+<input class="flex w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/20 transition-all" placeholder="请填写营业执照上的法定名称" type="text"/>
+</div>
+<!-- Tax ID -->
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-medium text-slate-700">
+                      纳税人识别号 <span class="text-red-500">*</span>
+</label>
+<input class="flex w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/20 transition-all font-mono" placeholder="请填写纳税人识别号" type="text"/>
+</div>
+<!-- Bank Info Group -->
+<div class="grid grid-cols-2 gap-5">
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-medium text-slate-700">开户银行</label>
+<input class="flex w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/20 transition-all" placeholder="请填写开户银行名称" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-medium text-slate-700">银行账号</label>
+<input class="flex w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/20 transition-all font-mono" placeholder="请填写银行账号" type="text"/>
+</div>
+</div>
+<!-- Address & Phone Group -->
+<div class="grid grid-cols-2 gap-5">
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-medium text-slate-700">注册地址</label>
+<input class="flex w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/20 transition-all" placeholder="请填写营业执照上的注册地址" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-medium text-slate-700">注册电话</label>
+<input class="flex w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/20 transition-all font-mono" placeholder="请填写注册电话" type="text"/>
+</div>
+</div>
+</div>
+<!-- Checkbox -->
+<div class="flex items-center gap-2 mt-2">
+<input class="size-4 rounded border-slate-300 text-primary focus:ring-primary/20" id="default-title" type="checkbox"/>
+<label class="text-sm text-slate-600 select-none cursor-pointer" for="default-title">设为默认抬头</label>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50/50 px-6 py-4 rounded-b-xl">
+<button class="flex h-9 cursor-pointer items-center justify-center rounded-lg border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+                取消
+              </button>
+<button class="flex h-9 cursor-pointer items-center justify-center rounded-lg bg-primary px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-600 focus:ring-2 focus:ring-primary/20 focus:ring-offset-1 transition-all">
+                保存抬头
+              </button>
+</div>
+</div>
+</div>
+<!-- END MODAL -->
+</main>
+</div>
+</div>
+</body></html>

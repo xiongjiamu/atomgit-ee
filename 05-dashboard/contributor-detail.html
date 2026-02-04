@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AtomGit - 开发者个人贡献详情</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "slate-850": "#1a2530",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        
+        .heatmap-grid {
+            display: grid;
+            grid-template-rows: repeat(7, 1fr);
+            grid-auto-flow: column;
+            gap: 4px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 antialiased overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Sidebar -->
+<aside class="w-72 bg-slate-50 border-r border-slate-200 flex flex-col shrink-0 h-full overflow-y-auto">
+<div class="p-6 pb-2">
+<div class="flex items-center gap-3 mb-8">
+<div class="bg-primary rounded-lg p-1.5">
+<span class="material-symbols-outlined text-white" style="font-size: 24px;">hub</span>
+</div>
+<div>
+<h1 class="text-[#0d141b] text-lg font-bold leading-none">AtomGit</h1>
+<p class="text-[#4c739a] text-xs font-normal mt-1">企业版 v3.0</p>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-500">grid_view</span>
+<span class="text-sm font-medium">总览</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-500">folder_open</span>
+<span class="text-sm font-medium">项目管理</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-500">group</span>
+<span class="text-sm font-medium">团队协作</span>
+</a>
+<div class="my-2 border-t border-slate-200"></div>
+<p class="px-3 py-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">数据洞察</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-[#e7edf3] text-primary transition-colors" href="#">
+<span class="material-symbols-outlined filled">bar_chart</span>
+<span class="text-sm font-bold">贡献与生态</span>
+</a>
+<div class="pl-10 flex flex-col gap-1 mt-1">
+<a class="block py-1.5 text-sm font-medium text-primary" href="#">开发者详情</a>
+<a class="block py-1.5 text-sm font-medium text-slate-500 hover:text-slate-800" href="#">团队效能</a>
+<a class="block py-1.5 text-sm font-medium text-slate-500 hover:text-slate-800" href="#">代码质量</a>
+</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors mt-2" href="#">
+<span class="material-symbols-outlined text-slate-500">terminal</span>
+<span class="text-sm font-medium">代码库</span>
+</a>
+</div>
+</div>
+<div class="mt-auto p-6 border-t border-slate-200">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-500">settings</span>
+<span class="text-sm font-medium">系统设置</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto bg-white relative">
+<!-- Header Bar -->
+<header class="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-slate-100 px-8 py-4 flex items-center justify-between">
+<!-- Breadcrumbs -->
+<nav class="flex items-center text-sm">
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">数据看板</a>
+<span class="mx-2 text-slate-300">/</span>
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">贡献与生态</a>
+<span class="mx-2 text-slate-300">/</span>
+<span class="font-medium text-slate-800">开发者详情</span>
+</nav>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 18px;">download</span>
+                        导出报告
+                    </button>
+<button class="flex items-center justify-center w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">notifications</span>
+</button>
+<div class="w-9 h-9 rounded-full bg-slate-200 bg-cover bg-center border border-slate-300" data-alt="User avatar thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBKP6PE9ZNsG3qS0kBZPyj1hc8xUzCjueCN6RgbcyODJNPLZSyA4rkSvNq9TsdpW9HGXMr9kCi1OIu3QPtE7_h03jH6E2d2s-OTVdqGUWFWOhwciFdQTwVpRxgy8hFKU0diJmtkaXl2BrmneFzpKN_ghp9Pt9PifVg2ZwuxQfdlujnHeP31Jw7DnDxAcfMh0LrvIDOvcATeK112CEJ3WtfPjSdGreDm0Al2suTsQZ1jeabhILmMOvgHQvSa1nDtZE4B7a_yaBTnc7Bi');">
+</div>
+</div>
+</header>
+<div class="max-w-[1600px] mx-auto p-8 flex flex-col gap-6">
+<!-- Profile & Stats Combined Section -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- Profile Card -->
+<div class="lg:col-span-8 flex flex-col sm:flex-row gap-6 p-6 rounded-xl border border-slate-200 bg-white shadow-sm">
+<div class="shrink-0">
+<div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-cover bg-center border-4 border-slate-50 shadow-inner" data-alt="Alex Chen Profile Picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCTV5Fq3Asmwu3aEa6RMrVV4CfP9WLI4i5h6UMzu_zdjuJViq0p7xag_Mo2NJAEW7T8ZO0pS08SkxfrJV8n44d3EshtnHCxNAqv1SavdiwqXW9A56ZeKfiaxDOGA5ythMJLmXI3apZxTMJ7GJVLNG5S1-RgyNRpVPuO2ADy52KqoGBQ-j9y9ifco8EoSR9QpFwYQZtr4BfNfkP3fbcxR-EOqUzEXY-YlVzRlZA-NQ089Unj2mZPdbYz7YZy8PCTP5MayB0V2bweGEdm');">
+</div>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<div class="flex flex-wrap items-center gap-3 mb-1">
+<h1 class="text-2xl font-bold text-slate-900">Alex Chen</h1>
+<span class="px-2.5 py-0.5 rounded-full bg-blue-50 text-primary text-xs font-semibold border border-blue-100">后端开发专家</span>
+<span class="text-slate-400 text-sm">ID: 88291</span>
+</div>
+<p class="text-slate-500 mb-4 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-slate-400" style="font-size: 18px;">business</span>
+                                云原生基础设施部
+                            </p>
+<div class="flex flex-wrap gap-4 mt-auto">
+<div class="flex items-center gap-2 pr-4 border-r border-slate-100">
+<span class="material-symbols-outlined text-slate-400">calendar_month</span>
+<div>
+<p class="text-xs text-slate-500">加入日期</p>
+<p class="text-sm font-semibold text-slate-800">2021-03-15</p>
+</div>
+</div>
+<div class="flex items-center gap-2 pr-4 border-r border-slate-100">
+<span class="material-symbols-outlined text-slate-400">terminal</span>
+<div>
+<p class="text-xs text-slate-500">主要语言</p>
+<p class="text-sm font-semibold text-slate-800">Go, Rust</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400">location_on</span>
+<div>
+<p class="text-xs text-slate-500">办公地点</p>
+<p class="text-sm font-semibold text-slate-800">杭州 HZ-2</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- KPI Cards (Stacked on small, row on large) -->
+<div class="lg:col-span-4 grid grid-cols-1 gap-4 h-full">
+<!-- Card 1 -->
+<div class="flex items-center justify-between p-5 rounded-xl border border-slate-200 bg-white shadow-sm hover:border-primary/30 transition-colors">
+<div>
+<p class="text-slate-500 text-sm font-medium mb-1">累计代码提交</p>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold text-slate-900">3,450</span>
+<span class="text-xs font-medium text-emerald-600 flex items-center bg-emerald-50 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined" style="font-size: 12px;">arrow_upward</span> 12%
+                                    </span>
+</div>
+</div>
+<div class="h-10 w-10 rounded-full bg-blue-50 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">commit</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="flex items-center justify-between p-5 rounded-xl border border-slate-200 bg-white shadow-sm hover:border-primary/30 transition-colors">
+<div>
+<p class="text-slate-500 text-sm font-medium mb-1">PR 合入率</p>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold text-slate-900">92%</span>
+<span class="text-xs font-medium text-emerald-600 flex items-center bg-emerald-50 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined" style="font-size: 12px;">arrow_upward</span> 2.5%
+                                    </span>
+</div>
+</div>
+<div class="h-10 w-10 rounded-full bg-purple-50 flex items-center justify-center text-purple-600">
+<span class="material-symbols-outlined">merge_type</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="flex items-center justify-between p-5 rounded-xl border border-slate-200 bg-white shadow-sm hover:border-primary/30 transition-colors">
+<div>
+<p class="text-slate-500 text-sm font-medium mb-1">社区积分</p>
+<div class="flex items-baseline gap-2">
+<span class="text-2xl font-bold text-slate-900">12,500</span>
+<span class="text-xs font-medium text-primary flex items-center bg-blue-50 px-1.5 py-0.5 rounded">
+                                        Top 5%
+                                    </span>
+</div>
+</div>
+<div class="h-10 w-10 rounded-full bg-amber-50 flex items-center justify-center text-amber-600">
+<span class="material-symbols-outlined">workspace_premium</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Visualization Row -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+<!-- Contribution Heatmap -->
+<div class="xl:col-span-2 p-6 rounded-xl border border-slate-200 bg-white shadow-sm flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-bold text-slate-900">贡献热力图</h3>
+<select class="text-sm border-slate-200 rounded-md text-slate-600 py-1 pl-2 pr-8 focus:ring-primary focus:border-primary">
+<option>2023</option>
+<option>2022</option>
+</select>
+</div>
+<div class="overflow-x-auto pb-2 flex-1 flex flex-col justify-center">
+<!-- Simulated Heatmap using Grid -->
+<div class="heatmap-grid min-w-[700px] h-[160px]">
+<!-- This is generated using a loop logic simulation. In real code this would be dynamic. -->
+<!-- We just paste a bunch of divs with random colors for the visual -->
+<!-- Helper to generate random heatmap squares -->
+<script>
+                                    for(let i=0; i<364; i++) {
+                                        let opacity = Math.random();
+                                        let colorClass = "bg-slate-100"; // default empty
+                                        
+                                        if (opacity > 0.85) colorClass = "bg-[#1d5e9f]"; // dark
+                                        else if (opacity > 0.7) colorClass = "bg-[#2b8cee]"; // primary
+                                        else if (opacity > 0.5) colorClass = "bg-[#6fb1f5]"; // light
+                                        else if (opacity > 0.3) colorClass = "bg-[#cce3fa]"; // very light
+                                        
+                                        document.write(`<div class="${colorClass} w-full h-full rounded-sm hover:ring-2 ring-offset-1 ring-slate-300 transition-all cursor-pointer" title="Contributions on day ${i}"></div>`);
+                                    }
+                                </script>
+</div>
+<div class="flex items-center gap-2 mt-4 text-xs text-slate-500 justify-end">
+<span>Less</span>
+<div class="w-3 h-3 bg-slate-100 rounded-sm"></div>
+<div class="w-3 h-3 bg-[#cce3fa] rounded-sm"></div>
+<div class="w-3 h-3 bg-[#6fb1f5] rounded-sm"></div>
+<div class="w-3 h-3 bg-[#2b8cee] rounded-sm"></div>
+<div class="w-3 h-3 bg-[#1d5e9f] rounded-sm"></div>
+<span>More</span>
+</div>
+</div>
+</div>
+<!-- Skills Radar Chart -->
+<div class="p-6 rounded-xl border border-slate-200 bg-white shadow-sm flex flex-col items-center justify-center relative">
+<div class="w-full flex justify-between items-center mb-2 absolute top-6 px-6 left-0">
+<h3 class="text-lg font-bold text-slate-900">能力模型</h3>
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined">info</span></button>
+</div>
+<div class="mt-8 w-full max-w-[320px] aspect-square relative flex items-center justify-center">
+<!-- SVG Radar Chart -->
+<svg class="w-full h-full" viewbox="0 0 200 200">
+<!-- Background Pentagons -->
+<g fill="none" stroke="#e2e8f0" stroke-width="1">
+<polygon points="100,20 176,76 147,164 53,164 24,76"></polygon>
+<polygon points="100,40 157,82 135,148 65,148 43,82"></polygon>
+<polygon points="100,60 138,88 123,132 77,132 62,88"></polygon>
+<polygon points="100,80 119,94 111,116 89,116 81,94"></polygon>
+</g>
+<!-- Axes -->
+<g stroke="#e2e8f0" stroke-width="1">
+<line x1="100" x2="100" y1="100" y2="20"></line>
+<line x1="100" x2="176" y1="100" y2="76"></line>
+<line x1="100" x2="147" y1="100" y2="164"></line>
+<line x1="100" x2="53" y1="100" y2="164"></line>
+<line x1="100" x2="24" y1="100" y2="76"></line>
+</g>
+<!-- Data Polygon: User (Blue) -->
+<polygon fill="rgba(43, 140, 238, 0.4)" points="100,25 165,79 135,150 70,140 35,85" stroke="#2b8cee" stroke-width="2"></polygon>
+<!-- Data Polygon: Average (Gray) -->
+<polygon fill="none" points="100,50 140,85 120,130 80,130 60,85" stroke="#94a3b8" stroke-dasharray="4 2" stroke-width="2"></polygon>
+<!-- Labels -->
+<text fill="#64748b" font-size="8" font-weight="600" text-anchor="middle" x="100" y="15">Coding</text>
+<text fill="#64748b" font-size="8" font-weight="600" text-anchor="start" x="185" y="76">Review</text>
+<text fill="#64748b" font-size="8" font-weight="600" text-anchor="middle" x="155" y="175">Comm.</text>
+<text fill="#64748b" font-size="8" font-weight="600" text-anchor="middle" x="45" y="175">Reliability</text>
+<text fill="#64748b" font-size="8" font-weight="600" text-anchor="end" x="15" y="76">Leadership</text>
+</svg>
+</div>
+<div class="flex gap-4 mt-4">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary/40 border border-primary"></div>
+<span class="text-xs text-slate-600">个人数据</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full border border-slate-400 border-dashed"></div>
+<span class="text-xs text-slate-600">社区平均</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Activity Timeline -->
+<div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-100 flex justify-between items-center">
+<h3 class="text-lg font-bold text-slate-900">最近动态</h3>
+<a class="text-sm text-primary hover:underline" href="#">查看全部</a>
+</div>
+<div class="p-6">
+<div class="relative pl-8 border-l border-slate-200 space-y-8">
+<!-- Timeline Item 1 -->
+<div class="relative group">
+<span class="absolute -left-[41px] flex h-6 w-6 items-center justify-center rounded-full bg-purple-100 ring-4 ring-white">
+<span class="material-symbols-outlined text-purple-600" style="font-size: 14px;">merge</span>
+</span>
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+<div class="flex flex-col">
+<p class="text-sm font-medium text-slate-900">
+                                            代码合并 <a class="text-primary hover:underline font-mono" href="#">#PR-3422</a>
+</p>
+<p class="text-sm text-slate-500 mt-1">优化了大规模并发下的 Redis 缓存策略，减少了 30% 的延迟。</p>
+</div>
+<span class="text-xs text-slate-400 whitespace-nowrap">2小时前</span>
+</div>
+<div class="mt-2 flex gap-2">
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200">backend</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200">performance</span>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="relative group">
+<span class="absolute -left-[41px] flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 ring-4 ring-white">
+<span class="material-symbols-outlined text-primary" style="font-size: 14px;">commit</span>
+</span>
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+<div class="flex flex-col">
+<p class="text-sm font-medium text-slate-900">
+                                            提交代码到 <a class="text-slate-700 hover:text-primary font-medium" href="#">infrastructure/core</a>
+</p>
+<p class="text-sm text-slate-500 mt-1">feat: add new metric collector for kubernetes pods</p>
+</div>
+<span class="text-xs text-slate-400 whitespace-nowrap">昨天 14:30</span>
+</div>
+<div class="mt-2 p-2 bg-slate-50 rounded border border-slate-200 font-mono text-xs text-slate-600 truncate max-w-lg">
+                                    7c8f9a2 fix(collector): resolve nil pointer exception in metrics...
+                                </div>
+</div>
+<!-- Timeline Item 3 -->
+<div class="relative group">
+<span class="absolute -left-[41px] flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 ring-4 ring-white">
+<span class="material-symbols-outlined text-emerald-600" style="font-size: 14px;">reviews</span>
+</span>
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+<div class="flex flex-col">
+<p class="text-sm font-medium text-slate-900">
+                                            Code Review 通过 <a class="text-primary hover:underline font-mono" href="#">#PR-3418</a>
+</p>
+<p class="text-sm text-slate-500 mt-1">Review 了 Sarah Li 提交的关于用户认证模块的重构代码。</p>
+</div>
+<span class="text-xs text-slate-400 whitespace-nowrap">2天前</span>
+</div>
+</div>
+<!-- Timeline Item 4 -->
+<div class="relative group">
+<span class="absolute -left-[41px] flex h-6 w-6 items-center justify-center rounded-full bg-amber-100 ring-4 ring-white">
+<span class="material-symbols-outlined text-amber-600" style="font-size: 14px;">bug_report</span>
+</span>
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+<div class="flex flex-col">
+<p class="text-sm font-medium text-slate-900">
+                                            创建 Issue <a class="text-primary hover:underline font-mono" href="#">#ISSUE-881</a>
+</p>
+<p class="text-sm text-slate-500 mt-1">Worker Node 内存泄漏问题调查报告</p>
+</div>
+<span class="text-xs text-slate-400 whitespace-nowrap">3天前</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-8 mb-8 flex justify-center text-slate-400 text-xs">
+<p>© 2024 AtomGit Enterprise. All rights reserved.</p>
+</div>
+</div>
+</main>
+</div>
+</body></html>

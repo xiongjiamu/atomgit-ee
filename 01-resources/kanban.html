@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>企业看板 - 概览列表</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3b82f6", // Blue primary color as seen in alerts and links
+                        "background-light": "#f9fafb", // Very light gray background
+                        "background-dark": "#111827", // Dark mode background
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1f2937",
+                        "border-light": "#e5e7eb",
+                        "border-dark": "#374151",
+                        "text-main-light": "#1f2937",
+                        "text-main-dark": "#f3f4f6",
+                        "text-secondary-light": "#6b7280",
+                        "text-secondary-dark": "#9ca3af",
+                        "warning-bg": "#fffbeb",
+                        "warning-text": "#b45309",
+                        "info-bg": "#eff6ff",
+                        "info-text": "#1d4ed8",
+                    },
+                    fontFamily: {
+                        display: ['"Noto Sans SC"', '"Inter"', 'sans-serif'],
+                        sans: ['"Noto Sans SC"', '"Inter"', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.375rem",
+                    },
+                    maxWidth: {
+                        'screen-2xl': '1600px', // Wider layout for enterprise
+                    }
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            font-family: 'Noto Sans SC', 'Inter', sans-serif;
+        }.custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #d1d5db;
+            border-radius: 20px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #4b5563;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark antialiased min-h-screen flex flex-col font-sans">
+<header class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark px-4 h-14 flex items-center justify-between sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<button class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary transition">
+<span class="material-icons-outlined">menu</span>
+</button>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-red-500 flex items-center justify-center text-white text-xs font-bold">A</div>
+<span class="font-medium text-sm">这是一个企业名称</span>
+<span class="material-icons-outlined text-sm text-text-secondary-light dark:text-text-secondary-dark">chevron_right</span>
+<span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-1.5 py-0.5 rounded">企业版</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden md:block">
+<span class="material-icons-outlined absolute left-2.5 top-1.5 text-gray-400 text-lg">search</span>
+<input class="pl-9 pr-4 py-1.5 text-sm bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full w-64 focus:ring-1 focus:ring-primary focus:border-primary outline-none transition text-text-main-light dark:text-text-main-dark placeholder-gray-400" placeholder="按 '/' 快速开始搜索" type="text"/>
+</div>
+<button class="bg-black dark:bg-white text-white dark:text-black hover:opacity-90 px-3 py-1.5 rounded text-sm font-medium flex items-center gap-1 transition">
+<span class="material-icons-outlined text-base">add</span>
+                新建
+            </button>
+<button class="relative text-text-secondary-light dark:text-text-secondary-dark hover:text-text-main-light dark:hover:text-text-main-dark">
+<span class="material-icons-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
+</button>
+<button class="relative text-text-secondary-light dark:text-text-secondary-dark hover:text-text-main-light dark:hover:text-text-main-dark">
+<span class="material-icons-outlined">help_outline</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900 border border-indigo-200 dark:border-indigo-700 flex items-center justify-center text-indigo-700 dark:text-indigo-300 font-bold text-xs cursor-pointer">
+                U
+            </div>
+</div>
+</header>
+<div class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark px-4 flex items-center gap-6 overflow-x-auto">
+<a class="py-3 text-sm font-medium text-primary border-b-2 border-primary whitespace-nowrap" href="#">概览</a>
+<a class="py-3 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-main-light dark:hover:text-text-main-dark border-b-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 whitespace-nowrap transition" href="#">资源中心</a>
+<a class="py-3 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-main-light dark:hover:text-text-main-dark border-b-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 whitespace-nowrap transition" href="#">社区活跃</a>
+<a class="py-3 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-main-light dark:hover:text-text-main-dark border-b-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 whitespace-nowrap transition" href="#">流水线</a>
+<a class="py-3 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-main-light dark:hover:text-text-main-dark border-b-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 whitespace-nowrap transition" href="#">安全与合规</a>
+<a class="py-3 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-main-light dark:hover:text-text-main-dark border-b-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 whitespace-nowrap transition" href="#">数据洞察</a>
+<a class="py-3 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-main-light dark:hover:text-text-main-dark border-b-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 whitespace-nowrap transition" href="#">账单管理</a>
+<a class="py-3 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-main-light dark:hover:text-text-main-dark border-b-2 border-transparent hover:border-gray-300 dark:hover:border-gray-600 whitespace-nowrap transition" href="#">企业管理</a>
+</div>
+<div class="px-4 py-2">
+<div class="bg-warning-bg dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-800 rounded mb-2 flex items-start p-2 gap-2 text-xs md:text-sm">
+<span class="material-icons-outlined text-yellow-600 text-sm mt-0.5">error_outline</span>
+<span class="text-warning-text dark:text-yellow-200">资源预警：您企业当前的存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容 <a class="underline hover:text-yellow-700 dark:hover:text-yellow-100 ml-1" href="#">去扩容</a></span>
+<button class="ml-auto text-yellow-500 hover:text-yellow-700"><span class="material-icons-outlined text-sm">close</span></button>
+</div>
+<div class="bg-info-bg dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded flex items-start p-2 gap-2 text-xs md:text-sm">
+<span class="material-icons-outlined text-blue-600 text-sm mt-0.5">info</span>
+<span class="text-info-text dark:text-blue-200">企业公告：AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉</span>
+<button class="ml-auto text-blue-500 hover:text-blue-700"><span class="material-icons-outlined text-sm">close</span></button>
+</div>
+</div>
+<div class="flex-1 flex max-w-full overflow-hidden">
+<aside class="w-64 bg-background-light dark:bg-background-dark flex-shrink-0 border-r border-border-light dark:border-border-dark hidden lg:block overflow-y-auto custom-scrollbar p-4">
+<div class="mb-6">
+<h3 class="text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider mb-2 px-2">资源中心</h3>
+<nav class="space-y-1">
+<a class="flex items-center px-2 py-2 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group" href="#">
+<span class="material-icons-outlined mr-3 text-gray-400 group-hover:text-gray-500">grid_view</span>
+                        企业 Issues
+                        <span class="ml-auto bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 py-0.5 px-2 rounded-full text-xs">321</span>
+</a>
+<a class="flex items-center px-2 py-2 text-sm font-medium text-primary bg-blue-50 dark:bg-blue-900/20 rounded-md group" href="#">
+<span class="material-icons-outlined mr-3 text-primary">view_kanban</span>
+                        企业看板
+                        <span class="ml-auto bg-blue-100 dark:bg-blue-800 text-primary dark:text-blue-200 py-0.5 px-2 rounded-full text-xs">121</span>
+</a>
+<a class="flex items-center px-2 py-2 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group" href="#">
+<span class="material-icons-outlined mr-3 text-gray-400 group-hover:text-gray-500">merge_type</span>
+                        Pull Requests
+                        <span class="ml-auto bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 py-0.5 px-2 rounded-full text-xs">332</span>
+</a>
+<a class="flex items-center px-2 py-2 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group" href="#">
+<span class="material-icons-outlined mr-3 text-gray-400 group-hover:text-gray-500">folder_open</span>
+                        企业项目
+                        <span class="ml-auto bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 py-0.5 px-2 rounded-full text-xs">85</span>
+</a>
+<a class="flex items-center px-2 py-2 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group" href="#">
+<span class="material-icons-outlined mr-3 text-gray-400 group-hover:text-gray-500">account_tree</span>
+                        企业里程碑
+                        <span class="ml-auto bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 py-0.5 px-2 rounded-full text-xs">321</span>
+</a>
+</nav>
+</div>
+<div>
+<h3 class="text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider mb-2 px-2">预警与治理</h3>
+<nav class="space-y-1">
+<a class="flex items-center px-2 py-2 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group" href="#">
+<span class="material-icons-outlined mr-3 text-gray-400 group-hover:text-gray-500">cloud_queue</span>
+                        企业 LFS
+                    </a>
+<a class="flex items-center px-2 py-2 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group" href="#">
+<span class="material-icons-outlined mr-3 text-gray-400 group-hover:text-gray-500">warning_amber</span>
+                        资源使用预警
+                    </a>
+</nav>
+</div>
+</aside>
+<main class="flex-1 bg-surface-light dark:bg-surface-dark p-4 md:p-6 overflow-y-auto">
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+<div class="relative w-full md:w-96">
+<span class="material-icons-outlined absolute left-2.5 top-2 text-gray-400 text-lg">search</span>
+<input class="pl-9 pr-4 py-1.5 text-sm bg-background-light dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md w-full focus:ring-1 focus:ring-primary focus:border-primary outline-none transition text-text-main-light dark:text-text-main-dark" placeholder="搜索" type="text"/>
+</div>
+<button class="bg-black dark:bg-white text-white dark:text-black hover:opacity-90 px-3 py-1.5 rounded text-sm font-medium flex items-center justify-center gap-1 transition w-full md:w-auto">
+<span class="material-icons-outlined text-base">add</span>
+                    新建企业看板
+                </button>
+</div>
+<div class="flex items-center gap-6 text-sm border-b border-border-light dark:border-border-dark mb-4">
+<a class="pb-2 border-b-2 border-black dark:border-white text-text-main-light dark:text-text-main-dark font-medium" href="#">开启中 <span class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs ml-1 text-gray-600 dark:text-gray-300">895</span></a>
+<a class="pb-2 border-b-2 border-transparent text-text-secondary-light dark:text-text-secondary-dark hover:text-text-main-light dark:hover:text-text-main-dark transition" href="#">已关闭 <span class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs ml-1 text-gray-600 dark:text-gray-300">96</span></a>
+<a class="pb-2 border-b-2 border-transparent text-text-secondary-light dark:text-text-secondary-dark hover:text-text-main-light dark:hover:text-text-main-dark transition" href="#">全部 <span class="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs ml-1 text-gray-600 dark:text-gray-300">121</span></a>
+</div>
+<div class="space-y-1">
+<div class="group flex items-start p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+<div class="mr-4 mt-1">
+<div class="w-8 h-8 rounded bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+<span class="material-icons-outlined text-lg">view_kanban</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<h4 class="text-base font-semibold text-text-main-light dark:text-text-main-dark truncate pr-4">看板名称</h4>
+<a class="text-sm text-text-secondary-light dark:text-text-secondary-dark hover:text-primary whitespace-nowrap opacity-0 group-hover:opacity-100 transition" href="#">关闭看板</a>
+</div>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-3">
+<span>#1</span>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<span class="flex items-center gap-1 text-gray-400">
+<span class="material-icons-outlined text-sm">schedule</span>
+                                1 小时前更新
+                            </span>
+</p>
+</div>
+</div>
+<div class="group flex items-start p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+<div class="mr-4 mt-1">
+<div class="w-8 h-8 rounded bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400">
+<span class="material-icons-outlined text-lg">view_kanban</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<h4 class="text-base font-semibold text-text-main-light dark:text-text-main-dark truncate pr-4">看板名称看板名称</h4>
+<a class="text-sm text-text-secondary-light dark:text-text-secondary-dark hover:text-primary whitespace-nowrap opacity-0 group-hover:opacity-100 transition" href="#">关闭看板</a>
+</div>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-3">
+<span>#1</span>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<span class="flex items-center gap-1 text-gray-400">
+<span class="material-icons-outlined text-sm">schedule</span>
+                                1 小时前更新
+                            </span>
+</p>
+</div>
+</div>
+<div class="group flex items-start p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+<div class="mr-4 mt-1">
+<div class="w-8 h-8 rounded bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400">
+<span class="material-icons-outlined text-lg">view_kanban</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<h4 class="text-base font-semibold text-text-main-light dark:text-text-main-dark truncate pr-4">看板名称看板名称看板名称看板名称看板名称看板名称看板名称看板名称看板名称看板名称</h4>
+<a class="text-sm text-text-secondary-light dark:text-text-secondary-dark hover:text-primary whitespace-nowrap opacity-0 group-hover:opacity-100 transition" href="#">关闭看板</a>
+</div>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-3">
+<span>#1</span>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<span class="flex items-center gap-1 text-gray-400">
+<span class="material-icons-outlined text-sm">schedule</span>
+                                1 小时前更新
+                            </span>
+</p>
+</div>
+</div>
+<div class="group flex items-start p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+<div class="mr-4 mt-1">
+<div class="w-8 h-8 rounded bg-gray-100 dark:bg-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400">
+<span class="material-icons-outlined text-lg">view_kanban</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<h4 class="text-base font-semibold text-text-main-light dark:text-text-main-dark truncate pr-4">看板名称</h4>
+<a class="text-sm text-text-secondary-light dark:text-text-secondary-dark hover:text-primary whitespace-nowrap opacity-0 group-hover:opacity-100 transition" href="#">关闭看板</a>
+</div>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-3">
+<span>#1</span>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<span class="flex items-center gap-1 text-gray-400">
+<span class="material-icons-outlined text-sm">schedule</span>
+                                1 小时前更新
+                            </span>
+</p>
+</div>
+</div>
+<div class="group flex items-start p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+<div class="mr-4 mt-1">
+<div class="w-8 h-8 rounded bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+<span class="material-icons-outlined text-lg">view_kanban</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<h4 class="text-base font-semibold text-text-main-light dark:text-text-main-dark truncate pr-4">看板名称</h4>
+<a class="text-sm text-text-secondary-light dark:text-text-secondary-dark hover:text-primary whitespace-nowrap opacity-0 group-hover:opacity-100 transition" href="#">关闭看板</a>
+</div>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-3">
+<span>#1</span>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<span class="flex items-center gap-1 text-gray-400">
+<span class="material-icons-outlined text-sm">schedule</span>
+                                1 小时前更新
+                            </span>
+</p>
+</div>
+</div>
+<div class="group flex items-start p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+<div class="mr-4 mt-1">
+<div class="w-8 h-8 rounded bg-red-100 dark:bg-red-900/30 flex items-center justify-center text-red-600 dark:text-red-400">
+<span class="material-icons-outlined text-lg">view_kanban</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<h4 class="text-base font-semibold text-text-main-light dark:text-text-main-dark truncate pr-4">看板名称</h4>
+<a class="text-sm text-text-secondary-light dark:text-text-secondary-dark hover:text-primary whitespace-nowrap opacity-0 group-hover:opacity-100 transition" href="#">关闭看板</a>
+</div>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-3">
+<span>#1</span>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<span class="flex items-center gap-1 text-gray-400">
+<span class="material-icons-outlined text-sm">schedule</span>
+                                1 小时前更新
+                            </span>
+</p>
+</div>
+</div>
+<div class="group flex items-start p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition">
+<div class="mr-4 mt-1">
+<div class="w-8 h-8 rounded bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400">
+<span class="material-icons-outlined text-lg">view_kanban</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<h4 class="text-base font-semibold text-text-main-light dark:text-text-main-dark truncate pr-4">看板名称</h4>
+<a class="text-sm text-text-secondary-light dark:text-text-secondary-dark hover:text-primary whitespace-nowrap opacity-0 group-hover:opacity-100 transition" href="#">关闭看板</a>
+</div>
+<p class="text-sm text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-3">
+<span>#1</span>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<span class="flex items-center gap-1 text-gray-400">
+<span class="material-icons-outlined text-sm">schedule</span>
+                                1 小时前更新
+                            </span>
+</p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-center mt-12 mb-6">
+<nav class="flex items-center space-x-2">
+<a class="px-3 py-1 rounded text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-sm" href="#"> &lt; 上一页 </a>
+<a class="px-3 py-1 rounded bg-black dark:bg-white text-white dark:text-black text-sm font-medium" href="#">1</a>
+<a class="px-3 py-1 rounded text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 text-sm" href="#">2</a>
+<a class="px-3 py-1 rounded text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 text-sm" href="#">3</a>
+<a class="px-3 py-1 rounded text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 text-sm" href="#">4</a>
+<a class="px-3 py-1 rounded text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 text-sm" href="#">5</a>
+<a class="px-3 py-1 rounded text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 text-sm" href="#">6</a>
+<span class="px-2 text-gray-400">...</span>
+<a class="px-3 py-1 rounded text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 text-sm" href="#">100</a>
+<a class="px-3 py-1 rounded text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-sm" href="#"> 下一页 &gt; </a>
+</nav>
+</div>
+</main>
+</div>
+
+</body></html>

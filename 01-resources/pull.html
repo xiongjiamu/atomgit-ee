@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>资源中心 - 合并请求列表 (PR)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#000000",
+                        "primary-hover": "#333333",
+                        "background-light": "#F7F8FA",
+                        "background-dark": "#0F1115",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E2024",
+                        "border-light": "#E5E7EB",
+                        "border-dark": "#2D3035",
+                        "text-primary-light": "#111827",
+                        "text-primary-dark": "#F3F4F6",
+                        "text-secondary-light": "#6B7280",
+                        "text-secondary-dark": "#9CA3AF",
+                        "accent-blue": "#3B82F6",
+                        "accent-green": "#10B981",
+                        "accent-purple": "#8B5CF6",
+                        "accent-orange": "#F97316",
+                        "status-open": "#22C55E",
+                        "status-merged": "#8B5CF6",
+                        "status-closed": "#EF4444",
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans SC"', 'Inter', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                    boxShadow: {
+                        'soft': '0 2px 8px rgba(0, 0, 0, 0.04)',
+                        'hover': '0 4px 12px rgba(0, 0, 0, 0.08)',
+                    }
+                },
+            },
+        };
+    </script>
+<style>::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E5E7EB;
+            border-radius: 3px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #374151;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-primary-light dark:text-text-primary-dark font-sans antialiased transition-colors duration-200">
+<header class="h-14 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark flex items-center justify-between px-4 sticky top-0 z-20">
+<div class="flex items-center space-x-4">
+<button class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-text-secondary-light dark:text-text-secondary-dark">
+<span class="material-icons-outlined">menu</span>
+</button>
+<div class="flex items-center space-x-2">
+<div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-xs">Atom</div>
+<span class="font-medium text-sm hidden sm:block">这是一个企业名称</span>
+<span class="text-xs text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark px-1.5 py-0.5 rounded">企业版</span>
+</div>
+</div>
+<div class="flex-1 max-w-xl mx-4">
+<div class="relative">
+<span class="material-icons-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary-light dark:text-text-secondary-dark text-lg">search</span>
+<input class="w-full bg-gray-50 dark:bg-[#2A2D33] border border-border-light dark:border-border-dark text-sm rounded-md pl-10 pr-4 py-1.5 focus:ring-1 focus:ring-primary dark:focus:ring-gray-500 focus:border-primary dark:focus:border-gray-500 transition-shadow" placeholder="按 / 键快速搜索" type="text"/>
+</div>
+</div>
+<div class="flex items-center space-x-3">
+<button class="bg-primary hover:bg-primary-hover text-white text-sm px-3 py-1.5 rounded-md flex items-center shadow-sm transition-colors">
+<span class="material-icons-outlined text-sm mr-1">add</span> 新建
+            </button>
+<button class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-text-secondary-light dark:text-text-secondary-dark relative">
+<span class="material-icons-outlined text-xl">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-surface-light dark:border-surface-dark"></span>
+</button>
+<div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center text-white text-xs font-bold border border-border-light dark:border-border-dark">U</div>
+</div>
+</header>
+<div class="h-10 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark flex items-center px-4 space-x-6 text-sm overflow-x-auto">
+<a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary dark:hover:text-white flex items-center space-x-1 whitespace-nowrap" href="#">
+<span class="material-icons-outlined text-base">dashboard</span>
+<span>概览</span>
+</a>
+<a class="text-primary dark:text-white font-medium border-b-2 border-primary flex items-center space-x-1 h-full px-1 whitespace-nowrap" href="#">
+<span class="material-icons-outlined text-base">folder_open</span>
+<span>资源中心</span>
+</a>
+<a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary dark:hover:text-white flex items-center space-x-1 whitespace-nowrap" href="#">
+<span class="material-icons-outlined text-base">forum</span>
+<span>社区运营</span>
+</a>
+<a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary dark:hover:text-white flex items-center space-x-1 whitespace-nowrap" href="#">
+<span class="material-icons-outlined text-base">timeline</span>
+<span>流水线</span>
+</a>
+<a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary dark:hover:text-white flex items-center space-x-1 whitespace-nowrap" href="#">
+<span class="material-icons-outlined text-base">security</span>
+<span>安全与合规</span>
+</a>
+<a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary dark:hover:text-white flex items-center space-x-1 whitespace-nowrap" href="#">
+<span class="material-icons-outlined text-base">analytics</span>
+<span>数据看板</span>
+</a>
+<a class="text-text-secondary-light dark:text-text-secondary-dark hover:text-primary dark:hover:text-white flex items-center space-x-1 whitespace-nowrap" href="#">
+<span class="material-icons-outlined text-base">settings</span>
+<span>企业管理</span>
+</a>
+</div>
+<div class="flex h-[calc(100vh-6rem)]">
+<aside class="w-64 bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark flex-shrink-0 flex flex-col overflow-y-auto hidden md:flex">
+<div class="flex-1 py-4">
+<div class="px-4 mb-2 text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider">资源中心</div>
+<nav class="space-y-0.5 px-2">
+<a class="flex items-center justify-between px-3 py-2 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-icons-outlined mr-3 text-lg text-gray-400 group-hover:text-gray-500">bug_report</span>
+                            企业 Issues
+                        </div>
+<span class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 py-0.5 px-2 rounded-full text-xs">121</span>
+</a>
+<a class="flex items-center justify-between px-3 py-2 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-icons-outlined mr-3 text-lg text-gray-400 group-hover:text-gray-500">radio_button_checked</span>
+                            企业看板
+                        </div>
+<span class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 py-0.5 px-2 rounded-full text-xs">121</span>
+</a>
+<a class="flex items-center justify-between px-3 py-2 text-sm font-medium bg-blue-50 dark:bg-blue-900/20 text-accent-blue dark:text-blue-300 rounded-md group transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-icons-outlined mr-3 text-lg text-accent-blue">merge_type</span>
+                            Pull Requests
+                        </div>
+<span class="bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-200 py-0.5 px-2 rounded-full text-xs">132</span>
+</a>
+<a class="flex items-center justify-between px-3 py-2 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-icons-outlined mr-3 text-lg text-gray-400 group-hover:text-gray-500">inventory_2</span>
+                            企业项目
+                        </div>
+<span class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 py-0.5 px-2 rounded-full text-xs">65</span>
+</a>
+<a class="flex items-center justify-between px-3 py-2 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-icons-outlined mr-3 text-lg text-gray-400 group-hover:text-gray-500">timeline</span>
+                            企业里程碑
+                        </div>
+<span class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 py-0.5 px-2 rounded-full text-xs">121</span>
+</a>
+</nav>
+<div class="mt-8 px-4 mb-2 text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider">预警与治理</div>
+<nav class="space-y-0.5 px-2">
+<a class="flex items-center px-3 py-2 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group transition-colors" href="#">
+<span class="material-icons-outlined mr-3 text-lg text-gray-400 group-hover:text-gray-500">folder_zip</span>
+                        企业 LFS
+                    </a>
+<a class="flex items-center px-3 py-2 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group transition-colors" href="#">
+<span class="material-icons-outlined mr-3 text-lg text-gray-400 group-hover:text-gray-500">warning</span>
+                        资源使用预警
+                    </a>
+</nav>
+</div>
+</aside>
+<main class="flex-1 flex flex-col min-w-0 bg-white dark:bg-[#15171B] overflow-hidden">
+<div class="px-6 pt-6 pb-2 space-y-3">
+<div class="flex items-start p-3 text-sm border rounded-lg bg-yellow-50 border-yellow-200 text-yellow-800 dark:bg-yellow-900/10 dark:border-yellow-800 dark:text-yellow-200 shadow-sm">
+<span class="material-icons-outlined text-lg mr-2 mt-0.5 text-yellow-600">warning_amber</span>
+<p class="leading-relaxed">资源预警：您企业当前的存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容</p>
+</div>
+<div class="flex items-start p-3 text-sm border rounded-lg bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-900/10 dark:border-blue-800 dark:text-blue-200 shadow-sm">
+<span class="material-icons-outlined text-lg mr-2 mt-0.5 text-blue-600">info</span>
+<p class="leading-relaxed">企业公告: AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉</p>
+</div>
+</div>
+<div class="px-6 py-4 flex flex-col space-y-5">
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-gray-400 text-xl">search</span>
+</div>
+<input class="block w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-[#1E2024] border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-text-primary-light dark:text-text-primary-dark placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-accent-blue/30 focus:border-accent-blue transition-all shadow-sm" placeholder="搜索 Pull Requests, Issues 或用户..." type="text"/>
+</div>
+<div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4 border-b border-border-light dark:border-border-dark pb-4">
+<div class="flex items-center space-x-1 p-1 bg-gray-50 dark:bg-[#1E2024] rounded-lg border border-gray-100 dark:border-gray-800 w-fit">
+<button class="flex items-center space-x-2 px-3 py-1.5 rounded-md text-sm font-medium bg-white dark:bg-gray-700 text-text-primary-light dark:text-text-primary-dark shadow-sm ring-1 ring-black/5 dark:ring-white/10 transition-all">
+<span>开启中</span>
+<span class="bg-gray-100 dark:bg-gray-600 text-gray-600 dark:text-gray-200 px-1.5 py-0.5 rounded-md text-xs font-semibold">855</span>
+</button>
+<button class="flex items-center space-x-2 px-3 py-1.5 rounded-md text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark hover:bg-gray-200/50 dark:hover:bg-gray-600/50 transition-all">
+<span>已合并</span>
+<span class="bg-transparent text-text-secondary-light dark:text-text-secondary-dark px-1.5 py-0.5 rounded-md text-xs font-semibold">56</span>
+</button>
+<button class="flex items-center space-x-2 px-3 py-1.5 rounded-md text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark hover:bg-gray-200/50 dark:hover:bg-gray-600/50 transition-all">
+<span>已关闭</span>
+<span class="bg-transparent text-text-secondary-light dark:text-text-secondary-dark px-1.5 py-0.5 rounded-md text-xs font-semibold">370</span>
+</button>
+<button class="flex items-center space-x-2 px-3 py-1.5 rounded-md text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark hover:bg-gray-200/50 dark:hover:bg-gray-600/50 transition-all">
+<span>全部</span>
+<span class="bg-transparent text-text-secondary-light dark:text-text-secondary-dark px-1.5 py-0.5 rounded-md text-xs font-semibold">1281</span>
+</button>
+</div>
+<div class="flex items-center flex-wrap gap-2">
+<div class="relative group">
+<button class="flex items-center space-x-1.5 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark px-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all">
+<span>所属组织</span>
+<span class="material-symbols-outlined text-sm leading-none">expand_more</span>
+</button>
+</div>
+<div class="relative group">
+<button class="flex items-center space-x-1.5 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark px-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all">
+<span>所属项目</span>
+<span class="material-symbols-outlined text-sm leading-none">expand_more</span>
+</button>
+</div>
+<div class="relative group">
+<button class="flex items-center space-x-1.5 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark px-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all">
+<span>负责人</span>
+<span class="material-symbols-outlined text-sm leading-none">expand_more</span>
+</button>
+</div>
+<div class="relative group">
+<button class="flex items-center space-x-1.5 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark px-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all">
+<span>Label</span>
+<span class="material-symbols-outlined text-sm leading-none">expand_more</span>
+</button>
+</div>
+<div class="relative group">
+<button class="flex items-center space-x-1.5 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark px-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all">
+<span>里程碑</span>
+<span class="material-symbols-outlined text-sm leading-none">expand_more</span>
+</button>
+</div>
+<div class="w-px h-5 bg-gray-200 dark:bg-gray-700 mx-1"></div>
+<button class="flex items-center space-x-1.5 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark px-3 py-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all">
+<span class="material-symbols-outlined text-base leading-none">sort</span>
+<span>排序</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-6 pt-2">
+<div class="space-y-4">
+<div class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg p-4 hover:shadow-soft hover:border-accent-blue dark:hover:border-gray-600 transition-all group">
+<div class="flex items-start gap-4">
+<div class="mt-1 flex-shrink-0">
+<span class="material-icons-outlined text-status-open text-xl" title="Open Pull Request">merge_type</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<h3 class="text-base font-medium text-text-primary-light dark:text-text-primary-dark truncate group-hover:text-accent-blue transition-colors cursor-pointer">
+                                            [Bug] The issue of occupying space in the non displayed part of a semicircle
+                                        </h3>
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600">duplicate</span>
+</div>
+<div class="flex items-center text-xs text-text-secondary-light dark:text-text-secondary-dark space-x-4">
+<span class="flex items-center gap-1"><span class="material-icons-outlined text-sm">chat_bubble_outline</span> 23</span>
+<span class="flex items-center gap-1"><span class="material-icons-outlined text-sm">schedule</span> 12小时前更新</span>
+</div>
+</div>
+<div class="flex items-center text-xs text-text-secondary-light dark:text-text-secondary-dark space-x-2">
+<span class="font-mono text-gray-500 dark:text-gray-400">csdn / jupyter-notebook #1</span>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<div class="flex items-center gap-1">
+<div class="w-4 h-4 rounded-full bg-gradient-to-r from-blue-400 to-cyan-300"></div>
+<span>Anon 1 周前创建</span>
+</div>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<span class="font-mono">dev-haclei-test</span>
+<span class="text-gray-400">合并到</span>
+<span class="font-mono px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded">main</span>
+<span class="text-green-600 dark:text-green-400">+1</span>
+<span class="text-red-500 dark:text-red-400">-1</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg p-4 hover:shadow-soft hover:border-accent-blue dark:hover:border-gray-600 transition-all group">
+<div class="flex items-start gap-4">
+<div class="mt-1 flex-shrink-0">
+<span class="material-icons-outlined text-status-merged text-xl" title="Merged Pull Request">merge</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<h3 class="text-base font-medium text-text-primary-light dark:text-text-primary-dark truncate group-hover:text-accent-blue transition-colors cursor-pointer">
+                                            removeData
+                                        </h3>
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 border border-blue-100 dark:border-blue-800">documentation</span>
+</div>
+<div class="flex items-center text-xs text-text-secondary-light dark:text-text-secondary-dark space-x-4">
+<span class="flex items-center gap-1"><span class="material-icons-outlined text-sm">chat_bubble_outline</span> 23</span>
+<span class="flex items-center gap-1"><span class="material-icons-outlined text-sm">schedule</span> 12小时前更新</span>
+</div>
+</div>
+<div class="flex items-center text-xs text-text-secondary-light dark:text-text-secondary-dark space-x-2">
+<span class="font-mono text-gray-500 dark:text-gray-400">csdn / jupyter-notebook #1</span>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<div class="flex items-center gap-1">
+<div class="w-4 h-4 rounded-full bg-indigo-400"></div>
+<span>Anon 1 周前创建</span>
+</div>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<span class="font-mono">dev-haclei-test</span>
+<span class="text-gray-400">合并到</span>
+<span class="font-mono px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded">main</span>
+<span class="text-green-600 dark:text-green-400">+1</span>
+<span class="text-red-500 dark:text-red-400">-1</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg p-4 hover:shadow-soft hover:border-accent-blue dark:hover:border-gray-600 transition-all group">
+<div class="flex items-start gap-4">
+<div class="mt-1 flex-shrink-0">
+<span class="material-icons-outlined text-status-open text-xl" title="Open Pull Request">merge_type</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<h3 class="text-base font-medium text-text-primary-light dark:text-text-primary-dark truncate group-hover:text-accent-blue transition-colors cursor-pointer">
+                                           [Bug] Heatmap in some Size show a blank space at left top
+                                        </h3>
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-300 border border-green-100 dark:border-green-800">help wanted</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-300 border border-green-100 dark:border-green-800">feature</span>
+</div>
+<div class="flex items-center text-xs text-text-secondary-light dark:text-text-secondary-dark space-x-4">
+<span class="flex items-center gap-1"><span class="material-icons-outlined text-sm">chat_bubble_outline</span> 23</span>
+<span class="flex items-center gap-1"><span class="material-icons-outlined text-sm">schedule</span> 12小时前更新</span>
+</div>
+</div>
+<div class="flex items-center text-xs text-text-secondary-light dark:text-text-secondary-dark space-x-2">
+<span class="font-mono text-gray-500 dark:text-gray-400">csdn / jupyter-notebook #1</span>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<div class="flex items-center gap-1">
+<div class="w-4 h-4 rounded-full bg-orange-400"></div>
+<span>Anon 1 周前创建</span>
+</div>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<span class="font-mono">dev-haclei-test</span>
+<span class="text-gray-400">合并到</span>
+<span class="font-mono px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded">main</span>
+<span class="text-green-600 dark:text-green-400">+1</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg p-4 hover:shadow-soft hover:border-accent-blue dark:hover:border-gray-600 transition-all group">
+<div class="flex items-start gap-4">
+<div class="mt-1 flex-shrink-0">
+<span class="material-icons-outlined text-status-closed text-xl" title="Closed Pull Request">block</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<h3 class="text-base font-medium text-text-primary-light dark:text-text-primary-dark truncate group-hover:text-accent-blue transition-colors cursor-pointer">
+                                            generation process for the first time may come into idle until I re-generate. The it give
+                                        </h3>
+</div>
+<div class="flex items-center text-xs text-text-secondary-light dark:text-text-secondary-dark space-x-4">
+<span class="flex items-center gap-1"><span class="material-icons-outlined text-sm">chat_bubble_outline</span> 23</span>
+<span class="flex items-center gap-1"><span class="material-icons-outlined text-sm">schedule</span> 12小时前更新</span>
+</div>
+</div>
+<div class="mb-1">
+<p class="text-xs text-text-secondary-light dark:text-text-secondary-dark truncate max-w-3xl">
+                                        [Bug] The generation process for the first time may come into idle until I re-generate. The it gives me two times of response
+                                    </p>
+<div class="flex gap-1 mt-1">
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-300 border border-red-100 dark:border-red-800">bug</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 border border-purple-100 dark:border-purple-800">help wanted</span>
+</div>
+</div>
+<div class="flex items-center text-xs text-text-secondary-light dark:text-text-secondary-dark space-x-2 mt-2">
+<span class="font-mono text-gray-500 dark:text-gray-400">csdn / jupyter-notebook #1</span>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<div class="flex items-center gap-1">
+<div class="w-4 h-4 rounded-full bg-pink-400"></div>
+<span>Anon 1 周前创建</span>
+</div>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<span class="font-mono">dev-haclei-test</span>
+<span class="text-gray-400">合并到</span>
+<span class="font-mono px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded">main</span>
+<span class="text-green-600 dark:text-green-400">+1</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg p-4 hover:shadow-soft hover:border-accent-blue dark:hover:border-gray-600 transition-all group">
+<div class="flex items-start gap-4">
+<div class="mt-1 flex-shrink-0">
+<span class="material-icons-outlined text-status-open text-xl" title="Open Pull Request">merge_type</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<h3 class="text-base font-medium text-text-primary-light dark:text-text-primary-dark truncate group-hover:text-accent-blue transition-colors cursor-pointer">
+                                           Some issues about boxplots
+                                        </h3>
+<span class="material-icons-outlined text-xs text-green-500">check_circle</span>
+</div>
+<div class="flex items-center text-xs text-text-secondary-light dark:text-text-secondary-dark space-x-4">
+<span class="flex items-center gap-1"><span class="material-icons-outlined text-sm">chat_bubble_outline</span> 23</span>
+<span class="flex items-center gap-1"><span class="material-icons-outlined text-sm">schedule</span> 12小时前更新</span>
+</div>
+</div>
+<div class="flex items-center text-xs text-text-secondary-light dark:text-text-secondary-dark space-x-2">
+<span class="font-mono text-gray-500 dark:text-gray-400">csdn / jupyter-notebook #1</span>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<div class="flex items-center gap-1">
+<div class="w-4 h-4 rounded-full bg-teal-400"></div>
+<span>Anon 1 周前创建</span>
+</div>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<span class="font-mono">dev-haclei-test</span>
+<span class="text-gray-400">合并到</span>
+<span class="font-mono px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded">main</span>
+<span class="text-green-600 dark:text-green-400">+1</span>
+<span class="text-red-500 dark:text-red-400">-1</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg p-4 hover:shadow-soft hover:border-accent-blue dark:hover:border-gray-600 transition-all group">
+<div class="flex items-start gap-4">
+<div class="mt-1 flex-shrink-0">
+<span class="material-icons-outlined text-status-open text-xl" title="Open Pull Request">merge_type</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<h3 class="text-base font-medium text-text-primary-light dark:text-text-primary-dark truncate group-hover:text-accent-blue transition-colors cursor-pointer">
+                                           Some issues about boxplots and datasets
+                                        </h3>
+<span class="material-icons-outlined text-xs text-green-500">check_circle</span>
+</div>
+<div class="flex items-center text-xs text-text-secondary-light dark:text-text-secondary-dark space-x-4">
+<span class="flex items-center gap-1"><span class="material-icons-outlined text-sm">chat_bubble_outline</span> 23</span>
+<span class="flex items-center gap-1"><span class="material-icons-outlined text-sm">schedule</span> 12小时前更新</span>
+</div>
+</div>
+<div class="flex items-center text-xs text-text-secondary-light dark:text-text-secondary-dark space-x-2">
+<span class="font-mono text-gray-500 dark:text-gray-400">csdn / jupyter-notebook #1</span>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<div class="flex items-center gap-1">
+<div class="w-4 h-4 rounded-full bg-blue-500"></div>
+<span>Anon 1 周前创建</span>
+</div>
+<span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+<span class="font-mono">dev-haclei-test</span>
+<span class="text-gray-400">合并到</span>
+<span class="font-mono px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded">main</span>
+<span class="text-green-600 dark:text-green-400">+1</span>
+<span class="text-red-500 dark:text-red-400">-1</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 flex justify-center pb-4">
+<nav aria-label="Pagination" class="flex items-center space-x-1">
+<a class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white dark:bg-surface-dark dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md" href="#">
+<span class="sr-only">Previous</span>
+<span class="material-icons-outlined text-sm">chevron_left</span> 上一页
+                        </a>
+<a aria-current="page" class="z-10 bg-primary text-white relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md" href="#">1</a>
+<a class="bg-white dark:bg-surface-dark dark:text-gray-400 border-gray-300 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md" href="#">2</a>
+<a class="bg-white dark:bg-surface-dark dark:text-gray-400 border-gray-300 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 hidden md:inline-flex relative items-center px-4 py-2 text-sm font-medium rounded-md" href="#">3</a>
+<span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-400 bg-white dark:bg-surface-dark">...</span>
+<a class="bg-white dark:bg-surface-dark dark:text-gray-400 border-gray-300 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800 hidden md:inline-flex relative items-center px-4 py-2 text-sm font-medium rounded-md" href="#">100</a>
+<a class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white dark:bg-surface-dark dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-md" href="#">
+<span class="sr-only">Next</span>
+                            下一页 <span class="material-icons-outlined text-sm">chevron_right</span>
+</a>
+</nav>
+</div>
+</div>
+</main>
+</div>
+</body></html>

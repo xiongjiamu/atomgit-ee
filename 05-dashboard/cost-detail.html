@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>数据看板 - 资源与成本下钻详情页</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#D92D20", // Reddish tone from screenshot active state
+                        "primary-hover": "#B42318",
+                        "background-light": "#F9FAFB",
+                        "background-dark": "#111827",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1F2937",
+                        "border-light": "#E5E7EB",
+                        "border-dark": "#374151",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "system-ui", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.375rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }.chart-grid-line { stroke: #E5E7EB; stroke-width: 1; }
+        .dark .chart-grid-line { stroke: #374151; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-200">
+<header class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark sticky top-0 z-50">
+<div class="px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<button class="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-gray-500 dark:text-gray-400">menu</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xs">A</div>
+<span class="font-semibold text-gray-900 dark:text-white">这是一个企业名称</span>
+<span class="px-2 py-0.5 rounded text-xs bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-600">企业版</span>
+</div>
+</div>
+<div class="flex-1 max-w-lg mx-auto">
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-gray-400 text-[20px]">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-1.5 border border-border-light dark:border-border-dark rounded-md leading-5 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm" placeholder="按下 / 快速开启搜索" type="text"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="text-gray-400 text-xs border border-gray-300 dark:border-gray-600 rounded px-1.5 py-0.5">/</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-1 bg-black text-white px-3 py-1.5 rounded-full text-sm hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    新建
+                </button>
+<button class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 relative">
+<span class="material-symbols-outlined text-gray-500 dark:text-gray-400">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-gray-800"></span>
+</button>
+<div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600 font-bold border border-red-200">
+<span class="material-symbols-outlined text-[20px]">face</span>
+</div>
+</div>
+</div>
+<div class="px-4 sm:px-6 lg:px-8 border-t border-border-light dark:border-border-dark flex items-center gap-6 overflow-x-auto text-sm">
+<a class="py-3 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white whitespace-nowrap flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[18px]">home</span> 概览
+            </a>
+<a class="py-3 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white whitespace-nowrap flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[18px]">data_usage</span> 资源中心
+            </a>
+<a class="py-3 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white whitespace-nowrap flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[18px]">forum</span> 社区运营
+            </a>
+<a class="py-3 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white whitespace-nowrap flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[18px]">account_tree</span> 流水线
+            </a>
+<a class="py-3 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white whitespace-nowrap flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[18px]">security</span> 安全与合规
+            </a>
+<a class="py-3 text-primary border-b-2 border-primary font-medium whitespace-nowrap flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[18px] filled">analytics</span> 数据看板
+            </a>
+<a class="py-3 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white whitespace-nowrap flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span> 账单管理
+            </a>
+<a class="py-3 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white whitespace-nowrap flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[18px]">settings</span> 企业管理
+            </a>
+</div>
+</header>
+<div class="bg-orange-50 dark:bg-orange-900/20 border-b border-orange-100 dark:border-orange-900/50 px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between text-sm text-orange-800 dark:text-orange-200">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-orange-600">info</span>
+<span class="font-medium">资源预警:</span>
+<span>您企业当前的存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容</span>
+</div>
+<button class="text-orange-600 hover:text-orange-800 dark:hover:text-orange-100"><span class="material-symbols-outlined text-[18px]">close</span></button>
+</div>
+<div class="bg-blue-50 dark:bg-blue-900/20 border-b border-blue-100 dark:border-blue-900/50 px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between text-sm text-blue-800 dark:text-blue-200">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-blue-600">info</span>
+<span class="font-medium">企业公告:</span>
+<span>AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉</span>
+</div>
+<button class="text-blue-600 hover:text-blue-800 dark:hover:text-blue-100"><span class="material-symbols-outlined text-[18px]">close</span></button>
+</div>
+<div class="flex flex-1">
+<aside class="w-64 bg-background-light dark:bg-background-dark border-r border-border-light dark:border-border-dark hidden lg:block">
+<nav class="p-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+                    流量与用户
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-[20px]">precision_manufacturing</span>
+                    生产与效能
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800" href="#">
+<span class="material-symbols-outlined text-[20px]">volunteer_activism</span>
+                    贡献与生态
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-primary bg-red-50 dark:bg-red-900/20 rounded-md" href="#">
+<span class="material-symbols-outlined text-[20px]">monetization_on</span>
+                    资源与成本
+                </a>
+</nav>
+</aside>
+<main class="flex-1 bg-white dark:bg-surface-dark p-6 lg:p-10 overflow-y-auto">
+<div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-2">
+<span>数据看板</span>
+<span class="mx-2">/</span>
+<span>资源与成本</span>
+<span class="mx-2">/</span>
+<span class="text-gray-900 dark:text-gray-200 font-medium">趋势下钻</span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8">
+<div>
+<h1 class="text-2xl font-bold text-gray-900 dark:text-white">资源与成本统计详情</h1>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Git/LFS 存储用量、流水线消耗及 AI 算力成本详细分析。</p>
+</div>
+<div class="flex items-center gap-3 mt-4 sm:mt-0">
+<div class="relative">
+<select class="appearance-none bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-2 pl-4 pr-10 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent shadow-sm">
+<option>最近 30 天</option>
+<option>最近 7 天</option>
+<option>最近 90 天</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</div>
+</div>
+<button class="p-2 border border-gray-300 dark:border-gray-600 rounded-md text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700 dark:text-gray-400 bg-white dark:bg-gray-800 shadow-sm transition">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500">database</span>
+<span class="text-sm font-medium text-gray-500 dark:text-gray-400">Git 存储</span>
+</div>
+<div class="text-3xl font-bold text-gray-900 dark:text-white mb-1">1.2 TB</div>
+<div class="text-xs text-gray-400 dark:text-gray-500">带宽: 45MB/s</div>
+</div>
+<div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500">inventory_2</span>
+<span class="text-sm font-medium text-gray-500 dark:text-gray-400">LFS 存储</span>
+</div>
+<div class="text-3xl font-bold text-gray-900 dark:text-white mb-1">485 GB</div>
+<div class="text-xs text-gray-400 dark:text-gray-500">带宽: 120MB/s</div>
+</div>
+<div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500">api</span>
+<span class="text-sm font-medium text-gray-500 dark:text-gray-400">API 调用</span>
+</div>
+<div class="text-3xl font-bold text-gray-900 dark:text-white mb-1">8.5 M</div>
+<div class="text-xs text-gray-400 dark:text-gray-500">Error Rate: 0.02%</div>
+</div>
+<div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-gray-400 dark:text-gray-500 text-[20px]">auto_awesome</span>
+<span class="text-sm font-medium text-gray-500 dark:text-gray-400">AI Token</span>
+</div>
+<div class="text-3xl font-bold text-primary dark:text-red-400 mb-1">14.2 M</div>
+<div class="text-xs text-gray-400 dark:text-gray-500">Top User: Dev_A</div>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 mb-8 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-semibold text-gray-900 dark:text-white">资源使用趋势 (Resource Usage Trends)</h3>
+<div class="flex items-center gap-4 text-xs">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-blue-500"></span>
+<span class="text-gray-600 dark:text-gray-400">Git 存储</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-green-500"></span>
+<span class="text-gray-600 dark:text-gray-400">LFS 存储</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-purple-500"></span>
+<span class="text-gray-600 dark:text-gray-400">API 调用</span>
+</div>
+</div>
+</div>
+<div class="w-full h-80 relative">
+<div class="absolute left-0 top-0 bottom-0 w-10 flex flex-col justify-between text-xs text-gray-400 text-right pr-2">
+<span>2.0T</span>
+<span>1.5T</span>
+<span>1.0T</span>
+<span>0.5T</span>
+<span>0</span>
+</div>
+<div class="absolute left-10 right-0 top-2 bottom-6 border-l border-b border-gray-200 dark:border-gray-700">
+<div class="w-full h-1/4 border-t border-dashed border-gray-100 dark:border-gray-700 absolute top-0"></div>
+<div class="w-full h-1/4 border-t border-dashed border-gray-100 dark:border-gray-700 absolute top-[25%]"></div>
+<div class="w-full h-1/4 border-t border-dashed border-gray-100 dark:border-gray-700 absolute top-[50%]"></div>
+<div class="w-full h-1/4 border-t border-dashed border-gray-100 dark:border-gray-700 absolute top-[75%]"></div>
+<svg class="absolute inset-0 w-full h-full overflow-visible" preserveAspectRatio="none">
+<path d="M0,80 Q50,75 100,70 T200,60 T300,55 T400,50 T500,45 T600,40 T700,35 T800,30 T900,25 T1000,20 L1200,10" fill="none" stroke="#3B82F6" stroke-width="3" vector-effect="non-scaling-stroke"></path>
+<path d="M0,80 Q50,75 100,70 T200,60 T300,55 T400,50 T500,45 T600,40 T700,35 T800,30 T900,25 T1000,20 L1200,10 L1200,300 L0,300 Z" fill="url(#blueGradient)" opacity="0.1"></path>
+<defs>
+<linearGradient id="blueGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#3B82F6"></stop>
+<stop offset="100%" stop-color="#3B82F6" stop-opacity="0"></stop>
+</linearGradient>
+</defs>
+</svg>
+<svg class="absolute inset-0 w-full h-full overflow-visible" preserveAspectRatio="none">
+<path d="M0,200 Q150,190 300,180 T600,170 T900,165 T1200,160" fill="none" stroke="#10B981" stroke-dasharray="5,5" stroke-width="3" vector-effect="non-scaling-stroke"></path>
+</svg>
+<svg class="absolute inset-0 w-full h-full overflow-visible" preserveAspectRatio="none">
+<path d="M0,250 L100,240 L200,260 L300,220 L400,230 L500,210 L600,225 L700,200 L800,215 L900,190 L1000,205 L1100,180 L1200,195" fill="none" stroke="#A855F7" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+</svg>
+<div class="absolute left-[60%] top-[30%] w-[1px] h-[70%] bg-gray-400 dark:bg-gray-500 border-l border-dashed border-gray-400">
+<div class="absolute -top-1 -left-[5px] w-2.5 h-2.5 rounded-full bg-blue-500 border-2 border-white dark:border-gray-800 shadow"></div>
+<div class="absolute top-4 left-4 bg-white dark:bg-gray-700 shadow-lg rounded-lg p-3 text-xs border border-gray-200 dark:border-gray-600 min-w-[140px] z-10">
+<div class="font-bold mb-1 text-gray-900 dark:text-white">2023-10-15</div>
+<div class="flex justify-between py-0.5"><span class="text-blue-500">Git:</span> <span class="text-gray-700 dark:text-gray-300">1.12 TB</span></div>
+<div class="flex justify-between py-0.5"><span class="text-green-500">LFS:</span> <span class="text-gray-700 dark:text-gray-300">460 GB</span></div>
+<div class="flex justify-between py-0.5"><span class="text-purple-500">API:</span> <span class="text-gray-700 dark:text-gray-300">420k</span></div>
+</div>
+</div>
+</div>
+<div class="absolute left-10 right-0 bottom-0 flex justify-between text-xs text-gray-400 pt-2">
+<span>10-01</span>
+<span>10-05</span>
+<span>10-10</span>
+<span>10-15</span>
+<span>10-20</span>
+<span>10-25</span>
+<span>10-30</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-800/50">
+<h3 class="text-base font-semibold text-gray-900 dark:text-white">每日详情数据 (Daily Breakdown)</h3>
+<button class="text-sm text-primary hover:text-primary-hover font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">download</span> 导出报表
+                    </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="bg-gray-50 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-medium border-b border-gray-200 dark:border-gray-600">
+<tr>
+<th class="px-6 py-3 whitespace-nowrap">日期</th>
+<th class="px-6 py-3 whitespace-nowrap text-right">Git 存储 (TB)</th>
+<th class="px-6 py-3 whitespace-nowrap text-right">LFS 存储 (GB)</th>
+<th class="px-6 py-3 whitespace-nowrap text-right">API 调用量</th>
+<th class="px-6 py-3 whitespace-nowrap text-right">AI Token 消耗</th>
+<th class="px-6 py-3 whitespace-nowrap text-right">预计费用 (CNY)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-gray-700 text-gray-700 dark:text-gray-300">
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+<td class="px-6 py-3 whitespace-nowrap font-medium text-gray-900 dark:text-white">2023-10-24</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">1.20</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">485.2</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">285,420</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono text-primary">540,200</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">¥ 124.50</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+<td class="px-6 py-3 whitespace-nowrap font-medium text-gray-900 dark:text-white">2023-10-23</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">1.19</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">482.1</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">271,110</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono text-primary">512,800</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">¥ 119.20</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+<td class="px-6 py-3 whitespace-nowrap font-medium text-gray-900 dark:text-white">2023-10-22</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">1.19</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">480.5</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">180,300</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono text-primary">220,100</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">¥ 95.40</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+<td class="px-6 py-3 whitespace-nowrap font-medium text-gray-900 dark:text-white">2023-10-21</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">1.18</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">480.2</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">155,200</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono text-primary">180,400</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">¥ 88.60</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+<td class="px-6 py-3 whitespace-nowrap font-medium text-gray-900 dark:text-white">2023-10-20</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">1.18</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">478.9</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">298,550</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono text-primary">610,230</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">¥ 132.10</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+<td class="px-6 py-3 whitespace-nowrap font-medium text-gray-900 dark:text-white">2023-10-19</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">1.17</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">475.4</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">310,200</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono text-primary">590,400</td>
+<td class="px-6 py-3 whitespace-nowrap text-right font-mono">¥ 129.80</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-3 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between bg-gray-50 dark:bg-gray-800/50">
+<span class="text-sm text-gray-500 dark:text-gray-400">显示 1 至 6 共 30 条</span>
+<div class="flex gap-1">
+<button class="px-3 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-sm hover:bg-gray-50 dark:hover:bg-gray-600 disabled:opacity-50">上一页</button>
+<button class="px-3 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-sm hover:bg-gray-50 dark:hover:bg-gray-600">下一页</button>
+</div>
+</div>
+</div>
+<div class="mt-8 text-center text-xs text-gray-400 dark:text-gray-600">
+                © 2023 AtomGit Enterprise Platform. All rights reserved.
+            </div>
+</main>
+</div>
+
+</body></html>

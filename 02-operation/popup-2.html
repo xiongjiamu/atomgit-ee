@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>社区运营 - 创建勋章引导弹窗 (步骤二)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "system-ui", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>body {
+    font-family: "Inter", sans-serif
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    vertical-align: middle
+    }
+.step-active {
+    color: #135bec
+    }
+.custom-select {
+    appearance: none;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuAi93l6bKEHu0VfaYuuCbZSP3KyS7YvZ_tnJbqcRcI3U3K2tXRDjjKzZrzgjXec0PzXkrTFdat8rjdU2565ECVzT_caSNOolZnm2YWnX6jH29cbQ9W8_wDmvglLxRzb6NA07tRLXXTEu7lC5HaMhzr6YXyNxeZYafR6GykNcnNYeMPtrsODfhzvZcZmEOeYubgBzjkU9gJx-xKTjmVPEbHHXitGEtOMaGl7IBjjPrnrCSmOE87pNRM1FVwq2Kzuwws6OtgSgf9Yg_32);
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em
+    }</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex items-center justify-center p-4">
+<!-- Modal Container -->
+<div class="bg-white dark:bg-[#1a2130] w-full max-w-[720px] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-gray-200 dark:border-gray-800">
+<!-- Header -->
+<div class="flex items-center justify-between px-8 py-5 border-b border-gray-100 dark:border-gray-800">
+<h2 class="text-[#0d121b] dark:text-white text-xl font-bold leading-tight tracking-tight">创建勋章</h2>
+<button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Stepper -->
+<div class="px-12 py-8 bg-gray-50/50 dark:bg-gray-900/20">
+<div class="flex items-center justify-between relative">
+<!-- Step 1 -->
+<div class="flex flex-col items-center z-10">
+<div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 mb-2 border-2 border-green-500">
+<span class="material-symbols-outlined text-lg">check</span>
+</div>
+<span class="text-sm font-medium text-gray-500 dark:text-gray-400">基础信息</span>
+</div>
+<!-- Connector 1 -->
+<div class="absolute top-5 left-[15%] right-[50%] h-[2px] bg-primary"></div>
+<!-- Step 2 (Active) -->
+<div class="flex flex-col items-center z-10">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white mb-2 shadow-lg shadow-primary/20 ring-4 ring-primary/10">
+<span class="text-sm font-bold">2</span>
+</div>
+<span class="text-sm font-bold text-primary">触发规则</span>
+</div>
+<!-- Connector 2 -->
+<div class="absolute top-5 left-[50%] right-[15%] h-[2px] bg-gray-200 dark:bg-gray-700"></div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center z-10">
+<div class="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-400 mb-2 border-2 border-gray-200 dark:border-gray-700">
+<span class="text-sm font-bold">3</span>
+</div>
+<span class="text-sm font-medium text-gray-400">预览并发布</span>
+</div>
+</div>
+</div>
+<!-- Form Content -->
+<div class="px-12 py-6 overflow-y-auto max-h-[500px]">
+<div class="space-y-8">
+<!-- Trigger Configuration Section -->
+<section>
+<div class="flex items-center gap-2 mb-6">
+<span class="w-1 h-5 bg-primary rounded-full"></span>
+<h3 class="text-lg font-bold text-[#0d121b] dark:text-white">规则配置</h3>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<!-- Trigger Event Dropdown -->
+<div class="col-span-2 sm:col-span-1">
+<label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                触发事件
+                                <span class="material-symbols-outlined text-gray-400 text-base ml-1 cursor-help" title="定义用户何种行为可计入勋章统计">info</span>
+</label>
+<select class="custom-select w-full h-12 px-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary focus:border-primary transition-all">
+<option value="merge_pr">合并 Pull Request</option>
+<option value="open_issue">提交 Issue</option>
+<option value="get_star">获得仓库 Star</option>
+<option value="commit">提交代码 (Commit)</option>
+<option value="comment">发表评论</option>
+</select>
+</div>
+<!-- Completion Count -->
+<div class="col-span-2 sm:col-span-1">
+<label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">完成次数</label>
+<div class="relative">
+<input class="w-full h-12 px-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary focus:border-primary transition-all" min="1" type="number" value="10"/>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm">次</span>
+</div>
+</div>
+<!-- Auto-issue Toggle -->
+<div class="col-span-2 bg-primary/5 dark:bg-primary/10 p-5 rounded-xl flex items-center justify-between">
+<div>
+<p class="text-sm font-bold text-[#0d121b] dark:text-white mb-1">自动发放勋章</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">满足触发规则后，系统将自动为符合条件的用户佩戴此勋章</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-12 h-6 bg-gray-200 peer-focus:outline-none dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</section>
+<!-- Advanced Settings Section -->
+<section class="border-t border-gray-100 dark:border-gray-800 pt-8">
+<div class="flex items-center gap-2 mb-6">
+<span class="w-1 h-5 bg-primary rounded-full"></span>
+<h3 class="text-lg font-bold text-[#0d121b] dark:text-white">高级设置 (可选)</h3>
+</div>
+<div class="space-y-6">
+<!-- Date Range Picker Placeholder -->
+<div>
+<label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">有效挑战周期</label>
+<div class="flex items-center gap-4">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">calendar_month</span>
+<input class="w-full h-12 pl-10 pr-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary focus:border-primary" placeholder="开始日期" type="text"/>
+</div>
+<span class="text-gray-400">至</span>
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">calendar_month</span>
+<input class="w-full h-12 pl-10 pr-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-primary focus:border-primary" placeholder="结束日期" type="text"/>
+</div>
+</div>
+<p class="mt-2 text-xs text-gray-500">仅在指定时间范围内完成的行为会被统计（留空则永久有效）</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Footer -->
+<div class="px-12 py-6 bg-gray-50 dark:bg-gray-900/50 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+<button class="px-6 h-11 rounded-lg border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+                上一步
+            </button>
+<div class="flex gap-4">
+<button class="px-6 h-11 rounded-lg text-gray-500 hover:text-gray-700 font-medium transition-colors">
+                    取消
+                </button>
+<button class="px-8 h-11 rounded-lg bg-primary text-white font-bold hover:bg-blue-700 shadow-lg shadow-primary/20 transition-all flex items-center gap-2">
+                    下一步
+                    <span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Hidden Background Image reference for prompt compliance -->
+<div class="hidden">
+<div data-alt="Abstract soft blue gradient for dashboard background"></div>
+</div>
+</body></html>

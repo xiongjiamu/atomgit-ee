@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>社区运营 - 创建勋章引导弹窗</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Open Sans", "Helvetica Neue", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-size: 24px; vertical-align: middle; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex items-center justify-center p-4">
+<!-- Modal Container -->
+<div class="bg-white dark:bg-[#1a2131] w-full max-w-[800px] rounded-xl shadow-2xl overflow-hidden flex flex-col">
+<!-- Header -->
+<header class="flex items-center justify-between border-b border-solid border-[#e7ebf3] dark:border-[#2d3648] px-8 py-5">
+<div class="flex items-center gap-3">
+<div class="text-primary">
+<span class="material-symbols-outlined">award_star</span>
+</div>
+<h1 class="text-[#0d121b] dark:text-white text-xl font-bold leading-tight">创建勋章</h1>
+</div>
+<button class="text-[#4c669a] hover:text-[#0d121b] dark:text-[#a0aec0] dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</header>
+<!-- Stepper -->
+<div class="px-8 pt-8">
+<div class="flex border-b border-[#cfd7e7] dark:border-[#2d3648] justify-between">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#4c669a] dark:text-[#a0aec0] pb-[13px] pt-4 flex-1 cursor-not-allowed" href="#">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">1. 基础信息</p>
+</div>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-[#4c669a] dark:text-[#a0aec0] pb-[13px] pt-4 flex-1 cursor-not-allowed" href="#">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">2. 获取规则</p>
+</div>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-primary text-primary pb-[13px] pt-4 flex-1" href="#">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">edit_square</span>
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">3. 奖励配置</p>
+</div>
+</a>
+</div>
+</div>
+<!-- Content Area -->
+<main class="flex-1 overflow-y-auto px-8 py-6 custom-scrollbar">
+<section class="mb-8">
+<h2 class="text-[#0d121b] dark:text-white text-lg font-bold mb-4">奖励与展示设置</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Reward Points -->
+<div class="flex flex-col gap-2">
+<label class="text-[#0d121b] dark:text-[#e2e8f0] text-sm font-medium">额外积分奖励</label>
+<div class="flex items-stretch rounded-lg group">
+<input class="flex-1 min-w-0 rounded-lg text-[#0d121b] dark:text-white border border-[#cfd7e7] dark:border-[#2d3648] bg-white dark:bg-[#101622] h-12 px-4 focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-all rounded-r-none border-r-0 placeholder:text-[#4c669a]/50" placeholder="输入数值" type="number" value="100"/>
+<div class="bg-[#f8f9fc] dark:bg-[#2d3648] border border-[#cfd7e7] dark:border-[#2d3648] border-l-0 rounded-r-lg px-4 flex items-center text-[#4c669a] dark:text-[#a0aec0] text-sm font-medium">
+                                积分
+                            </div>
+</div>
+</div>
+<!-- Highlight Option -->
+<div class="flex flex-col gap-2 justify-end pb-3">
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="relative">
+<input checked="" class="peer sr-only" type="checkbox"/>
+<div class="w-11 h-6 bg-gray-200 dark:bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</div>
+<span class="text-[#0d121b] dark:text-[#e2e8f0] text-sm font-medium">在用户个人主页高亮显示</span>
+</label>
+</div>
+</div>
+</section>
+<!-- Final Preview Summary -->
+<section class="bg-primary/5 dark:bg-primary/10 border border-primary/20 rounded-xl p-6">
+<h3 class="text-primary dark:text-blue-400 text-sm font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">visibility</span>
+                    勋章详情预览
+                </h3>
+<div class="flex flex-col sm:flex-row gap-6 items-start">
+<!-- Visual Mockup -->
+<div class="w-32 h-32 flex-shrink-0 bg-white dark:bg-[#101622] rounded-xl border border-primary/20 flex flex-col items-center justify-center shadow-sm">
+<div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg mb-2 relative overflow-hidden">
+<span class="material-symbols-outlined text-white text-4xl relative z-10">code_blocks</span>
+<div class="absolute inset-0 bg-white/10" data-alt="Abstract gradient badge icon pattern"></div>
+</div>
+<span class="text-[10px] text-primary/60 dark:text-blue-400/60 font-bold">贡献先锋</span>
+</div>
+<!-- Rules Summary -->
+<div class="flex-1 space-y-3">
+<div>
+<p class="text-[#4c669a] dark:text-[#a0aec0] text-xs font-semibold mb-1">勋章名称</p>
+<p class="text-[#0d121b] dark:text-white font-bold">代码贡献先锋 (Gold Level)</p>
+</div>
+<div>
+<p class="text-[#4c669a] dark:text-[#a0aec0] text-xs font-semibold mb-1">获取规则</p>
+<div class="bg-white/50 dark:bg-black/20 rounded p-3 text-sm text-[#0d121b] dark:text-[#cbd5e0] leading-relaxed border border-[#cfd7e7] dark:border-[#2d3648]">
+<ul class="list-disc list-inside space-y-1">
+<li>累计合并 5 个 Pull Request</li>
+<li>代码 Review 获赞数超过 20</li>
+<li>参与贡献的项目 Star 数 &gt; 100</li>
+</ul>
+</div>
+</div>
+<div class="flex gap-4">
+<div>
+<p class="text-[#4c669a] dark:text-[#a0aec0] text-xs font-semibold mb-1">奖励</p>
+<p class="text-primary dark:text-blue-400 text-sm font-bold">+100 社区积分</p>
+</div>
+<div>
+<p class="text-[#4c669a] dark:text-[#a0aec0] text-xs font-semibold mb-1">展示</p>
+<p class="text-green-600 dark:text-green-400 text-sm font-bold">主页高亮</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="border-t border-solid border-[#e7ebf3] dark:border-[#2d3648] px-8 py-5 flex items-center justify-between bg-white dark:bg-[#1a2131]">
+<button class="flex items-center gap-2 px-6 py-2.5 rounded-lg border border-[#cfd7e7] dark:border-[#2d3648] text-[#0d121b] dark:text-white font-semibold text-sm hover:bg-gray-50 dark:hover:bg-[#2d3648] transition-colors">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+                上一步
+            </button>
+<button class="flex items-center gap-2 px-8 py-2.5 rounded-lg bg-primary hover:bg-blue-700 text-white font-bold text-sm shadow-md shadow-blue-500/20 transition-all active:scale-95">
+                确认创建
+                <span class="material-symbols-outlined text-lg">rocket_launch</span>
+</button>
+</footer>
+</div>
+</body></html>

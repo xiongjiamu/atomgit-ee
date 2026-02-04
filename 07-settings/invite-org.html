@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>企业管理 - 邀请组织弹窗</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2563EB", // Blue-600
+                        "primary-hover": "#1D4ED8", // Blue-700
+                        "background-light": "#F9FAFB", // Gray-50
+                        "background-dark": "#0f172a", // Slate-900
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1e293b", // Slate-800
+                        "border-light": "#E5E7EB", // Gray-200
+                        "border-dark": "#334155", // Slate-700
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans SC"', 'sans-serif'],
+                        display: ['"Noto Sans SC"', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.375rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>.custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #CBD5E1;
+            border-radius: 20px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #475569;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200 font-sans h-screen flex flex-col overflow-hidden">
+<header class="h-14 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark flex items-center justify-between px-4 shrink-0 z-20 relative">
+<div class="flex items-center space-x-4">
+<div class="w-8 h-8 rounded-full bg-gradient-to-br from-red-400 to-red-600"></div>
+<div class="flex items-center space-x-2">
+<span class="font-medium text-gray-900 dark:text-white">这是一个企业名称</span>
+<span class="text-xs px-1.5 py-0.5 rounded border border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 flex items-center">
+<span class="material-icons-outlined text-[14px] mr-1">inventory_2</span> 企业版
+                </span>
+</div>
+</div>
+<div class="flex-1 max-w-xl mx-4">
+<div class="relative group">
+<span class="material-icons-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 group-focus-within:text-primary">search</span>
+<input class="w-full pl-10 pr-4 py-1.5 bg-gray-100 dark:bg-gray-900 border-none rounded-md text-sm focus:ring-1 focus:ring-primary placeholder-gray-400 dark:text-gray-200" placeholder="按下 / 快速开启搜索" type="text"/>
+<div class="absolute right-3 top-1/2 transform -translate-y-1/2 px-1.5 py-0.5 bg-white dark:bg-gray-700 rounded border border-gray-200 dark:border-gray-600 text-xs text-gray-400 font-mono">/</div>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<button class="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 px-3 py-1.5 rounded text-sm font-medium flex items-center">
+<span class="material-icons-outlined text-sm mr-1">add</span> 新建
+            </button>
+<button class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+<span class="material-icons-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900 flex items-center justify-center text-red-600 dark:text-red-300">
+<span class="material-icons-outlined text-sm">face</span>
+</div>
+</div>
+</header>
+<div class="h-12 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark flex items-center px-4 shrink-0 overflow-x-auto">
+<nav class="flex space-x-6 text-sm font-medium h-full">
+<a class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white h-full border-b-2 border-transparent" href="#">
+<span class="material-icons-outlined text-[18px] mr-1.5">home</span> 概览
+            </a>
+<a class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white h-full border-b-2 border-transparent" href="#">
+<span class="material-icons-outlined text-[18px] mr-1.5">dns</span> 资源中心
+            </a>
+<a class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white h-full border-b-2 border-transparent" href="#">
+<span class="material-icons-outlined text-[18px] mr-1.5">forum</span> 社区运营
+            </a>
+<a class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white h-full border-b-2 border-transparent" href="#">
+<span class="material-icons-outlined text-[18px] mr-1.5">view_kanban</span> 流水线
+            </a>
+<a class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white h-full border-b-2 border-transparent" href="#">
+<span class="material-icons-outlined text-[18px] mr-1.5">verified_user</span> 安全与合规
+            </a>
+<a class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white h-full border-b-2 border-transparent" href="#">
+<span class="material-icons-outlined text-[18px] mr-1.5">folder</span> 数据看板
+            </a>
+<a class="flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white h-full border-b-2 border-transparent" href="#">
+<span class="material-icons-outlined text-[18px] mr-1.5">receipt</span> 账单管理
+            </a>
+<a class="flex items-center text-primary h-full border-b-2 border-primary" href="#">
+<span class="material-icons-outlined text-[18px] mr-1.5">settings</span> 企业管理
+            </a>
+</nav>
+</div>
+<div class="flex flex-col shrink-0">
+<div class="bg-orange-50 dark:bg-orange-900/30 border-b border-orange-100 dark:border-orange-800/50 px-6 py-2 flex items-center justify-between">
+<div class="flex items-center text-xs text-orange-800 dark:text-orange-200">
+<span class="material-icons-outlined text-sm mr-2 text-orange-600 dark:text-orange-400">error</span>
+<span class="font-bold mr-1">资源预警：</span> 您企业当前的存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容
+            </div>
+<button class="text-orange-400 hover:text-orange-600 dark:text-orange-300">
+<span class="material-icons-outlined text-sm">close</span>
+</button>
+</div>
+<div class="bg-blue-50 dark:bg-blue-900/30 border-b border-blue-100 dark:border-blue-800/50 px-6 py-2 flex items-center justify-between">
+<div class="flex items-center text-xs text-blue-800 dark:text-blue-200">
+<span class="material-icons-outlined text-sm mr-2 text-primary">info</span>
+<span class="font-bold mr-1">企业公告：</span> AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉
+            </div>
+<button class="text-blue-400 hover:text-blue-600 dark:text-blue-300">
+<span class="material-icons-outlined text-sm">close</span>
+</button>
+</div>
+</div>
+<div class="flex flex-1 overflow-hidden relative">
+<aside class="w-64 bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark overflow-y-auto custom-scrollbar flex flex-col py-6 shrink-0">
+<div class="mb-8">
+<h3 class="px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">组织与成员</h3>
+<nav class="space-y-0.5">
+<a class="flex items-center px-6 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 group" href="#">
+<span class="material-icons-outlined text-gray-400 group-hover:text-gray-500 mr-3 text-[18px]">group</span>
+<span class="flex-1">企业成员管理</span>
+<span class="bg-gray-100 dark:bg-gray-700 text-gray-500 text-xs py-0.5 px-1.5 rounded">121</span>
+</a>
+<a class="flex items-center px-6 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 group" href="#">
+<span class="material-icons-outlined text-gray-400 group-hover:text-gray-500 mr-3 text-[18px]">manage_accounts</span>
+<span class="flex-1">角色与权限</span>
+<span class="bg-gray-100 dark:bg-gray-700 text-gray-500 text-xs py-0.5 px-1.5 rounded">12</span>
+</a>
+<a class="flex items-center px-6 py-2 text-sm text-primary bg-blue-50 dark:bg-blue-900/20 group relative border-r-2 border-primary" href="#">
+<span class="material-icons-outlined text-primary mr-3 text-[18px]">domain</span>
+<span class="flex-1 font-medium">组织管理</span>
+<span class="bg-blue-100 dark:bg-blue-800 text-primary dark:text-blue-200 text-xs py-0.5 px-1.5 rounded">121</span>
+</a>
+</nav>
+</div>
+<div class="mb-8">
+<h3 class="px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">DevOps 基础设施</h3>
+<nav class="space-y-0.5">
+<a class="flex items-center px-6 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 group" href="#">
+<span class="material-icons-outlined text-gray-400 group-hover:text-gray-500 mr-3 text-[18px]">layers</span>
+<span class="flex-1">构建资源 (Runners)</span>
+</a>
+<a class="flex items-center px-6 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 group" href="#">
+<span class="material-icons-outlined text-gray-400 group-hover:text-gray-500 mr-3 text-[18px]">webhook</span>
+<span class="flex-1">企业 WebHooks</span>
+</a>
+<a class="flex items-center px-6 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 group" href="#">
+<span class="material-icons-outlined text-gray-400 group-hover:text-gray-500 mr-3 text-[18px]">vpn_key</span>
+<span class="flex-1">企业 Token 管理</span>
+</a>
+</nav>
+</div>
+<div class="mb-8">
+<h3 class="px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">安全与策略</h3>
+<nav class="space-y-0.5">
+<a class="flex items-center px-6 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 group" href="#">
+<span class="material-icons-outlined text-gray-400 group-hover:text-gray-500 mr-3 text-[18px]">gavel</span>
+<span class="flex-1">Rulesets 规则集</span>
+<span class="bg-gray-100 dark:bg-gray-700 text-gray-500 text-xs py-0.5 px-1.5 rounded">20</span>
+</a>
+<a class="flex items-center px-6 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 group" href="#">
+<span class="material-icons-outlined text-gray-400 group-hover:text-gray-500 mr-3 text-[18px]">playlist_add_check</span>
+<span class="flex-1">IP 白名单</span>
+</a>
+</nav>
+</div>
+<div class="mb-8">
+<h3 class="px-6 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">运营配置</h3>
+<nav class="space-y-0.5">
+<a class="flex items-center px-6 py-2 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 group" href="#">
+<span class="material-icons-outlined text-gray-400 group-hover:text-gray-500 mr-3 text-[18px]">tune</span>
+<span class="flex-1">Issue 字段配置</span>
+</a>
+</nav>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto p-8 relative">
+<div class="max-w-6xl mx-auto">
+<div class="flex items-center justify-between mb-6">
+<h1 class="text-2xl font-bold text-gray-900 dark:text-white">组织管理</h1>
+<button class="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-md text-sm font-medium shadow-sm transition-colors duration-200">
+                        添加组织
+                    </button>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow cursor-pointer w-full md:w-1/2 lg:w-1/3">
+<div class="flex items-start space-x-4">
+<div class="w-12 h-12 rounded bg-gray-900 flex items-center justify-center text-white font-bold text-lg">
+                            FE
+                        </div>
+<div>
+<h3 class="text-base font-semibold text-gray-900 dark:text-white">Frontend Team</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">24 Members</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<div class="fixed inset-0 bg-gray-900/60 dark:bg-black/70 backdrop-blur-[2px] z-50 flex items-center justify-center p-4 transition-opacity duration-300">
+<div class="bg-white dark:bg-surface-dark w-full max-w-lg rounded-xl shadow-2xl transform scale-100 transition-transform duration-300 flex flex-col max-h-[90vh]">
+<div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-700">
+<h2 class="text-lg font-semibold text-gray-900 dark:text-white">添加组织</h2>
+<button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+<span class="material-icons-outlined">close</span>
+</button>
+</div>
+<div class="px-6 border-b border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/30">
+<div class="flex space-x-6">
+<button class="py-3 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 border-b-2 border-transparent transition-colors">
+                            新建组织
+                        </button>
+<button class="py-3 text-sm font-medium text-primary border-b-2 border-primary transition-colors">
+                            邀请组织
+                        </button>
+</div>
+</div>
+<div class="p-6 overflow-y-auto">
+<form action="#" class="space-y-6">
+<div class="relative">
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5" for="org-search">选择要邀请的组织 <span class="text-red-500">*</span></label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-gray-400 text-[20px]">search</span>
+</span>
+<input class="w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-primary focus:ring-primary dark:focus:ring-primary shadow-sm text-sm py-2.5 pl-10" id="org-search" placeholder="搜索组织名称或 ID" type="text" value="Backend"/>
+</div>
+<div class="mt-2 rounded-md border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 shadow-lg overflow-hidden">
+<ul class="divide-y divide-gray-100 dark:divide-gray-700 max-h-48 overflow-y-auto">
+<li class="px-4 py-2.5 hover:bg-blue-50 dark:hover:bg-blue-900/20 cursor-pointer flex items-center justify-between group bg-blue-50/50 dark:bg-blue-900/10">
+<div class="flex items-center">
+<div class="w-8 h-8 rounded bg-indigo-600 flex items-center justify-center text-white text-xs font-bold mr-3">
+                                            BE
+                                        </div>
+<div>
+<p class="text-sm font-medium text-gray-900 dark:text-white">Backend Team</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">@backend-core</p>
+</div>
+</div>
+<span class="material-icons-outlined text-primary text-sm">check_circle</span>
+</li>
+<li class="px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer flex items-center justify-between group">
+<div class="flex items-center">
+<div class="w-8 h-8 rounded bg-green-600 flex items-center justify-center text-white text-xs font-bold mr-3">
+                                            DV
+                                        </div>
+<div>
+<p class="text-sm font-medium text-gray-900 dark:text-white">DevOps Infra</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">@devops-infra</p>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5" for="invite-role">分配角色</label>
+<div class="relative">
+<select class="appearance-none w-full rounded-md border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-primary focus:ring-primary shadow-sm text-sm py-2.5 pl-3 pr-10" id="invite-role">
+<option value="member">成员 (Member)</option>
+<option value="admin">管理员 (Admin)</option>
+<option value="guest">访客 (Guest)</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+<span class="material-icons-outlined text-[20px]">expand_more</span>
+</div>
+</div>
+<p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">
+                                邀请后，该组织内的所有成员将获得对应权限。
+                            </p>
+</div>
+<div class="rounded-md bg-blue-50 dark:bg-blue-900/20 p-4 border border-blue-100 dark:border-blue-800/50">
+<div class="flex">
+<div class="flex-shrink-0">
+<span class="material-icons-outlined text-primary text-sm mt-0.5">info</span>
+</div>
+<div class="ml-3 flex-1 md:flex md:justify-between">
+<p class="text-sm text-blue-700 dark:text-blue-300">
+                                    即将邀请 <strong>Backend Team</strong> 加入企业。
+                                </p>
+</div>
+</div>
+</div>
+</form>
+</div>
+<div class="px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-100 dark:border-gray-700 flex items-center justify-end space-x-3 rounded-b-xl">
+<button class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-gray-800 transition-colors" type="button">
+                        取消
+                    </button>
+<button class="px-4 py-2 bg-primary border border-transparent rounded-md text-sm font-medium text-white hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-offset-gray-800 shadow-sm transition-colors" type="button">
+                        确定邀请
+                    </button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

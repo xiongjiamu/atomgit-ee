@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>数据看板 - 全部核心贡献者列表</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Noto+Sans+SC:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "Noto Sans SC", "sans-serif"],
+                        "sans": ["Inter", "Noto Sans SC", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', 'Noto Sans SC', sans-serif; }
+        .material-symbols-outlined { vertical-align: middle; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
+<div class="min-h-screen flex flex-col w-full">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 w-full bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 h-16 flex items-center justify-between px-6 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="size-8 flex items-center justify-center text-primary">
+<svg class="w-full h-full" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 45.8096C19.6865 45.8096 15.4698 44.5305 11.8832 42.134C8.29667 39.7376 5.50128 36.3314 3.85056 32.3462C2.19985 28.361 1.76794 23.9758 2.60947 19.7452C3.451 15.5145 5.52816 11.6284 8.57829 8.5783C11.6284 5.52817 15.5145 3.45101 19.7452 2.60948C23.9758 1.76795 28.361 2.19986 32.3462 3.85057C36.3314 5.50129 39.7376 8.29668 42.134 11.8833C44.5305 15.4698 45.8096 19.6865 45.8096 24L24 24L24 45.8096Z" fill="currentColor"></path>
+</svg>
+</div>
+<h1 class="text-slate-900 dark:text-white text-lg font-bold tracking-tight">AtomGit Enterprise</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-6">
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">控制台</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">文档</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors" href="#">帮助</a>
+</nav>
+<div class="h-6 w-px bg-slate-200 dark:bg-slate-700 hidden md:block"></div>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center size-9 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center size-9 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="size-9 rounded-full bg-cover bg-center border border-slate-200 dark:border-slate-600 cursor-pointer" data-alt="User profile picture showing a smiling professional" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCowJR4TPvENHu24y4FL16ZUKX3XjMm8zBOti4WbnF3LXziHe6b8EdtzqBn23Md-uG3ixI9QLsMAvjgBdzygP2tHx7SeRYyxXt5nV9dcGb8DnH2loz6-DOclF6vhhtkHPncWITNyT5CPkTqyT07N7YEsepUi99EB64Jb-NaHVUnIaiTnOF0e6ycoBM7GWOePc2TrIsR6zmEjzkURgIdCjd0rWqg_LE_x0pVSuSXHPyNzTfPlggGTiJM4UhSKj8ZBYh-3NAMxmgS9AyO");'>
+</div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col shrink-0">
+<div class="p-4 border-b border-slate-100 dark:border-slate-700/50">
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
+<div class="size-10 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">insights</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white">AtomGit Insight</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">数据洞察中心</span>
+</div>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto p-4 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary transition-colors">home</span>
+<span class="text-sm font-medium">总览</span>
+</a>
+<!-- Active Item -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary-400 font-medium" href="#">
+<span class="material-symbols-outlined text-[22px] fill-1">group</span>
+<span class="text-sm">贡献与生态</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary transition-colors">pie_chart</span>
+<span class="text-sm font-medium">项目分析</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary transition-colors">content_copy</span>
+<span class="text-sm font-medium">代码质量</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[22px] group-hover:text-primary transition-colors">manage_accounts</span>
+<span class="text-sm font-medium">团队管理</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 overflow-y-auto bg-background-light dark:bg-background-dark p-6 lg:p-10">
+<div class="max-w-[1600px] w-full mx-auto space-y-6">
+<!-- Breadcrumbs -->
+<nav class="flex items-center text-sm text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">数据看板</a>
+<span class="mx-2">/</span>
+<a class="hover:text-primary transition-colors" href="#">贡献与生态</a>
+<span class="mx-2">/</span>
+<span class="text-slate-900 dark:text-white font-medium">全部核心贡献者</span>
+</nav>
+<!-- Page Header & Actions -->
+<div class="flex flex-col xl:flex-row xl:items-end justify-between gap-6">
+<div class="space-y-2">
+<h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">全部核心贡献者列表</h1>
+<p class="text-slate-500 dark:text-slate-400 max-w-2xl">
+                            查看社区贡献者的详细排名与各项指标数据，基于代码提交、Issue 处理及代码评审的综合评估。
+                        </p>
+</div>
+<!-- Toolbar -->
+<div class="flex flex-wrap items-center gap-3">
+<!-- Search -->
+<div class="relative group">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors material-symbols-outlined text-[20px]">search</span>
+<input class="h-10 pl-10 pr-4 w-64 rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-sm outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-slate-900 dark:text-white placeholder:text-slate-400" placeholder="搜索开发者姓名或 ID" type="text"/>
+</div>
+<!-- Date Picker -->
+<div class="relative">
+<button class="h-10 px-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-lg flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:border-primary/50 transition-colors">
+<span class="material-symbols-outlined text-[20px] text-slate-500">calendar_today</span>
+<span>近30天</span>
+<span class="material-symbols-outlined text-[20px] text-slate-400">arrow_drop_down</span>
+</button>
+</div>
+<!-- Export Button -->
+<button class="h-10 px-5 bg-primary hover:bg-blue-600 text-white rounded-lg text-sm font-bold flex items-center gap-2 transition-colors shadow-sm shadow-blue-500/20">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                            导出榜单
+                        </button>
+</div>
+</div>
+<!-- Data Table Card -->
+<div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-700/30 border-b border-slate-200 dark:border-slate-700">
+<th class="py-4 pl-6 pr-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 w-20 text-center">排名</th>
+<th class="py-4 px-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 min-w-[240px]">开发者</th>
+<th class="py-4 px-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 min-w-[200px]">代码贡献量</th>
+<th class="py-4 px-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">PR 提交/合入</th>
+<th class="py-4 px-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Issue 处理</th>
+<th class="py-4 px-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">代码评审量</th>
+<th class="py-4 pr-6 pl-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 text-right">综合贡献分</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/20 transition-colors group">
+<td class="py-4 pl-6 pr-4 text-center">
+<div class="size-8 mx-auto flex items-center justify-center rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400">
+<span class="material-symbols-outlined text-[20px]">emoji_events</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center border border-slate-100 dark:border-slate-600" data-alt="Avatar of Sarah Chen" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBXhyZKBAfRHylBx1WiEnAmhP8zhxlUZqpuJ0nYru3Titvz6IQUOUluTrZp536t86Y3axYRN70AwczUIxm4aUC7QBPJB8FK2IkiUCBXGvR1wdFyxfaKDmN2cAD-6vd0_fMWiZntu2LfMQb8TSRc-CXkn7yfj9lxRVwj5vkK_G0bGPaFG4D1Zm7Q6ueu327MwI5brCoBB5muiEv9sra3pw4AZlclLHvAFcmfrtxj6DIJ-sRKuZOe-LP2smZjS44Ly-L4DQDkkhdoAgHx");'></div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors cursor-pointer">Sarah Chen</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Platform Engineering • Alibaba</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-1.5 w-full max-w-[160px]">
+<span class="text-sm font-medium text-slate-900 dark:text-white">12,450 lines</span>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-600 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 95%"></div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">142 <span class="text-slate-400 mx-1">/</span> 138</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">89</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">324</td>
+<td class="py-4 pr-6 pl-4 text-right">
+<span class="text-base font-bold text-primary">98.5</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/20 transition-colors group">
+<td class="py-4 pl-6 pr-4 text-center">
+<div class="size-8 mx-auto flex items-center justify-center rounded-full bg-slate-200 dark:bg-slate-600 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined text-[20px]">workspace_premium</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center border border-slate-100 dark:border-slate-600" data-alt="Avatar of Mike Ross" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAn5ywixAJUCo2AaNznEv9dfNXAr3aabmdWOF6kBxzcCzmLMKOtKCWrkfY5bFlVg9BdMbpTYEKWt92G8tNpl62J84T0cCAzYTGXgnwwajhD5CU6NVs9tRmrU1pSHFeBTBkqDfrpvgkaQq94QwDvnVxaGTz2ZSpS2bpul41rSyj0EhDbxEMaCpWdwtSOPXnvMkmz-0L4ffQvuew6RO4RHvizDvm0P2LjLo69ZTzBpZiU-dIO2JvKivMzciO4secT1wr4_5zsZHtVDtHT");'></div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors cursor-pointer">Mike Ross</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Core Infra • Tencent</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-1.5 w-full max-w-[160px]">
+<span class="text-sm font-medium text-slate-900 dark:text-white">9,820 lines</span>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-600 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 82%"></div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">115 <span class="text-slate-400 mx-1">/</span> 110</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">67</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">210</td>
+<td class="py-4 pr-6 pl-4 text-right">
+<span class="text-base font-bold text-primary">94.2</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/20 transition-colors group">
+<td class="py-4 pl-6 pr-4 text-center">
+<div class="size-8 mx-auto flex items-center justify-center rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400">
+<span class="material-symbols-outlined text-[20px]">workspace_premium</span>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center border border-slate-100 dark:border-slate-600" data-alt="Avatar of David Kim" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCuIc1i3RpGUjAeTgCE9v896cAZoxYG1dBmUH_rwae4qOjsnVuRwOjjULA1QikW-ARR7yImQ3AnNTFp7_d38v8E6ov6Bdyy_He5WBXVDtEZf9khjJgUoO8GULqwP4C9g7FcxnfglsQm22S_2_g5j2bnxWAR_gtHs89AlYl-axf7__-GL531qXUAb9TN-MWAVK-lc-8Cno-XzhovMzx_e2iIhKZtRiZm5tcXbHZh7v0YngpE6MC3dWOtg2XBcT-hFAYq4bJ0fSfQ5zzT");'></div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors cursor-pointer">David Kim</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Open Source • ByteDance</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-1.5 w-full max-w-[160px]">
+<span class="text-sm font-medium text-slate-900 dark:text-white">8,150 lines</span>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-600 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 70%"></div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">98 <span class="text-slate-400 mx-1">/</span> 92</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">124</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">185</td>
+<td class="py-4 pr-6 pl-4 text-right">
+<span class="text-base font-bold text-primary">91.8</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/20 transition-colors group">
+<td class="py-4 pl-6 pr-4 text-center">
+<span class="text-sm font-semibold text-slate-500 dark:text-slate-400">4</span>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center border border-slate-100 dark:border-slate-600" data-alt="Avatar of Emily Wang" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDrbns3bkg-cwu6Or7I6m_PWJjK6XmGWTVq0F9RBF1DuBdGz7MCme6PC4runl-L4_Is8LtMg-jRwTl5Nd-4n5vpU6lKpKkg7RdXXKiLc1jEyksuKgadprMsPeA4WfDBpMps-H_cgA7KwDeB__fFaEIz_F7YP1KkBN60EhBrGk3FoQi156s6AQzVe2ekJwwSkKa2emSLsDFkcBaIGQpxAuSYc335-Prn2Iu27Lujb13Rwz--3wSn0gvu6uYx1AiVnhl9Py_1BOGZmKNr");'></div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors cursor-pointer">Emily Wang</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Frontend • Meituan</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-1.5 w-full max-w-[160px]">
+<span class="text-sm font-medium text-slate-900 dark:text-white">6,240 lines</span>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-600 rounded-full overflow-hidden">
+<div class="h-full bg-primary/80 rounded-full" style="width: 55%"></div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">76 <span class="text-slate-400 mx-1">/</span> 75</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">45</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">160</td>
+<td class="py-4 pr-6 pl-4 text-right">
+<span class="text-base font-bold text-slate-900 dark:text-white">88.4</span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/20 transition-colors group">
+<td class="py-4 pl-6 pr-4 text-center">
+<span class="text-sm font-semibold text-slate-500 dark:text-slate-400">5</span>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center border border-slate-100 dark:border-slate-600" data-alt="Avatar of James Lee" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCStBy-jwGZPYYnpkChhr7D7DlxcT1Z5JmUGZHWpNnthxSPvs_GcqMGVtYdgMf7Fi8MkDmAUO8WekD6fGlrFsniiroBuOh8gSnsbmEh3LR2_5EbXcnJujdtVq6vSqhOifc739q0AS4rW7nfW_uZgIgraJypaiCuwl0y0LPvPTJE_ThDkEq7fAkBx0FQftKiwqrY3Jg_yM5ldWiXeQPDEdvOc9SEDWaT1S8qFWCBbGpB5eaANbCX9zJDUNG3jEX67u_n351fMpCYjXji");'></div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors cursor-pointer">James Lee</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Backend • Huawei</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-1.5 w-full max-w-[160px]">
+<span class="text-sm font-medium text-slate-900 dark:text-white">5,900 lines</span>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-600 rounded-full overflow-hidden">
+<div class="h-full bg-primary/80 rounded-full" style="width: 50%"></div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">62 <span class="text-slate-400 mx-1">/</span> 60</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">92</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">130</td>
+<td class="py-4 pr-6 pl-4 text-right">
+<span class="text-base font-bold text-slate-900 dark:text-white">85.1</span>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/20 transition-colors group">
+<td class="py-4 pl-6 pr-4 text-center">
+<span class="text-sm font-semibold text-slate-500 dark:text-slate-400">6</span>
+</td>
+<td class="py-4 px-4">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-slate-100 dark:bg-slate-700 border border-slate-100 dark:border-slate-600 flex items-center justify-center text-slate-500 dark:text-slate-300 font-bold" data-alt="Default avatar with initials AL">AL</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors cursor-pointer">Alex Liu</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Independent Contributor</span>
+</div>
+</div>
+</td>
+<td class="py-4 px-4">
+<div class="flex flex-col gap-1.5 w-full max-w-[160px]">
+<span class="text-sm font-medium text-slate-900 dark:text-white">4,120 lines</span>
+<div class="h-1.5 w-full bg-slate-100 dark:bg-slate-600 rounded-full overflow-hidden">
+<div class="h-full bg-primary/60 rounded-full" style="width: 35%"></div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">40 <span class="text-slate-400 mx-1">/</span> 38</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">23</td>
+<td class="py-4 px-4 text-sm text-slate-700 dark:text-slate-300 font-medium">95</td>
+<td class="py-4 pr-6 pl-4 text-right">
+<span class="text-base font-bold text-slate-900 dark:text-white">80.5</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="border-t border-slate-200 dark:border-slate-700 px-6 py-4 flex items-center justify-between">
+<span class="text-sm text-slate-500 dark:text-slate-400">
+                            显示第 <span class="font-medium text-slate-900 dark:text-white">1</span> 到 <span class="font-medium text-slate-900 dark:text-white">10</span> 条，共 <span class="font-medium text-slate-900 dark:text-white">498</span> 条结果
+                        </span>
+<div class="flex items-center gap-1">
+<button class="size-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-50 transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-lg bg-primary text-white font-medium shadow-sm shadow-blue-500/30 transition-colors">1</button>
+<button class="size-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">2</button>
+<button class="size-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">3</button>
+<span class="px-2 text-slate-400">...</span>
+<button class="size-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">50</button>
+<button class="size-8 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

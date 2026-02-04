@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AtomGit 资源中心 - 效能操作增强版</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#D93025", // Redish tone from screenshot logo
+                        "primary-hover": "#B9251B",
+                        "background-light": "#F3F4F6", // Gray-100ish
+                        "background-dark": "#0B1120", // Very dark blue/gray
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1F2937", // Gray-800
+                        "border-light": "#E5E7EB", // Gray-200
+                        "border-dark": "#374151", // Gray-700
+                    },
+                    fontFamily: {
+                        sans: ['"Inter"', '"Noto Sans SC"', 'sans-serif'],
+                        display: ['"Inter"', '"Noto Sans SC"', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                    }
+                },
+            },
+        };
+    </script>
+<style>.custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #D1D5DB;
+            border-radius: 20px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #4B5563;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-700 dark:text-gray-300 font-sans antialiased transition-colors duration-200">
+<header class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark sticky top-0 z-50">
+<div class="px-4 h-14 flex items-center justify-between">
+<div class="flex items-center space-x-4">
+<div class="flex items-center space-x-2">
+<button class="p-1 md:hidden rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500">
+<span class="material-icons-outlined">menu</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-gradient-to-br from-red-400 to-primary flex items-center justify-center text-white font-bold text-xs">
+                        AG
+                    </div>
+<span class="font-semibold text-gray-900 dark:text-white hidden sm:block">这是一个企业名称</span>
+<span class="px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600 text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800">企业版</span>
+</div>
+</div>
+<div class="hidden md:flex flex-1 max-w-xl mx-4">
+<div class="relative w-full">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-gray-400 text-lg">search</span>
+</span>
+<input class="block w-full pl-10 pr-3 py-1.5 border border-border-light dark:border-border-dark rounded-md leading-5 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:bg-white dark:focus:bg-gray-900 focus:ring-1 focus:ring-primary sm:text-sm transition duration-150 ease-in-out" placeholder="按下 / 快速开启搜索" type="text"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="text-gray-400 text-xs border border-gray-200 dark:border-gray-600 rounded px-1.5 py-0.5">/</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-3">
+<button class="flex items-center space-x-1 bg-black hover:bg-gray-800 dark:bg-white dark:hover:bg-gray-200 text-white dark:text-black px-3 py-1.5 rounded-md text-sm font-medium transition-colors">
+<span class="material-icons-outlined text-sm">add</span>
+<span>新建</span>
+</button>
+<button class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 relative">
+<span class="material-icons-outlined text-xl">notifications</span>
+<span class="absolute top-1.5 right-1.5 block h-2 w-2 rounded-full ring-2 ring-white dark:ring-gray-800 bg-red-500"></span>
+</button>
+<button class="p-0.5 rounded-full border border-gray-200 dark:border-gray-600">
+<img alt="User Avatar" class="h-8 w-8 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDg0QAiSD7jW9d_hg06Xl03pDxgSgTjk0R-JR6LB1ZusCapD1_vTd2tu_AAEdrSALE1ot9pfHTRwLsOjwb1OpJL_fWBS-o9P9ddmJoXkIqlB2cfCDwn7whA1mDpuNd_4IVtcau4z-kYguUxq5FhWA4WzDWLkW8lGqVFR3m9rmfDqabTh49uBbrrtKIWDqJGQfj5dUPTcRJc6HrqRGDET3DD_cB_QhVC_mHLzAumPtyTGMIoBHh1G1zrn8l26IZqjXmiZ7NoapBF2Jx"/>
+</button>
+</div>
+</div>
+<div class="px-4 border-t border-border-light dark:border-border-dark h-10 flex items-center space-x-6 overflow-x-auto text-sm font-medium custom-scrollbar">
+<a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white flex items-center gap-1" href="#">
+<span class="material-icons-outlined text-lg">home</span> 概览
+            </a>
+<a class="text-primary flex items-center gap-1 border-b-2 border-primary h-full px-1" href="#">
+<span class="material-icons-outlined text-lg">hub</span> 资源中心
+            </a>
+<a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white flex items-center gap-1" href="#">
+<span class="material-icons-outlined text-lg">forum</span> 社区运营
+            </a>
+<a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white flex items-center gap-1" href="#">
+<span class="material-icons-outlined text-lg">alt_route</span> 流水线
+            </a>
+<a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white flex items-center gap-1" href="#">
+<span class="material-icons-outlined text-lg">security</span> 安全与合规
+            </a>
+<a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white flex items-center gap-1" href="#">
+<span class="material-icons-outlined text-lg">analytics</span> 数据看板
+            </a>
+<a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white flex items-center gap-1" href="#">
+<span class="material-icons-outlined text-lg">receipt_long</span> 账单管理
+            </a>
+<a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white flex items-center gap-1" href="#">
+<span class="material-icons-outlined text-lg">settings</span> 企业管理
+            </a>
+</div>
+</header>
+<div class="flex min-h-[calc(100vh-6rem)]">
+<aside class="w-64 flex-shrink-0 bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark hidden lg:block overflow-y-auto custom-scrollbar">
+<div class="py-6 px-4 space-y-8">
+<div>
+<h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-2">资源中心</h3>
+<nav class="space-y-1">
+<a class="group flex items-center justify-between px-3 py-2 text-sm font-medium rounded-md bg-primary text-white shadow-sm transition-all" href="#">
+<div class="flex items-center">
+<span class="material-icons-outlined mr-3 text-lg opacity-90">adjust</span>
+                                企业 Issues
+                            </div>
+<span class="bg-white/20 text-white py-0.5 px-2 rounded-full text-xs">121</span>
+</a>
+<a class="group flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-icons-outlined mr-3 text-lg text-gray-400 group-hover:text-gray-500">view_kanban</span>
+                                企业看板
+                            </div>
+<span class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 py-0.5 px-2 rounded-full text-xs group-hover:bg-gray-200 dark:group-hover:bg-gray-600">121</span>
+</a>
+<a class="group flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-icons-outlined mr-3 text-lg text-gray-400 group-hover:text-gray-500">call_merge</span>
+                                Pull Requests
+                            </div>
+<span class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 py-0.5 px-2 rounded-full text-xs group-hover:bg-gray-200 dark:group-hover:bg-gray-600">132</span>
+</a>
+<a class="group flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-icons-outlined mr-3 text-lg text-gray-400 group-hover:text-gray-500">folder_copy</span>
+                                企业项目
+                            </div>
+<span class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 py-0.5 px-2 rounded-full text-xs group-hover:bg-gray-200 dark:group-hover:bg-gray-600">65</span>
+</a>
+<a class="group flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-icons-outlined mr-3 text-lg text-gray-400 group-hover:text-gray-500">flag</span>
+                                企业里程碑
+                            </div>
+<span class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 py-0.5 px-2 rounded-full text-xs group-hover:bg-gray-200 dark:group-hover:bg-gray-600">121</span>
+</a>
+</nav>
+</div>
+<div>
+<h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-2">预警与治理</h3>
+<nav class="space-y-1">
+<a class="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-icons-outlined mr-3 text-lg text-gray-400 group-hover:text-gray-500">storage</span>
+                            企业 LFS
+                        </a>
+<a class="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" href="#">
+<span class="material-icons-outlined mr-3 text-lg text-gray-400 group-hover:text-gray-500">warning</span>
+                            资源使用预警
+                        </a>
+</nav>
+</div>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto">
+<div class="px-6 pt-6 pb-2 space-y-3">
+<div class="rounded-md bg-orange-50 dark:bg-orange-900/20 p-3 border border-orange-100 dark:border-orange-800 flex items-start">
+<div class="flex-shrink-0">
+<span class="material-icons-outlined text-orange-400 dark:text-orange-500 text-lg">info</span>
+</div>
+<div class="ml-3 flex-1 md:flex md:justify-between">
+<p class="text-sm text-orange-700 dark:text-orange-300">
+<span class="font-bold">资源预警：</span> 您企业当前的存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容
+                        </p>
+<p class="mt-3 text-sm md:mt-0 md:ml-6">
+<button class="whitespace-nowrap font-medium text-orange-700 dark:text-orange-300 hover:text-orange-600 dark:hover:text-orange-200">
+<span class="material-icons-outlined text-sm align-middle">close</span>
+</button>
+</p>
+</div>
+</div>
+<div class="rounded-md bg-blue-50 dark:bg-blue-900/20 p-3 border border-blue-100 dark:border-blue-800 flex items-start">
+<div class="flex-shrink-0">
+<span class="material-icons-outlined text-blue-400 dark:text-blue-500 text-lg">info</span>
+</div>
+<div class="ml-3 flex-1 md:flex md:justify-between">
+<p class="text-sm text-blue-700 dark:text-blue-300">
+<span class="font-bold">企业公告：</span> AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉
+                        </p>
+<p class="mt-3 text-sm md:mt-0 md:ml-6">
+<button class="whitespace-nowrap font-medium text-blue-700 dark:text-blue-300 hover:text-blue-600 dark:hover:text-blue-200">
+<span class="material-icons-outlined text-sm align-middle">close</span>
+</button>
+</p>
+</div>
+</div>
+</div>
+<div class="px-6 py-4">
+<div class="mb-4">
+<div class="relative rounded-md shadow-sm">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-gray-400">search</span>
+</div>
+<input class="focus:ring-primary focus:border-primary block w-full pl-10 sm:text-sm border-gray-300 dark:border-gray-700 dark:bg-surface-dark dark:text-white rounded-md py-2" placeholder="搜索 Issues..." type="text"/>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-lg shadow-subtle border border-border-light dark:border-border-dark overflow-hidden">
+<div class="flex items-center justify-between border-b border-border-light dark:border-border-dark px-4 py-2 bg-gray-50 dark:bg-gray-800/50">
+<div class="flex space-x-1">
+<button class="px-3 py-1.5 rounded-md text-sm font-medium bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm ring-1 ring-gray-900/5 dark:ring-gray-500/20">
+                                开启中 <span class="ml-1 text-gray-500 dark:text-gray-400">65</span>
+</button>
+<button class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-white dark:hover:bg-gray-700">
+                                已关闭 <span class="ml-1 text-gray-400 dark:text-gray-500">56</span>
+</button>
+<button class="px-3 py-1.5 rounded-md text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-white dark:hover:bg-gray-700">
+                                全部 <span class="ml-1 text-gray-400 dark:text-gray-500">121</span>
+</button>
+</div>
+<div class="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-400">
+<div class="flex items-center cursor-pointer hover:text-gray-900 dark:hover:text-white">
+<span>所属组织</span> <span class="material-icons-outlined text-sm ml-0.5">expand_more</span>
+</div>
+<div class="flex items-center cursor-pointer hover:text-gray-900 dark:hover:text-white">
+<span>所属项目</span> <span class="material-icons-outlined text-sm ml-0.5">expand_more</span>
+</div>
+<div class="flex items-center cursor-pointer hover:text-gray-900 dark:hover:text-white">
+<span>负责人</span> <span class="material-icons-outlined text-sm ml-0.5">expand_more</span>
+</div>
+<div class="flex items-center cursor-pointer hover:text-gray-900 dark:hover:text-white">
+<span>Label</span> <span class="material-icons-outlined text-sm ml-0.5">expand_more</span>
+</div>
+<div class="flex items-center cursor-pointer hover:text-gray-900 dark:hover:text-white">
+<span>排序</span> <span class="material-icons-outlined text-sm ml-0.5">sort</span>
+</div>
+</div>
+</div>
+<ul class="divide-y divide-border-light dark:divide-border-dark">
+<li class="group hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-150 relative">
+<div class="px-4 py-4 flex items-start sm:px-6">
+<div class="flex-shrink-0 mt-0.5">
+<span class="material-icons-outlined text-green-500 text-xl">adjust</span>
+</div>
+<div class="ml-3 flex-1 min-w-0">
+<div class="flex text-sm items-start justify-between">
+<div class="font-medium text-gray-900 dark:text-white truncate pr-4">
+<span class="hover:underline cursor-pointer decoration-2 underline-offset-2">[Bug] The issue of occupying space in the non displayed part of a semicircle pie chart</span>
+<span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200">
+                                                bug
+                                            </span>
+</div>
+<div class="flex-shrink-0 flex items-center text-gray-400 dark:text-gray-500 text-xs sm:text-sm group-hover:opacity-0 transition-opacity duration-200 absolute right-6">
+<span class="flex items-center mr-4">
+<span class="material-icons-outlined text-sm mr-1">chat_bubble_outline</span> 23
+                                            </span>
+<span class="flex items-center">
+<span class="material-icons-outlined text-sm mr-1">schedule</span> 12小时前更新
+                                            </span>
+</div>
+<div class="hidden group-hover:flex items-center space-x-1 absolute right-4 top-3 bg-white dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 rounded-md p-1 transition-opacity duration-200">
+<button class="p-1.5 text-gray-500 hover:text-primary hover:bg-red-50 dark:hover:bg-red-900/30 rounded" title="Assign to me">
+<span class="material-icons-outlined text-lg">person_add</span>
+</button>
+<button class="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded" title="Quick Preview">
+<span class="material-icons-outlined text-lg">visibility</span>
+</button>
+<button class="p-1.5 text-gray-500 hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30 rounded" title="Quick Resolve">
+<span class="material-icons-outlined text-lg">check_circle_outline</span>
+</button>
+<div class="w-px h-4 bg-gray-200 dark:bg-gray-600 mx-1"></div>
+<span class="text-xs text-gray-400 px-1">23 评论</span>
+</div>
+</div>
+<div class="mt-1 flex items-center text-xs text-gray-500 dark:text-gray-400 space-x-2">
+<span>csdn / jupyter</span>
+<span>#1</span>
+<span>·</span>
+<div class="flex items-center space-x-1">
+<img alt="" class="w-4 h-4 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYrIySe_NDuVXIPtAmqp3SKwfYQfMVNSSsdipefLH8MXnnhlyG2hO4cC-wap6gDqXjE62aJbQRqq0RuxTf-qyuOZKOEyMEf4rDYaXftEzd9hc4u9Di5qogbgcetYH2OL6ZCaD9laGbW4yy8H4OyXv6G3iOKNXmtB8U8hLMoQM6GBBe6KfEEXx8BX4DABkvjubf_LG5Wh6NV97VJeM7A29rLTEGyN9lnZrp62FaiQoSfMQGo9_Wjg2W8V99rhyRLVGzOgdK8ARmu_h5"/>
+<span>Aresn</span>
+</div>
+<span>1 周前创建</span>
+<span>·</span>
+<div class="flex -space-x-1 overflow-hidden">
+<img alt="" class="inline-block h-4 w-4 rounded-full ring-1 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCa7BzYBNBBWe_HAb3kAt0PiSz1-TAOCbT1hUbJgrYgPj9Cp9IgbA5wX8orbHZqrp9b8bvXgFAZ7Jl9ahsxa5NhYcwSiozPxnvMJuIQbhlHfzV4Ukz_tysjBTqIOrrO_pGliaC9r2ZkVlyLOkPWSAkJ23lxE-Kn-xJHZu9QKyz4mBqv7G8oIw_wpYTgpyzosJ-WWdS-yniwzoJxCnJgl0YTPha_jSdaK0I7bUKI_iT2iCP5uLw25Y3hVM-GXLIg9DX9cpYkIMf77wpG"/>
+<img alt="" class="inline-block h-4 w-4 rounded-full ring-1 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNoIeLPTpEOTg9Zng1308IrI8s0Z_0MOENFiEqivkFUIN3MMQIzldRs3lyJme30Oqmy9qfEeCiVvnh957kYEYoHwLIEDvrQ9JEJuDFbqFe_7xeBwdgeWJijM2b31JenJyobfbDu_hbKxiuPMMFo6VpSR9GLoBwYgEtTZTPCugdAD-MGIqRRN3xdFkYiqWrDV7LlEPxvwBCQu4bUYlekYXeEM9mCMvWFOjRgocQs9wYvAUAUoTQBDjzyAPIPMi4xoqSr1YdRFTKwvw5"/>
+<img alt="" class="inline-block h-4 w-4 rounded-full ring-1 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjKmL03hzI-7lS5ZFKDZD3L84sxMgmugW1HOqy9oXBBedJeRyhUAJfgMaoKX5nHWs_SmeLJaxOWakO5lFau1L6xnhWMPIwXS73DE6ffYI9ERj5X6gxvtRvdZQkJO6HxMA6R6uSj6_DX-CuFvS3S93miJONIwsEt29BZ1YD82D10JiX5DSdMWkIySa79TTPXx1dpONHwMxs9WsYVc8-RlkandDgRivf4d73hQsZa4O6brEr8s_F6nCntcFebDZEAn6Tqqc888G7fTZq"/>
+</div>
+<span class="ml-1">+6 负责</span>
+</div>
+</div>
+</div>
+</li>
+<li class="group hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-150 relative">
+<div class="px-4 py-4 flex items-start sm:px-6">
+<div class="flex-shrink-0 mt-0.5">
+<span class="material-icons-outlined text-green-500 text-xl">adjust</span>
+</div>
+<div class="ml-3 flex-1 min-w-0">
+<div class="flex text-sm items-start justify-between">
+<div class="font-medium text-gray-900 dark:text-white truncate pr-4">
+<span class="hover:underline cursor-pointer">removeData</span>
+</div>
+<div class="flex-shrink-0 flex items-center text-gray-400 dark:text-gray-500 text-xs sm:text-sm group-hover:opacity-0 transition-opacity duration-200 absolute right-6">
+<span class="flex items-center mr-4">
+<span class="material-icons-outlined text-sm mr-1">chat_bubble_outline</span> 23
+                                            </span>
+<span class="flex items-center">
+<span class="material-icons-outlined text-sm mr-1">schedule</span> 12小时前更新
+                                            </span>
+</div>
+<div class="hidden group-hover:flex items-center space-x-1 absolute right-4 top-3 bg-white dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 rounded-md p-1 transition-opacity duration-200">
+<button class="p-1.5 text-gray-500 hover:text-primary hover:bg-red-50 dark:hover:bg-red-900/30 rounded"><span class="material-icons-outlined text-lg">person_add</span></button>
+<button class="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded"><span class="material-icons-outlined text-lg">visibility</span></button>
+<button class="p-1.5 text-gray-500 hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30 rounded"><span class="material-icons-outlined text-lg">check_circle_outline</span></button>
+</div>
+</div>
+<div class="mt-1 flex items-center text-xs text-gray-500 dark:text-gray-400 space-x-2">
+<span>csdn / jupyter-notebook</span>
+<span>#1</span>
+<span>·</span>
+<div class="flex items-center space-x-1">
+<img alt="" class="w-4 h-4 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1sGRrFm-G6emY_jIxBAlDrVRQalyMwPN9qnmv0zZxzgCeSqFAxbH5OSRvG7Ul0u0aboBXJazYfIOeCT402ybwf3ordpXpwxqZHpLy_lKi6jeroIYXQMSyxeNEO2DsU7JpIxZCArU4GKWa_otZX9ghu6txfMVhpiYhqyPVbD3lamzUIJi7vBc8Lj3KWO_spWxDbZsZbQME1QCX3-FKs9N9Md7OQ1TURt2bL-lxNqfNMzgkxgFCS_mBCPOUcCS2ytPmkWl5w7A79TjR"/>
+<span>Aresn</span>
+</div>
+<span>1 周前创建</span>
+<span>·</span>
+<div class="flex -space-x-1 overflow-hidden">
+<img alt="" class="inline-block h-4 w-4 rounded-full ring-1 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZvvXIwgEbm4Xj6Hd_qvYzUXIiX6BVvaXs_P0fzPXXUojHrPDWNDc0g1fldZ9BvMUoDPjYp0P1nasJrQlnaiIjk81F-0FO2fyPv2eVQYyd2U10kAfIzwS_Dsm4RJh0voIbYhfSE9vDA0gY-IIxUaxAzkP4H9mXlwFrWqGe_B83IUsqFPRaSATjY5zcDJKFs9NNW6cRXKvA5Az8GLr5nuB6I81sN51fgtGaJosHK4u5zfHSWt1u3Dr5iZN6UwM6uuu17fpwpy3TJZz8"/>
+<img alt="" class="inline-block h-4 w-4 rounded-full ring-1 ring-white dark:ring-gray-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw6Qppx8ZBqZlC1jDEx0JciPVJtZFzyeZS1ZWwZ0lKdh4LbwjNPlo5XHIcXh4qVu7_81qQ-Iatb2_v9q_LcFd--hJ3kAgVE1GWdxEI16dYrTMTWlYsMUa0nNW1PxTWjJVNkB-VlWtVMnQq33mRrS-MEki3Biptv1mzo2Gk75Ggn2Z39CKRvXmKcGfoRPQdkJu4QTnGJ6wOQ8DwMr-JYt8_7q6l5bdGrTE75AbDinp4M1Puic664zKRBlN7Z7NQTm4pY_0U7KNvJ9uT"/>
+</div>
+<span class="ml-1">负责</span>
+</div>
+</div>
+</div>
+</li>
+<li class="group hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-150 relative">
+<div class="px-4 py-4 flex items-start sm:px-6">
+<div class="flex-shrink-0 mt-0.5">
+<span class="material-icons-outlined text-purple-500 text-xl">check_circle</span>
+</div>
+<div class="ml-3 flex-1 min-w-0">
+<div class="flex text-sm items-start justify-between">
+<div class="font-medium text-gray-900 dark:text-white pr-4">
+<span class="hover:underline cursor-pointer">[Bug] Heatmap in some Size show a blank space at left top</span>
+<span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+                                                documentation
+                                            </span>
+<span class="ml-1 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
+                                                help wanted
+                                            </span>
+</div>
+<div class="flex-shrink-0 flex items-center text-gray-400 dark:text-gray-500 text-xs sm:text-sm group-hover:opacity-0 transition-opacity duration-200 absolute right-6">
+<span class="flex items-center mr-4">
+<span class="material-icons-outlined text-sm mr-1">chat_bubble_outline</span> 23
+                                            </span>
+<span class="flex items-center">
+<span class="material-icons-outlined text-sm mr-1">schedule</span> 12小时前更新
+                                            </span>
+</div>
+<div class="hidden group-hover:flex items-center space-x-1 absolute right-4 top-3 bg-white dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 rounded-md p-1 transition-opacity duration-200">
+<button class="p-1.5 text-gray-500 hover:text-primary hover:bg-red-50 dark:hover:bg-red-900/30 rounded"><span class="material-icons-outlined text-lg">person_add</span></button>
+<button class="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded"><span class="material-icons-outlined text-lg">visibility</span></button>
+<button class="p-1.5 text-gray-500 hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30 rounded"><span class="material-icons-outlined text-lg">replay</span></button>
+</div>
+</div>
+<div class="mt-1 flex items-center text-xs text-gray-500 dark:text-gray-400 space-x-2">
+<span>csdn / jupyter-notebook</span>
+<span>#1</span>
+<span>·</span>
+<div class="flex items-center space-x-1">
+<img alt="" class="w-4 h-4 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBC6hl4O-drgAKltrTuPrT_UIJm3lYmpVEdMEO4xtCA9KiG04QS4vKLa9JoMOpNeiwLO0sJt9AQ1FpOCwo4dY3kdoJ47jiYeW1CywweZjIiaLfmD_hfauRat5F-WM1sbstNDeyt99ViSEyfU9GKjr187krzy5Yizyeh4keJdNmjTka4eI-r9ZCrN8zOM-0tt49nimuQ0GfwizeFyXNam-hO8Ajjx8DyPLN7TRzQHQllj5cv4oyc7w90kaYCj6PSd5_pBft4HPzUwvsN"/>
+<span>Aresn</span>
+</div>
+<span>1 周前创建</span>
+</div>
+</div>
+</div>
+</li>
+<li class="group hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-150 relative">
+<div class="px-4 py-4 flex items-start sm:px-6">
+<div class="flex-shrink-0 mt-0.5">
+<span class="material-icons-outlined text-green-500 text-xl">adjust</span>
+</div>
+<div class="ml-3 flex-1 min-w-0">
+<div class="flex text-sm items-start justify-between">
+<div class="font-medium text-gray-900 dark:text-white pr-4">
+<span class="hover:underline cursor-pointer block mb-1 line-clamp-2">generation process for the first time may come into idle until I re-generate. The it gives me two times of response generation process for the first time...</span>
+<div class="flex space-x-1 mt-1">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-50 dark:bg-green-900/50 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800">
+<span class="material-icons-outlined text-[10px] mr-1">check</span> verified
+                                                </span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200">
+                                                    bug
+                                                </span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+                                                    documentation
+                                                </span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+                                                    duplicate
+                                                </span>
+</div>
+</div>
+<div class="flex-shrink-0 flex items-center text-gray-400 dark:text-gray-500 text-xs sm:text-sm group-hover:opacity-0 transition-opacity duration-200 absolute right-6 top-4">
+<span class="flex items-center mr-4">
+<span class="material-icons-outlined text-sm mr-1">chat_bubble_outline</span> 23
+                                            </span>
+<span class="flex items-center">
+<span class="material-icons-outlined text-sm mr-1">schedule</span> 12小时前更新
+                                            </span>
+</div>
+<div class="hidden group-hover:flex items-center space-x-1 absolute right-4 top-3 bg-white dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 rounded-md p-1 transition-opacity duration-200">
+<button class="p-1.5 text-gray-500 hover:text-primary hover:bg-red-50 dark:hover:bg-red-900/30 rounded"><span class="material-icons-outlined text-lg">person_add</span></button>
+<button class="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded"><span class="material-icons-outlined text-lg">visibility</span></button>
+<button class="p-1.5 text-gray-500 hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30 rounded"><span class="material-icons-outlined text-lg">check_circle_outline</span></button>
+</div>
+</div>
+<div class="mt-2 flex items-center text-xs text-gray-500 dark:text-gray-400 space-x-2">
+<span>csdn / jupyter-notebook</span>
+<span>#1</span>
+<span>·</span>
+<div class="flex items-center space-x-1">
+<span class="w-4 h-4 rounded-full bg-green-200 flex items-center justify-center text-[8px] font-bold text-green-800">A</span>
+<span>Aresn</span>
+</div>
+<span>1 周前创建</span>
+<span>·</span>
+<div class="flex items-center space-x-1">
+<img alt="" class="w-4 h-4 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKsmRdFvu1M_mOlfUcZ3CZUGGl_7cWxFzGMDpZjFrziGI_1WbqnzMQBn4VPJpeNaabIeRPFjH96H5EQg_LGLN5k3kL4dKueHyxCpednPy6tRwzECut4GXCpQ_2A6QfFYaZpAq44kHU3sy6U3ubLWdxMaiyiwTWL89_ZvFflM-ReZ_jEadAzUF_GK1wOJ6bV_X-xFVWnD2RfNhjFzjwYw1iv2RWUtsFsqj86UNfTD_xu_qQfbFesieu6OwjcvpmPgtak1Xp-1xBmj6X"/>
+<span>负责</span>
+</div>
+</div>
+</div>
+</div>
+</li>
+<li class="group hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors duration-150 relative">
+<div class="px-4 py-4 flex items-start sm:px-6">
+<div class="flex-shrink-0 mt-0.5">
+<span class="material-icons-outlined text-purple-500 text-xl">check_circle</span>
+</div>
+<div class="ml-3 flex-1 min-w-0">
+<div class="flex text-sm items-start justify-between">
+<div class="font-medium text-gray-900 dark:text-white pr-4">
+<span class="hover:underline cursor-pointer">Some issues about boxplots</span>
+</div>
+<div class="flex-shrink-0 flex items-center text-gray-400 dark:text-gray-500 text-xs sm:text-sm group-hover:opacity-0 transition-opacity duration-200 absolute right-6">
+<span class="flex items-center mr-4">
+<span class="material-icons-outlined text-sm mr-1">chat_bubble_outline</span> 23
+                                            </span>
+<span class="flex items-center">
+<span class="material-icons-outlined text-sm mr-1">schedule</span> 12小时前更新
+                                            </span>
+</div>
+<div class="hidden group-hover:flex items-center space-x-1 absolute right-4 top-3 bg-white dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 rounded-md p-1 transition-opacity duration-200">
+<button class="p-1.5 text-gray-500 hover:text-primary hover:bg-red-50 dark:hover:bg-red-900/30 rounded"><span class="material-icons-outlined text-lg">person_add</span></button>
+<button class="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded"><span class="material-icons-outlined text-lg">visibility</span></button>
+<button class="p-1.5 text-gray-500 hover:text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30 rounded"><span class="material-icons-outlined text-lg">replay</span></button>
+</div>
+</div>
+<div class="mt-1 flex items-center text-xs text-gray-500 dark:text-gray-400 space-x-2">
+<span>csdn / jupyter</span>
+<span>#1</span>
+<span>·</span>
+<div class="flex items-center space-x-1">
+<img alt="" class="w-4 h-4 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACsWTqNkGYzA_aWFLobJ4h31ikWyNBUepksUhtgnh7swFcaBIm8tmC9ixHF_XaVWVl4yzZtH-cqX-SElBu-Uk3oMPr1iblwBRnSSw5qVaTzN1azw4yDFfHvK-eo62R6AQ4nmP8JTxmNrr9jAFKZPcaSa-aT6pAS4BoK5CLMALnPnjc8XT224k15kUz7wfLIA7YOxLF5ULIKKhzwJrU3T8d29pIZ7_puFg2IJLavWU-Z8klY2IxZ22bCLn5CO95n_CE0EFk6nDq97OU"/>
+<span>Aresn</span>
+</div>
+<span>1 周前创建</span>
+</div>
+</div>
+</div>
+</li>
+</ul>
+<div class="bg-surface-light dark:bg-surface-dark px-4 py-3 flex items-center justify-center border-t border-border-light dark:border-border-dark sm:px-6">
+<nav aria-label="Pagination" class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+<a class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" href="#">
+<span class="sr-only">Previous</span>
+<span class="material-icons-outlined text-sm">chevron_left</span> 上一页
+                            </a>
+<a aria-current="page" class="z-10 bg-black dark:bg-white border-black dark:border-white text-white dark:text-black relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                1
+                            </a>
+<a class="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                2
+                            </a>
+<a class="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                3
+                            </a>
+<a class="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                4
+                            </a>
+<a class="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                5
+                            </a>
+<a class="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                6
+                            </a>
+<span class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-700 dark:text-gray-200">
+                                ...
+                            </span>
+<a class="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 relative inline-flex items-center px-4 py-2 border text-sm font-medium" href="#">
+                                100
+                            </a>
+<a class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700" href="#">
+<span class="sr-only">Next</span>
+                                下一页 <span class="material-icons-outlined text-sm">chevron_right</span>
+</a>
+</nav>
+</div>
+</div>
+<p class="text-center text-xs text-gray-400 mt-6 mb-4">AtomGit © 2024</p>
+</div>
+</main>
+</div>
+
+</body></html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Production &amp; Efficiency Drill-down - AtomGit</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b8cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for table if needed */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<!-- Sidebar -->
+<div class="w-64 flex-shrink-0 flex flex-col justify-between bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 h-full">
+<div class="flex flex-col gap-6 p-4">
+<!-- Profile / Logo Area -->
+<div class="flex items-center gap-3 px-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 shadow-sm border border-slate-100" data-alt="AtomGit Logo or User Avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD5SXzcsTckKW5xNG54FyzEegPhX2jXeUm2SqFg5znVNWqxMA8TGpz_wEE-QR9j-08_RjF5MvC09DVCxDAIzMM27o2RFuO0im5tKxLzCa3R6MrgeEyMW4JzDSGht_aq7BtBobXTuVCypdMpHRBnziVKQ-o_lGns0O2bt365R9H70Fc04GWDDe9hr9FmSEeff8S8dThJhZzxNHExUvHpB9XHsHXQC6YAFeLUuOrcmKvVgdXL5qFz11esCZi52WNmuoea8gkHl9SuZhFw");'></div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-semibold leading-tight">AtomGit</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-normal">Enterprise Edition</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors" style="font-size: 20px;">home</span>
+<span class="text-sm font-medium">概览</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors" style="font-size: 20px;">folder</span>
+<span class="text-sm font-medium">代码库</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary font-medium" href="#">
+<span class="material-symbols-outlined text-primary fill-current" style="font-size: 20px;">bar_chart</span>
+<span class="text-sm">数据看板</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors" style="font-size: 20px;">settings</span>
+<span class="text-sm font-medium">设置</span>
+</a>
+</nav>
+</div>
+<!-- Bottom User Actions -->
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<button class="flex items-center gap-3 px-3 py-2 w-full text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">logout</span>
+<span class="text-sm font-medium">退出登录</span>
+</button>
+</div>
+</div>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-y-auto bg-background-light dark:bg-background-dark relative">
+<div class="w-full max-w-[1920px] mx-auto p-6 md:p-8 lg:p-10 flex flex-col gap-8 pb-20">
+<!-- Breadcrumbs -->
+<nav class="flex items-center text-sm font-medium text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">数据看板</a>
+<span class="mx-2 text-slate-300">/</span>
+<a class="hover:text-primary transition-colors" href="#">生产与效能</a>
+<span class="mx-2 text-slate-300">/</span>
+<span class="text-slate-900 dark:text-white">效能指标下钻</span>
+</nav>
+<!-- Header Section -->
+<header class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+<div>
+<h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">生产与效能指标下钻分析</h1>
+<p class="mt-2 text-slate-500 dark:text-slate-400 max-w-2xl">
+                            深入分析代码提交趋势、Issue 处理效率及 PR 合并情况。数据每日更新。
+                        </p>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<!-- Project Filter -->
+<div class="relative group">
+<div class="flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 cursor-pointer shadow-sm hover:border-primary/50 transition-colors min-w-[200px]">
+<span class="material-symbols-outlined text-slate-400" style="font-size: 20px;">layers</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200 flex-1">项目: AtomGit-Core</span>
+<span class="material-symbols-outlined text-slate-400" style="font-size: 20px;">arrow_drop_down</span>
+</div>
+</div>
+<!-- Date Range Picker -->
+<div class="relative group">
+<div class="flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5 cursor-pointer shadow-sm hover:border-primary/50 transition-colors">
+<span class="material-symbols-outlined text-slate-400" style="font-size: 20px;">calendar_today</span>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">最近 30 天</span>
+<span class="text-xs text-slate-400 border-l border-slate-200 dark:border-slate-600 pl-2 ml-2">10月01日 - 10月31日</span>
+</div>
+</div>
+<!-- Export Button -->
+<button class="flex items-center gap-2 bg-primary hover:bg-blue-600 text-white px-4 py-2.5 rounded-lg shadow-sm transition-colors font-medium text-sm">
+<span class="material-symbols-outlined" style="font-size: 20px;">download</span>
+                            导出报表
+                        </button>
+</div>
+</header>
+<!-- Main Chart Section -->
+<section class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+<h2 class="text-lg font-semibold text-slate-900 dark:text-white">趋势概览</h2>
+<!-- Chart Legend / Toggles -->
+<div class="flex flex-wrap gap-4">
+<button class="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:opacity-80 transition-opacity">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+                                代码行数
+                            </button>
+<button class="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:opacity-80 transition-opacity">
+<span class="w-3 h-3 rounded-full bg-purple-500"></span>
+                                提交次数
+                            </button>
+<button class="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:opacity-80 transition-opacity">
+<span class="w-3 h-3 rounded-full bg-orange-500"></span>
+                                新增 Issue
+                            </button>
+<button class="flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:opacity-80 transition-opacity">
+<span class="w-3 h-3 rounded-full bg-teal-500"></span>
+                                合并 PR
+                            </button>
+</div>
+</div>
+<!-- Chart Visual (SVG Representation) -->
+<div class="w-full h-[320px] relative">
+<!-- Y-Axis Lines -->
+<div class="absolute inset-0 flex flex-col justify-between text-xs text-slate-400 pointer-events-none">
+<div class="border-b border-slate-100 dark:border-slate-700 w-full h-0 relative"><span class="absolute -top-3 left-0">1200</span></div>
+<div class="border-b border-slate-100 dark:border-slate-700 w-full h-0 relative"><span class="absolute -top-3 left-0">900</span></div>
+<div class="border-b border-slate-100 dark:border-slate-700 w-full h-0 relative"><span class="absolute -top-3 left-0">600</span></div>
+<div class="border-b border-slate-100 dark:border-slate-700 w-full h-0 relative"><span class="absolute -top-3 left-0">300</span></div>
+<div class="border-b border-slate-100 dark:border-slate-700 w-full h-0 relative"><span class="absolute -top-3 left-0">0</span></div>
+</div>
+<!-- Chart Lines Container -->
+<svg class="absolute inset-0 w-full h-full pl-8" preserveaspectratio="none" viewbox="0 0 1000 100">
+<!-- Line 1: Code Lines (Primary Blue) -->
+<path d="M0,80 C100,75 200,60 300,40 C400,20 500,50 600,30 C700,10 800,25 900,15 L1000,10" fill="none" stroke="#2b8cee" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<!-- Line 2: Commits (Purple) -->
+<path d="M0,90 C100,85 200,80 300,75 C400,70 500,65 600,70 C700,75 800,60 900,55 L1000,60" fill="none" opacity="0.8" stroke="#a855f7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<!-- Line 3: Issues (Orange) -->
+<path d="M0,95 C150,95 300,90 450,85 C600,80 750,90 900,85 L1000,88" fill="none" opacity="0.8" stroke="#f97316" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<!-- Line 4: PRs (Teal) -->
+<path d="M0,98 C120,95 240,92 360,88 C480,85 600,80 720,75 C840,70 960,65 L1000,60" fill="none" opacity="0.8" stroke="#14b8a6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<!-- Tooltip Example (Floating) -->
+<div class="absolute left-[60%] top-[30%] bg-slate-900 text-white text-xs rounded-lg p-3 shadow-xl z-10 pointer-events-none transform -translate-x-1/2">
+<div class="font-semibold mb-2 text-slate-300">2023-10-18</div>
+<div class="flex items-center justify-between gap-4 mb-1">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-primary"></span>代码行数</span>
+<span class="font-bold">842</span>
+</div>
+<div class="flex items-center justify-between gap-4 mb-1">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-purple-500"></span>提交次数</span>
+<span class="font-bold">45</span>
+</div>
+<div class="flex items-center justify-between gap-4">
+<span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-teal-500"></span>合并 PR</span>
+<span class="font-bold">12</span>
+</div>
+</div>
+</div>
+<!-- X-Axis Labels -->
+<div class="flex justify-between pl-8 pt-4 text-xs text-slate-400 font-medium">
+<span>10-01</span>
+<span>10-06</span>
+<span>10-11</span>
+<span>10-16</span>
+<span>10-21</span>
+<span>10-26</span>
+<span>10-31</span>
+</div>
+</section>
+<!-- Data Table Section -->
+<section class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 overflow-hidden flex flex-col">
+<div class="p-5 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+<h2 class="text-lg font-semibold text-slate-900 dark:text-white">详细数据</h2>
+<div class="flex items-center gap-2">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 material-symbols-outlined" style="font-size: 18px;">search</span>
+<input class="pl-9 pr-4 py-1.5 text-sm bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-md focus:outline-none focus:border-primary w-48" placeholder="搜索日期..." type="text"/>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 text-sm font-medium uppercase tracking-wide">
+<th class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 min-w-[120px]">日期</th>
+<th class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 text-right">总代码行数</th>
+<th class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 text-right">日提交数</th>
+<th class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 text-right">新增 Issue</th>
+<th class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 text-right">已合并 PR</th>
+<th class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 text-right">效能环比</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
+<td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-white">2023-10-31</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">12,450</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">42</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">8</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">12</td>
+<td class="px-6 py-4 text-sm text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                            +5.2%
+                                            <span class="material-symbols-outlined ml-0.5 text-[14px]">trending_up</span>
+</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
+<td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-white">2023-10-30</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">11,203</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">38</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">5</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">9</td>
+<td class="px-6 py-4 text-sm text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                            +2.1%
+                                            <span class="material-symbols-outlined ml-0.5 text-[14px]">trending_up</span>
+</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
+<td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-white">2023-10-29</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">8,930</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">12</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">2</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">3</td>
+<td class="px-6 py-4 text-sm text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
+                                            -12.5%
+                                            <span class="material-symbols-outlined ml-0.5 text-[14px]">trending_down</span>
+</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
+<td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-white">2023-10-28</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">9,540</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">15</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">4</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">5</td>
+<td class="px-6 py-4 text-sm text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300">
+                                            0.0%
+                                            <span class="material-symbols-outlined ml-0.5 text-[14px]">remove</span>
+</span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group">
+<td class="px-6 py-4 text-sm font-medium text-slate-900 dark:text-white">2023-10-27</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">10,890</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">55</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">12</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-300 text-right font-mono">18</td>
+<td class="px-6 py-4 text-sm text-right">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                            +8.4%
+                                            <span class="material-symbols-outlined ml-0.5 text-[14px]">trending_up</span>
+</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between">
+<p class="text-sm text-slate-500 dark:text-slate-400">
+                            显示第 <span class="font-medium text-slate-900 dark:text-white">1</span> 到 <span class="font-medium text-slate-900 dark:text-white">5</span> 条，共 <span class="font-medium text-slate-900 dark:text-white">31</span> 条
+                        </p>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-sm border border-slate-200 dark:border-slate-700 rounded-md text-slate-500 disabled:opacity-50 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors" disabled="">上一页</button>
+<button class="px-3 py-1 text-sm border border-slate-200 dark:border-slate-700 rounded-md text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">1</button>
+<button class="px-3 py-1 text-sm border border-slate-200 dark:border-slate-700 rounded-md text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">2</button>
+<button class="px-3 py-1 text-sm border border-slate-200 dark:border-slate-700 rounded-md text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">3</button>
+<span class="px-2 text-slate-400 flex items-center">...</span>
+<button class="px-3 py-1 text-sm border border-slate-200 dark:border-slate-700 rounded-md text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">7</button>
+<button class="px-3 py-1 text-sm border border-slate-200 dark:border-slate-700 rounded-md text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">下一页</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

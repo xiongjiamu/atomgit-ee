@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>流水线 - 用量报告 (Enterprise)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined|Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3b82f6", // Vibrant blue used in charts and accents
+              "primary-dark": "#2563eb",
+              "background-light": "#f8f9fb", // Very light gray/white background
+              "background-dark": "#111827", // Dark mode background
+              "surface-light": "#ffffff",
+              "surface-dark": "#1f2937",
+              "border-light": "#e5e7eb",
+              "border-dark": "#374151",
+              "text-main-light": "#1f2937",
+              "text-main-dark": "#f3f4f6",
+              "text-sub-light": "#6b7280",
+              "text-sub-dark": "#9ca3af",
+              "success": "#10b981", // Green for normal status
+              "warning": "#f59e0b", // Orange/Yellow
+              "danger": "#ef4444", // Red
+              "info-bg": "#eff6ff", // Light blue bg for alerts
+              "info-border": "#bfdbfe",
+              "warning-bg": "#fffbeb", // Light yellow bg for alerts
+              "warning-border": "#fde68a",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+              sans: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.5rem",
+              "lg": "0.75rem",
+              "xl": "1rem",
+            },
+            boxShadow: {
+              'soft': '0 2px 8px rgba(0, 0, 0, 0.04)',
+            }
+          },
+        },
+      };
+    </script>
+<style>::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af; 
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #4b5563; 
+        }.sidebar-item-active {
+            background-color: #eff6ff;
+            color: #2563eb;
+            font-weight: 500;
+        }
+        .dark .sidebar-item-active {
+            background-color: #1e3a8a;
+            color: #93c5fd;
+        }.donut-chart {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #3b82f6 0% 65%, 
+                #e5e7eb 65% 100%
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .dark .donut-chart {
+             background: conic-gradient(
+                #3b82f6 0% 65%, 
+                #374151 65% 100%
+            );
+        }
+        .donut-hole {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: white;
+        }
+        .dark .donut-hole {
+            background-color: #1f2937;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-sans text-text-main-light dark:text-text-main-dark antialiased min-h-screen flex flex-col">
+<header class="h-16 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark flex items-center px-6 sticky top-0 z-20 shrink-0">
+<div class="flex items-center space-x-4">
+<button class="text-text-sub-light dark:text-text-sub-dark hover:text-primary dark:hover:text-primary transition">
+<span class="material-icons-outlined">menu</span>
+</button>
+<div class="flex items-center space-x-2">
+<div class="w-8 h-8 rounded-full bg-red-400"></div> 
+<span class="font-semibold text-lg whitespace-nowrap">这是一个企业名称</span>
+<span class="px-2 py-0.5 text-xs border border-border-light dark:border-border-dark rounded-full text-text-sub-light dark:text-text-sub-dark bg-gray-50 dark:bg-gray-800">企业版</span>
+</div>
+</div>
+<div class="flex-1 flex justify-center max-w-2xl mx-auto px-6">
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-gray-400 text-lg">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2 border border-border-light dark:border-border-dark rounded-full leading-5 bg-gray-50 dark:bg-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:bg-white dark:focus:bg-gray-700 focus:ring-1 focus:ring-primary focus:border-primary transition duration-150 ease-in-out" placeholder="按 / 快速开启搜索" type="text"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="text-gray-400 text-xs border border-gray-200 dark:border-gray-600 rounded px-1.5 py-0.5">/</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-5">
+<button class="bg-black dark:bg-white text-white dark:text-black px-4 py-1.5 rounded-full text-sm font-medium flex items-center hover:opacity-80 transition">
+<span class="material-icons-outlined text-sm mr-1">add</span>
+                新建
+            </button>
+<button class="text-text-sub-light dark:text-text-sub-dark hover:text-primary transition relative">
+<span class="material-icons-outlined">notifications</span>
+<span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-gray-800"></span>
+</button>
+<div class="h-8 w-8 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center text-red-500 dark:text-red-300">
+<span class="material-icons-round text-lg">face</span>
+</div>
+</div>
+</header>
+<div class="h-12 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark flex items-center px-6 space-x-8 overflow-x-auto shrink-0 no-scrollbar">
+<a class="flex items-center text-text-sub-light dark:text-text-sub-dark hover:text-primary font-medium text-sm whitespace-nowrap pb-3 pt-3 border-b-2 border-transparent" href="#">
+<span class="material-icons-outlined text-lg mr-1.5">home</span> 概览
+        </a>
+<a class="flex items-center text-text-sub-light dark:text-text-sub-dark hover:text-primary font-medium text-sm whitespace-nowrap pb-3 pt-3 border-b-2 border-transparent" href="#">
+<span class="material-icons-outlined text-lg mr-1.5">dns</span> 资源中心
+        </a>
+<a class="flex items-center text-text-sub-light dark:text-text-sub-dark hover:text-primary font-medium text-sm whitespace-nowrap pb-3 pt-3 border-b-2 border-transparent" href="#">
+<span class="material-icons-outlined text-lg mr-1.5">dashboard</span> 社区运营
+        </a>
+<a class="flex items-center text-primary dark:text-blue-400 font-medium text-sm whitespace-nowrap pb-3 pt-3 border-b-2 border-primary" href="#">
+<span class="material-icons-outlined text-lg mr-1.5">account_tree</span> 流水线
+        </a>
+<a class="flex items-center text-text-sub-light dark:text-text-sub-dark hover:text-primary font-medium text-sm whitespace-nowrap pb-3 pt-3 border-b-2 border-transparent" href="#">
+<span class="material-icons-outlined text-lg mr-1.5">security</span> 安全与合规
+        </a>
+<a class="flex items-center text-text-sub-light dark:text-text-sub-dark hover:text-primary font-medium text-sm whitespace-nowrap pb-3 pt-3 border-b-2 border-transparent" href="#">
+<span class="material-icons-outlined text-lg mr-1.5">folder_open</span> 数据看板
+        </a>
+<a class="flex items-center text-text-sub-light dark:text-text-sub-dark hover:text-primary font-medium text-sm whitespace-nowrap pb-3 pt-3 border-b-2 border-transparent" href="#">
+<span class="material-icons-outlined text-lg mr-1.5">receipt_long</span> 账单管理
+        </a>
+<a class="flex items-center text-text-sub-light dark:text-text-sub-dark hover:text-primary font-medium text-sm whitespace-nowrap pb-3 pt-3 border-b-2 border-transparent" href="#">
+<span class="material-icons-outlined text-lg mr-1.5">settings</span> 企业管理
+        </a>
+</div>
+<div class="flex flex-1 overflow-hidden">
+<aside class="w-64 bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark flex-shrink-0 overflow-y-auto hidden lg:block pt-6">
+<nav class="space-y-1 px-3">
+<a class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-text-sub-light dark:text-text-sub-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition" href="#">
+<span class="material-icons-outlined text-gray-400 group-hover:text-gray-500 mr-3 text-lg">history</span>
+                    运行记录
+                </a>
+<a class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-primary dark:text-primary bg-blue-50 dark:bg-blue-900/20 sidebar-item-active transition" href="#">
+<span class="material-icons-outlined text-primary mr-3 text-lg">insights</span>
+                    用量报告
+                </a>
+<a class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-text-sub-light dark:text-text-sub-dark hover:bg-gray-100 dark:hover:bg-gray-800 transition" href="#">
+<span class="material-icons-outlined text-gray-400 group-hover:text-gray-500 mr-3 text-lg">assignment</span>
+                    质量报告
+                </a>
+</nav>
+</aside>
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-6">
+<div class="space-y-3 mb-6">
+<div class="bg-warning-bg dark:bg-yellow-900/20 border border-warning-border dark:border-yellow-700/50 rounded-md p-3 flex items-start">
+<span class="material-icons-outlined text-warning text-lg mt-0.5 mr-2">info</span>
+<div class="flex-1 text-sm text-yellow-800 dark:text-yellow-200">
+<span class="font-bold mr-1">资源预警:</span> 您企业当前的存储空间已使用 856GB (85%), 接近包年套餐上限，请关注资源消耗或及时扩容
+                    </div>
+<button class="text-yellow-500 hover:text-yellow-700 dark:hover:text-yellow-100">
+<span class="material-icons-outlined text-lg">close</span>
+</button>
+</div>
+<div class="bg-info-bg dark:bg-blue-900/20 border border-info-border dark:border-blue-700/50 rounded-md p-3 flex items-start">
+<span class="material-icons-outlined text-blue-600 dark:text-blue-400 text-lg mt-0.5 mr-2">info</span>
+<div class="flex-1 text-sm text-blue-800 dark:text-blue-200">
+<span class="font-bold mr-1">企业公告:</span> AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉
+                    </div>
+<button class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-100">
+<span class="material-icons-outlined text-lg">close</span>
+</button>
+</div>
+</div>
+<div class="flex items-center space-x-2 text-sm text-text-sub-light dark:text-text-sub-dark mb-6">
+<div class="relative group">
+<button class="flex items-center bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 px-3 py-1.5 rounded text-text-main-light dark:text-text-main-dark font-medium transition">
+<span class="material-icons-outlined text-primary text-base mr-2">layers</span>
+                        全企业视图 (Enterprise)
+                        <span class="material-icons-outlined text-base ml-2">expand_more</span>
+</button>
+</div>
+<span class="material-icons-outlined text-gray-400 text-base">chevron_right</span>
+<span class="text-text-sub-light dark:text-text-sub-dark">用量指标统计</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 border border-border-light dark:border-border-dark shadow-soft">
+<div class="flex justify-between items-start mb-4">
+<h3 class="text-text-sub-light dark:text-text-sub-dark font-medium text-xs uppercase tracking-wider">总消耗时长 (MINUTES)</h3>
+<span class="bg-blue-50 dark:bg-blue-900/30 text-primary dark:text-blue-300 text-xs px-2 py-1 rounded">本月</span>
+</div>
+<div class="flex items-baseline mb-2">
+<span class="text-4xl font-bold text-text-main-light dark:text-text-main-dark mr-2">12,450</span>
+<span class="text-sm text-text-sub-light dark:text-text-sub-dark">/ 50,000 (限额)</span>
+</div>
+<div class="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-2 mt-4">
+<div class="bg-primary h-2 rounded-full" style="width: 25%"></div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 border border-border-light dark:border-border-dark shadow-soft flex items-center justify-between">
+<div class="flex-1">
+<h3 class="text-text-sub-light dark:text-text-sub-dark font-medium text-xs uppercase tracking-wider mb-6">RUNNER 资源分布</h3>
+<div class="flex items-center justify-start space-x-6">
+<div class="donut-chart flex-shrink-0 transform scale-75 lg:scale-90 origin-left">
+<div class="donut-hole"></div>
+</div>
+<div class="space-y-3 text-sm">
+<div class="flex items-center">
+<span class="w-2.5 h-2.5 rounded-full bg-primary mr-2"></span>
+<span class="text-text-main-light dark:text-text-main-dark mr-1">托管 Runner</span>
+<span class="text-text-sub-light dark:text-text-sub-dark font-semibold">(65%)</span>
+</div>
+<div class="flex items-center">
+<span class="w-2.5 h-2.5 rounded-full bg-gray-300 dark:bg-gray-600 mr-2"></span>
+<span class="text-text-main-light dark:text-text-main-dark mr-1">自建 Runner</span>
+<span class="text-text-sub-light dark:text-text-sub-dark font-semibold">(35%)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 border border-border-light dark:border-border-dark shadow-soft">
+<h3 class="text-text-sub-light dark:text-text-sub-dark font-medium text-xs uppercase tracking-wider mb-6">执行平台分布</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center">
+<span class="material-icons-outlined text-text-sub-light dark:text-text-sub-dark mr-2 text-base">grid_view</span>
+<span class="text-text-main-light dark:text-text-main-dark">Linux</span>
+</div>
+<span class="font-bold text-text-main-light dark:text-text-main-dark">88%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center">
+<span class="material-icons-outlined text-text-sub-light dark:text-text-sub-dark mr-2 text-base">window</span>
+<span class="text-text-main-light dark:text-text-main-dark">Windows</span>
+</div>
+<span class="font-bold text-text-main-light dark:text-text-main-dark">10%</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<div class="flex items-center">
+<span class="material-icons-outlined text-text-sub-light dark:text-text-sub-dark mr-2 text-base">computer</span>
+<span class="text-text-main-light dark:text-text-main-dark">macOS</span>
+</div>
+<span class="font-bold text-text-main-light dark:text-text-main-dark">2%</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-soft p-6">
+<div class="flex items-center mb-6">
+<span class="material-icons-outlined text-primary mr-2">dns</span>
+<h2 class="text-lg font-bold text-text-main-light dark:text-text-main-dark">企业自建 Runner 集群负载 (Self-hosted)</h2>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-5 border border-border-light dark:border-border-dark">
+<div class="text-xs text-text-sub-light dark:text-text-sub-dark mb-2">集群在线率</div>
+<div class="flex items-baseline">
+<span class="text-2xl font-bold text-success mr-2">100%</span>
+<span class="text-xs text-text-sub-light dark:text-text-sub-dark">(24/24)</span>
+</div>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-5 border border-border-light dark:border-border-dark">
+<div class="text-xs text-text-sub-light dark:text-text-sub-dark mb-2">当前并发任务</div>
+<div class="flex items-baseline">
+<span class="text-2xl font-bold text-text-main-light dark:text-text-main-dark mr-2">18</span>
+<span class="text-xs text-text-sub-light dark:text-text-sub-dark">/ Max 50</span>
+</div>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-5 border border-border-light dark:border-border-dark">
+<div class="text-xs text-text-sub-light dark:text-text-sub-dark mb-2">峰值 CPU 使用率</div>
+<div class="flex items-baseline">
+<span class="text-2xl font-bold text-warning mr-2">72%</span>
+</div>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-5 border border-border-light dark:border-border-dark">
+<div class="text-xs text-text-sub-light dark:text-text-sub-dark mb-2">集群扩容预警</div>
+<div class="flex items-baseline">
+<span class="text-2xl font-bold text-success mr-2">正常</span>
+<span class="text-lg font-medium text-success">(Low)</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

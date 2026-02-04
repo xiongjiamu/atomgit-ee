@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>成分分析 - 依赖树可视化视图</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "primary-dark": "#0e45b5",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "slate-850": "#1a2332",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for the drawer */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+        }
+        /* Grid background pattern */
+        .bg-grid-pattern {
+            background-size: 20px 20px;
+            background-image: radial-gradient(circle, #cfd7e7 1px, transparent 1px);
+        }
+        .node-connector-path {
+            fill: none;
+            stroke: #cbd5e1;
+            stroke-width: 2px;
+            transition: stroke 0.3s ease;
+        }
+        .node-connector-path.active {
+            stroke: #135bec;
+            stroke-width: 3px;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 overflow-hidden flex flex-col h-screen">
+<!-- Top Navbar -->
+<header class="flex-none flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e7ebf3] bg-white px-8 py-3 z-20">
+<div class="flex items-center gap-4 text-[#0d121b]">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined text-3xl">hub</span>
+</div>
+<h2 class="text-[#0d121b] text-lg font-bold leading-tight tracking-[-0.015em]">AtomGit Enterprise</h2>
+<div class="h-6 w-px bg-slate-200 mx-2"></div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-500 hover:text-primary text-sm font-medium transition-colors" href="#">仪表盘</a>
+<a class="text-slate-500 hover:text-primary text-sm font-medium transition-colors" href="#">项目</a>
+<a class="text-primary text-sm font-medium transition-colors" href="#">安全合规</a>
+<a class="text-slate-500 hover:text-primary text-sm font-medium transition-colors" href="#">设置</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center text-slate-500 hover:text-primary">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center text-slate-500 hover:text-primary">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 border border-slate-200" data-alt="User avatar profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDx-EEPbzscoQcXI7AiGm9Q-JR4HjshT5MBLZPh1212LBxSqc23pO5waNj0la7JuVqGtGlenGFI9PSi-LwT7s-assU4sSWv9iZhniChedP_NkTzIO49Ej_hFkJdNJg1WA1VQC7vzr5cwWGgGqlzGGCqod4Chyak5zoM_umOvdJtsbdSXHcJSZQK5CZOK5TZbhY75X9xI50Ko0FvNKfeuBKtoGpyxgFYkZq60Hn0kYou1yV9ZeUvWJ67E5Stv9YjYVrjWo6_86gUxQRr");'>
+</div>
+</div>
+</header>
+<!-- Sub-header: Toolbar & Controls -->
+<div class="flex-none bg-white border-b border-slate-200 px-8 py-3 flex items-center justify-between shadow-sm z-10">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 text-sm">
+<a class="text-slate-500 hover:text-slate-700" href="#">安全合规</a>
+<span class="text-slate-300">/</span>
+<a class="text-slate-500 hover:text-slate-700" href="#">成分分析</a>
+<span class="text-slate-300">/</span>
+<span class="text-slate-900 font-medium">依赖树视图</span>
+<span class="ml-2 px-2 py-0.5 rounded-full bg-slate-100 text-xs text-slate-500 border border-slate-200">v2.4.0-build</span>
+</div>
+<!-- Toolbar Actions -->
+<div class="flex items-center gap-4">
+<!-- Search -->
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">search</span>
+</div>
+<input class="block w-64 pl-10 pr-3 py-1.5 border border-slate-300 rounded-md leading-5 bg-slate-50 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition-all" placeholder="搜索组件 (例如: fastjson)..." type="text"/>
+</div>
+<div class="h-6 w-px bg-slate-200"></div>
+<!-- Filter Toggle -->
+<label class="flex items-center cursor-pointer gap-2 select-none group">
+<div class="relative">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-red-500"></div>
+</div>
+<span class="text-sm font-medium text-slate-600 group-hover:text-slate-800">仅显示风险节点</span>
+</label>
+<button class="px-3 py-1.5 text-sm font-medium text-primary bg-primary/10 hover:bg-primary/20 rounded-md border border-transparent transition-colors">
+                导出报告
+            </button>
+</div>
+</div>
+<!-- Main Workspace -->
+<main class="flex-1 relative overflow-hidden bg-background-light">
+<!-- Interactive Canvas Background -->
+<div class="absolute inset-0 bg-grid-pattern opacity-60"></div>
+<!-- Visualization Layer -->
+<div class="absolute inset-0 overflow-auto flex items-center justify-center p-20 min-w-[1200px] min-h-[800px]">
+<!-- Visual Tree Container (Simulated with absolute positioning for a 1920px width design) -->
+<div class="relative w-[1400px] h-[800px] bg-white/50 backdrop-blur-[2px] rounded-xl shadow-sm border border-slate-100/50 scale-[0.85] origin-top-left md:scale-100 transform transition-transform">
+<!-- SVG Connections Layer -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none z-0" xmlns="http://www.w3.org/2000/svg">
+<!-- Paths from Root -->
+<path class="node-connector-path" d="M 280 400 C 400 400, 400 200, 520 200"></path>
+<path class="node-connector-path active" d="M 280 400 C 400 400, 400 400, 520 400"></path> <!-- Highlighted Path -->
+<path class="node-connector-path" d="M 280 400 C 400 400, 400 600, 520 600"></path>
+<!-- Paths from Node B (FastJSON) -->
+<path class="node-connector-path active" d="M 800 400 C 920 400, 920 300, 1040 300"></path>
+<path class="node-connector-path active" d="M 800 400 C 920 400, 920 500, 1040 500"></path>
+</svg>
+<!-- Nodes Layer -->
+<!-- Root Node -->
+<div class="absolute top-[360px] left-[40px] z-10">
+<div class="w-64 h-20 bg-slate-900 rounded-lg shadow-lg border border-slate-700 flex items-center p-4 relative group cursor-pointer hover:scale-105 transition-transform">
+<div class="size-10 rounded bg-white/10 flex items-center justify-center text-white mr-3">
+<span class="material-symbols-outlined">dataset</span>
+</div>
+<div>
+<div class="text-white text-sm font-bold">AtomGit-Backend</div>
+<div class="text-slate-400 text-xs">Project Root • v2.0</div>
+</div>
+<div class="absolute -top-2 -right-2 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">MAIN</div>
+</div>
+</div>
+<!-- Level 1 Node A: Spring Boot -->
+<div class="absolute top-[160px] left-[520px] z-10">
+<div class="w-72 h-20 bg-white rounded-lg shadow-sm border border-slate-200 flex items-center p-4 relative group cursor-pointer hover:border-green-500 hover:shadow-md transition-all">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-green-500 rounded-l-lg"></div>
+<div class="size-10 rounded bg-green-50 flex items-center justify-center text-green-600 mr-3">
+<span class="material-symbols-outlined">deployed_code</span>
+</div>
+<div class="flex-1">
+<div class="text-slate-800 text-sm font-bold">spring-boot-starter</div>
+<div class="text-slate-500 text-xs">org.springframework</div>
+</div>
+<span class="material-symbols-outlined text-green-500 text-lg">check_circle</span>
+</div>
+</div>
+<!-- Level 1 Node B: FastJSON (Vulnerable - Selected) -->
+<div class="absolute top-[360px] left-[520px] z-20">
+<div class="w-72 h-24 bg-white rounded-lg shadow-md border-2 border-primary ring-4 ring-primary/10 flex items-center p-4 relative group cursor-pointer transition-all">
+<div class="absolute left-0 top-0 bottom-0 w-1.5 bg-red-500 rounded-l-sm"></div>
+<div class="size-10 rounded bg-red-50 flex items-center justify-center text-red-600 mr-3">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<span class="text-slate-900 text-sm font-bold">fastjson</span>
+<span class="bg-red-100 text-red-700 text-[10px] px-1.5 py-0.5 rounded font-medium">CVE-2022</span>
+</div>
+<div class="text-slate-500 text-xs mt-1">com.alibaba • v1.2.68</div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<span class="flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-[10px] font-bold text-white">2</span>
+</div>
+</div>
+</div>
+<!-- Level 1 Node C: Lodash -->
+<div class="absolute top-[560px] left-[520px] z-10">
+<div class="w-72 h-20 bg-white rounded-lg shadow-sm border border-slate-200 flex items-center p-4 relative group cursor-pointer hover:border-green-500 hover:shadow-md transition-all">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-green-500 rounded-l-lg"></div>
+<div class="size-10 rounded bg-green-50 flex items-center justify-center text-green-600 mr-3">
+<span class="material-symbols-outlined">data_object</span>
+</div>
+<div class="flex-1">
+<div class="text-slate-800 text-sm font-bold">lodash</div>
+<div class="text-slate-500 text-xs">npm • v4.17.21</div>
+</div>
+<span class="material-symbols-outlined text-green-500 text-lg">check_circle</span>
+</div>
+</div>
+<!-- Level 2 Node B1: Jackson Core -->
+<div class="absolute top-[260px] left-[1040px] z-10">
+<div class="w-64 h-16 bg-white rounded-lg shadow-sm border border-slate-200 flex items-center p-3 relative group cursor-pointer hover:border-green-500 hover:shadow-md transition-all opacity-80 hover:opacity-100">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-green-500 rounded-l-lg"></div>
+<div class="size-8 rounded bg-slate-50 flex items-center justify-center text-slate-500 mr-3">
+<span class="material-symbols-outlined text-lg">extension</span>
+</div>
+<div class="flex-1">
+<div class="text-slate-800 text-sm font-semibold">jackson-core</div>
+<div class="text-slate-400 text-[10px]">v2.11.0</div>
+</div>
+</div>
+</div>
+<!-- Level 2 Node B2: Slf4j API -->
+<div class="absolute top-[460px] left-[1040px] z-10">
+<div class="w-64 h-16 bg-white rounded-lg shadow-sm border border-slate-200 flex items-center p-3 relative group cursor-pointer hover:border-green-500 hover:shadow-md transition-all opacity-80 hover:opacity-100">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-green-500 rounded-l-lg"></div>
+<div class="size-8 rounded bg-slate-50 flex items-center justify-center text-slate-500 mr-3">
+<span class="material-symbols-outlined text-lg">extension</span>
+</div>
+<div class="flex-1">
+<div class="text-slate-800 text-sm font-semibold">slf4j-api</div>
+<div class="text-slate-400 text-[10px]">v1.7.30</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Controls (Bottom Left) -->
+<div class="absolute bottom-6 left-8 flex flex-col gap-2 z-30">
+<div class="bg-white rounded-lg shadow-lg border border-slate-200 p-1 flex flex-col">
+<button class="size-9 flex items-center justify-center text-slate-600 hover:text-primary hover:bg-slate-50 rounded transition-colors" title="放大">
+<span class="material-symbols-outlined">add</span>
+</button>
+<div class="h-px w-full bg-slate-100 my-0.5"></div>
+<button class="size-9 flex items-center justify-center text-slate-600 hover:text-primary hover:bg-slate-50 rounded transition-colors" title="缩小">
+<span class="material-symbols-outlined">remove</span>
+</button>
+</div>
+<button class="bg-white rounded-lg shadow-lg border border-slate-200 size-9 flex items-center justify-center text-slate-600 hover:text-primary hover:bg-slate-50 transition-colors" title="重置视图">
+<span class="material-symbols-outlined">center_focus_strong</span>
+</button>
+</div>
+<!-- Legend (Bottom Center) -->
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur rounded-full px-6 py-2 shadow-sm border border-slate-200 flex items-center gap-6 text-xs font-medium text-slate-600 z-30">
+<div class="flex items-center gap-2">
+<div class="size-2.5 rounded-full bg-slate-900"></div>
+<span>当前项目</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-2.5 rounded-full bg-green-500"></div>
+<span>安全组件</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-2.5 rounded-full bg-red-500"></div>
+<span>高危风险</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-2.5 rounded-full bg-orange-400"></div>
+<span>中危风险</span>
+</div>
+</div>
+<!-- Right Detail Drawer (Overlay) -->
+<aside class="absolute top-4 right-4 bottom-4 w-[400px] bg-white rounded-xl shadow-2xl border border-slate-200 flex flex-col z-40 animate-slide-in-right transform overflow-hidden">
+<!-- Drawer Header -->
+<div class="p-6 border-b border-slate-100 flex items-start justify-between bg-slate-50/50">
+<div class="flex items-start gap-4">
+<div class="size-12 rounded-lg bg-red-50 border border-red-100 flex items-center justify-center text-red-600 shrink-0">
+<span class="material-symbols-outlined text-3xl">warning</span>
+</div>
+<div>
+<h2 class="text-xl font-bold text-slate-900">fastjson</h2>
+<p class="text-sm text-slate-500 font-mono mt-1">com.alibaba:fastjson</p>
+</div>
+</div>
+<button class="text-slate-400 hover:text-slate-600 transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Drawer Content -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
+<!-- Status Banner -->
+<div class="rounded-lg bg-red-50 border border-red-100 p-4 flex gap-3">
+<span class="material-symbols-outlined text-red-600 shrink-0">gpp_maybe</span>
+<div>
+<h4 class="text-sm font-bold text-red-800">发现 2 个高危漏洞</h4>
+<p class="text-xs text-red-600 mt-1 leading-relaxed">建议尽快升级至 v1.2.83 或更高版本以修复反序列化漏洞。</p>
+</div>
+</div>
+<!-- Basic Info Grid -->
+<div>
+<h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">组件信息</h3>
+<div class="grid grid-cols-2 gap-y-4 gap-x-2">
+<div>
+<span class="text-xs text-slate-500 block">当前版本</span>
+<span class="text-sm font-medium text-slate-900">1.2.68</span>
+</div>
+<div>
+<span class="text-xs text-slate-500 block">最新版本</span>
+<span class="text-sm font-medium text-primary">1.2.83</span>
+</div>
+<div>
+<span class="text-xs text-slate-500 block">许可证</span>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px] text-slate-400">balance</span>
+<span class="text-sm font-medium text-slate-900">Apache-2.0</span>
+</div>
+</div>
+<div>
+<span class="text-xs text-slate-500 block">引用深度</span>
+<span class="text-sm font-medium text-slate-900">Level 1 (Direct)</span>
+</div>
+</div>
+</div>
+<div class="h-px bg-slate-100"></div>
+<!-- Vulnerabilities List -->
+<div>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">关联漏洞 (CVE)</h3>
+<a class="text-xs font-medium text-primary hover:underline" href="#">查看全部</a>
+</div>
+<div class="space-y-3">
+<!-- Vuln Item 1 -->
+<div class="group block p-3 rounded-lg border border-slate-200 hover:border-primary/50 hover:shadow-sm transition-all bg-white cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold text-white bg-red-500 px-2 py-0.5 rounded">High (8.8)</span>
+<span class="text-xs text-slate-400 font-mono">CVE-2022-25845</span>
+</div>
+<p class="text-sm font-medium text-slate-800 group-hover:text-primary transition-colors">Fastjson AutoType Bypass RCE</p>
+</div>
+<!-- Vuln Item 2 -->
+<div class="group block p-3 rounded-lg border border-slate-200 hover:border-primary/50 hover:shadow-sm transition-all bg-white cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-bold text-white bg-red-500 px-2 py-0.5 rounded">High (8.1)</span>
+<span class="text-xs text-slate-400 font-mono">CVE-2020-11111</span>
+</div>
+<p class="text-sm font-medium text-slate-800 group-hover:text-primary transition-colors">Deserialization of Untrusted Data</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Drawer Footer -->
+<div class="p-6 border-t border-slate-100 bg-slate-50">
+<div class="flex gap-3">
+<button class="flex-1 bg-white border border-slate-300 text-slate-700 font-medium py-2 px-4 rounded-lg hover:bg-slate-50 transition-colors text-sm">
+                        查看依赖路径
+                    </button>
+<button class="flex-1 bg-primary text-white font-medium py-2 px-4 rounded-lg hover:bg-primary-dark transition-colors shadow-sm text-sm">
+                        修复建议
+                    </button>
+</div>
+</div>
+</aside>
+</main>
+</body></html>

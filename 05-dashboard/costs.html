@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Enterprise Data Dashboard - Resource &amp; Cost</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#D12F2F", // The distinct red color from the screenshot
+                        "background-light": "#F7F8FA", // Light gray background for the app shell
+                        "background-dark": "#111827", // Dark mode background
+                        "surface-light": "#FFFFFF", // White surface
+                        "surface-dark": "#1F2937", // Dark surface
+                        "border-light": "#E5E7EB",
+                        "border-dark": "#374151",
+                    },
+                    fontFamily: {
+                        sans: ['"Inter"', '"Noto Sans SC"', 'sans-serif'],
+                        display: ['"Inter"', '"Noto Sans SC"', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.375rem",
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 font-sans antialiased h-screen flex flex-col overflow-hidden">
+<header class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark flex items-center justify-between px-5 h-14 shrink-0 z-20">
+<div class="flex items-center gap-4">
+<button class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+<span class="material-icons-outlined text-xl">menu</span>
+</button>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center text-white text-xs font-bold">
+</div>
+<span class="font-medium text-gray-900 dark:text-white">这是一个企业名称</span>
+<span class="px-1.5 py-0.5 rounded text-xs border border-gray-200 text-gray-500 dark:border-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800">企业版</span>
+</div>
+</div>
+<div class="hidden md:flex flex-1 max-w-lg mx-8">
+<div class="relative w-full">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-gray-400 text-lg">search</span>
+</span>
+<input class="block w-full pl-10 pr-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-md leading-5 bg-white dark:bg-gray-800 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition duration-150 ease-in-out" placeholder="按下 / 快速开启搜索" type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-1 bg-black hover:bg-gray-800 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors">
+<span class="material-icons-outlined text-base">add</span>
+<span>新建</span>
+</button>
+<button class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 relative">
+<span class="material-icons-outlined">notifications</span>
+<span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-gray-800"></span>
+</button>
+<div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-primary font-bold overflow-hidden cursor-pointer">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2sQMTNm-laZ_-42eLWG5k4Qw5yHwEogcwW0OrfdBsl_pA90YuoBT3NTLtfDLbhelnWqL3A9sD2h014QBWR_saoCFhw_nw1l501SP4y3J5re0BFG8tqolBmM4hblreuuXxira-Bds9AWyy4b5MZMkc0311nlhGxugX60EqO38MnQGX-ZuPkamYWl7RfZcFwOK7ayyPq9Fz7dk4WshqNrR9o4bLFMNf-wnYjG5UuBriz7-TVEj_IqxvfoznlwZboLsqHBq_Oe5wOD05"/>
+</div>
+</div>
+</header>
+<nav class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark px-5 h-12 flex items-center gap-8 text-sm font-medium shrink-0 overflow-x-auto z-10">
+<a class="flex items-center gap-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white h-full border-b-2 border-transparent hover:border-gray-300 px-1" href="#">
+<span class="material-icons-outlined text-lg">home</span>
+            概览
+        </a>
+<a class="flex items-center gap-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white h-full border-b-2 border-transparent hover:border-gray-300 px-1" href="#">
+<span class="material-icons-outlined text-lg">dns</span>
+            资源中心
+        </a>
+<a class="flex items-center gap-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white h-full border-b-2 border-transparent hover:border-gray-300 px-1" href="#">
+<span class="material-icons-outlined text-lg">forum</span>
+            社区运营
+        </a>
+<a class="flex items-center gap-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white h-full border-b-2 border-transparent hover:border-gray-300 px-1" href="#">
+<span class="material-icons-outlined text-lg">view_stream</span>
+            流水线
+        </a>
+<a class="flex items-center gap-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white h-full border-b-2 border-transparent hover:border-gray-300 px-1" href="#">
+<span class="material-icons-outlined text-lg">verified_user</span>
+            安全与合规
+        </a>
+<a class="flex items-center gap-2 text-primary dark:text-red-400 h-full border-b-2 border-primary px-1" href="#">
+<span class="material-icons-outlined text-lg">analytics</span>
+            数据看板
+        </a>
+<a class="flex items-center gap-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white h-full border-b-2 border-transparent hover:border-gray-300 px-1" href="#">
+<span class="material-icons-outlined text-lg">receipt</span>
+            账单管理
+        </a>
+<a class="flex items-center gap-2 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white h-full border-b-2 border-transparent hover:border-gray-300 px-1" href="#">
+<span class="material-icons-outlined text-lg">settings</span>
+            企业管理
+        </a>
+</nav>
+<div class="flex flex-1 overflow-hidden relative">
+<div class="absolute top-0 left-0 right-0 z-10 flex flex-col">
+<div class="bg-orange-50 dark:bg-orange-900/20 border-b border-orange-100 dark:border-orange-800/30 px-6 py-2.5 flex items-start sm:items-center justify-between">
+<div class="flex items-center gap-2 text-sm text-orange-800 dark:text-orange-200">
+<span class="material-icons-outlined text-orange-600 dark:text-orange-400 text-lg">error</span>
+<p><span class="font-bold">资源预警：</span>您企业当前的存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容</p>
+</div>
+<button class="text-orange-400 hover:text-orange-600 dark:hover:text-orange-200">
+<span class="material-icons-outlined text-lg">close</span>
+</button>
+</div>
+<div class="bg-blue-50 dark:bg-blue-900/20 border-b border-blue-100 dark:border-blue-800/30 px-6 py-2.5 flex items-start sm:items-center justify-between">
+<div class="flex items-center gap-2 text-sm text-blue-800 dark:text-blue-200">
+<span class="material-icons-outlined text-blue-600 dark:text-blue-400 text-lg">info</span>
+<p><span class="font-bold">企业公告：</span>AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉</p>
+</div>
+<button class="text-blue-400 hover:text-blue-600 dark:hover:text-blue-200">
+<span class="material-icons-outlined text-lg">close</span>
+</button>
+</div>
+</div>
+<div class="flex w-full pt-[98px]"> 
+<aside class="w-64 bg-background-light dark:bg-background-dark flex flex-col py-6 shrink-0 h-full overflow-y-auto border-r border-border-light dark:border-border-dark">
+<nav class="space-y-1 px-3">
+<a class="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" href="#">
+<span class="material-icons-outlined mr-3 text-gray-400 group-hover:text-gray-500 text-xl">group</span>
+                        流量与用户
+                    </a>
+<a class="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" href="#">
+<span class="material-icons-outlined mr-3 text-gray-400 group-hover:text-gray-500 text-xl">precision_manufacturing</span>
+                        生产与效能
+                    </a>
+<a class="group flex items-center px-3 py-2 text-sm font-medium text-gray-600 rounded-md hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800" href="#">
+<span class="material-icons-outlined mr-3 text-gray-400 group-hover:text-gray-500 text-xl">handshake</span>
+                        贡献与生态
+                    </a>
+<a class="group flex items-center px-3 py-2 text-sm font-medium bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-300 rounded-md" href="#">
+<span class="material-icons-outlined mr-3 text-red-500 dark:text-red-400 text-xl">savings</span>
+                        资源与成本
+                    </a>
+</nav>
+</aside>
+<main class="flex-1 bg-surface-light dark:bg-surface-dark overflow-y-auto p-8">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+<div>
+<h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">资源与成本统计</h1>
+<p class="text-sm text-gray-500 dark:text-gray-400">Git/LFS 存储用量、流水线消耗及 AI 算力成本分析。</p>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative">
+<button class="flex items-center justify-between w-36 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+<span>最近 30 天</span>
+<span class="material-icons-outlined text-gray-400 text-sm">expand_more</span>
+</button>
+</div>
+<button class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 bg-white dark:bg-gray-800">
+<span class="material-icons-outlined text-lg block">refresh</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+<div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center gap-2 text-gray-500 dark:text-gray-400 mb-4">
+<span class="material-icons-outlined text-lg">database</span>
+<span class="text-sm font-medium">Git 存储</span>
+</div>
+<div class="text-3xl font-bold text-gray-900 dark:text-white mb-2">1.2 TB</div>
+<div class="text-xs text-gray-400 dark:text-gray-500">带宽: 45MB/s</div>
+</div>
+<div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center gap-2 text-gray-500 dark:text-gray-400 mb-4">
+<span class="material-icons-outlined text-lg">inventory_2</span>
+<span class="text-sm font-medium">LFS 存储</span>
+</div>
+<div class="text-3xl font-bold text-gray-900 dark:text-white mb-2">485 GB</div>
+<div class="text-xs text-gray-400 dark:text-gray-500">带宽: 120MB/s</div>
+</div>
+<div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center gap-2 text-gray-500 dark:text-gray-400 mb-4">
+<span class="material-icons-outlined text-lg">api</span>
+<span class="text-sm font-medium">API 调用</span>
+</div>
+<div class="text-3xl font-bold text-gray-900 dark:text-white mb-2">8.5 M</div>
+<div class="text-xs text-gray-400 dark:text-gray-500">Error Rate: 0.02%</div>
+</div>
+<div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center gap-2 text-gray-500 dark:text-gray-400 mb-4">
+<span class="material-icons-outlined text-lg">auto_awesome</span>
+<span class="text-sm font-medium">AI Token</span>
+</div>
+<div class="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">14.2 M</div>
+<div class="text-xs text-gray-400 dark:text-gray-500">Top User: Dev_A</div>
+</div>
+</div>
+<div class="mt-8 flex flex-col items-center justify-center h-96 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800/50">
+<span class="text-gray-400 dark:text-gray-600 text-sm">图表区域 (Chart Area)</span>
+</div>
+</main>
+</div>
+</div>
+
+</body></html>

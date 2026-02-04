@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>账单管理 - 账单总览</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2563EB", // Rich Blue for primary actions
+                        "background-light": "#F9FAFB", // Light gray background for page
+                        "background-dark": "#0F172A", // Dark Slate for dark mode background
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E293B",
+                        "sidebar-light": "#F3F4F6",
+                        "sidebar-dark": "#111827",
+                    },
+                    fontFamily: {
+                        display: ["'Noto Sans SC'", "sans-serif"],
+                        sans: ["'Noto Sans SC'", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.375rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569; 
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #64748b; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-sans min-h-screen flex flex-col overflow-hidden">
+<header class="bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-700 flex-none z-20">
+<div class="h-16 px-4 flex items-center justify-between">
+<div class="flex items-center space-x-4">
+<button class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-full">
+<span class="material-icons-outlined">menu</span>
+</button>
+<div class="flex items-center space-x-2">
+<div class="w-8 h-8 rounded-full bg-red-400 flex items-center justify-center text-white font-bold text-xs shadow-sm">
+<div class="w-4 h-4 rounded-full border-2 border-white opacity-50"></div>
+</div>
+<span class="font-medium text-lg tracking-tight">这是一个企业名称</span>
+<span class="px-2 py-0.5 text-xs border border-gray-300 dark:border-gray-600 rounded text-gray-500 dark:text-gray-400">企业版</span>
+</div>
+</div>
+<div class="flex-1 max-w-xl px-8 hidden md:block">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-gray-400 text-lg">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2 border border-gray-200 dark:border-gray-700 rounded-lg leading-5 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition-colors" placeholder="按下 / 快速开启搜索" type="text"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="text-gray-400 text-xs border border-gray-200 dark:border-gray-600 rounded px-1.5 py-0.5 bg-white dark:bg-gray-700">/</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<button class="bg-black hover:bg-gray-800 text-white dark:bg-white dark:text-black dark:hover:bg-gray-200 px-4 py-1.5 rounded-full text-sm font-medium flex items-center shadow-sm transition-colors">
+<span class="material-icons-round text-sm mr-1">add</span>
+                    新建
+                </button>
+<button class="relative text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+<span class="material-icons-outlined">notifications</span>
+<span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-gray-900"></span>
+</button>
+<div class="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center cursor-pointer overflow-hidden border border-gray-200 dark:border-gray-700">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1DS26tZxAM_Iz9-FqVqAVxHb7drgfZU_U4JHXHEiuPW3gdJ1U9l9k5XCGuK1R9OxfZsnGltzZ7CF_LxXAd_jZ_tjw6U3bb4nR7IrG8CNTzmSfI4cFIqXlt9yJPbOJcI14k5gznHK_KoTlStezI8v3wFWGX8sDAAujPqx2LHVqafKeRBvhPJk0Fia4bJUdXi-yrpPdRx9etswFTSetF-7-dg1sA0wJvgU6QFwGJFCY5egg5l9qOCandqTniE28QwjeRr1j6ApcPS54"/>
+</div>
+</div>
+</div>
+<div class="px-4 flex items-center space-x-8 text-sm text-gray-500 dark:text-gray-400 font-medium overflow-x-auto no-scrollbar border-t border-gray-100 dark:border-gray-800">
+<a class="py-3 hover:text-gray-900 dark:hover:text-gray-100 flex items-center space-x-1 whitespace-nowrap" href="#">
+<span class="material-icons-outlined text-lg">home</span>
+<span>概览</span>
+</a>
+<a class="py-3 hover:text-gray-900 dark:hover:text-gray-100 flex items-center space-x-1 whitespace-nowrap" href="#">
+<span class="material-icons-outlined text-lg">dns</span>
+<span>资源中心</span>
+</a>
+<a class="py-3 hover:text-gray-900 dark:hover:text-gray-100 flex items-center space-x-1 whitespace-nowrap" href="#">
+<span class="material-icons-outlined text-lg">forum</span>
+<span>社区运营</span>
+</a>
+<a class="py-3 hover:text-gray-900 dark:hover:text-gray-100 flex items-center space-x-1 whitespace-nowrap" href="#">
+<span class="material-icons-outlined text-lg">account_tree</span>
+<span>流水线</span>
+</a>
+<a class="py-3 hover:text-gray-900 dark:hover:text-gray-100 flex items-center space-x-1 whitespace-nowrap" href="#">
+<span class="material-icons-outlined text-lg">security</span>
+<span>安全与合规</span>
+</a>
+<a class="py-3 hover:text-gray-900 dark:hover:text-gray-100 flex items-center space-x-1 whitespace-nowrap" href="#">
+<span class="material-icons-outlined text-lg">folder_open</span>
+<span>数据看板</span>
+</a>
+<a class="py-3 text-gray-900 dark:text-white border-b-2 border-gray-900 dark:border-white flex items-center space-x-1 whitespace-nowrap" href="#">
+<span class="material-icons-outlined text-lg">receipt_long</span>
+<span>账单管理</span>
+</a>
+<a class="py-3 hover:text-gray-900 dark:hover:text-gray-100 flex items-center space-x-1 whitespace-nowrap" href="#">
+<span class="material-icons-outlined text-lg">settings</span>
+<span>企业管理</span>
+</a>
+</div>
+</header>
+<div class="flex-none">
+<div class="bg-orange-50 dark:bg-orange-900/20 border-b border-orange-100 dark:border-orange-800/50 px-6 py-2.5 flex items-center justify-between">
+<div class="flex items-center text-sm text-orange-700 dark:text-orange-300">
+<span class="material-icons text-base mr-2">info</span>
+<span class="font-medium mr-1">资源预警：</span>
+<span>您企业当前的存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容</span>
+</div>
+<button class="text-orange-400 hover:text-orange-600 dark:text-orange-500 dark:hover:text-orange-300">
+<span class="material-icons text-sm">close</span>
+</button>
+</div>
+<div class="bg-blue-50 dark:bg-blue-900/20 border-b border-blue-100 dark:border-blue-800/50 px-6 py-2.5 flex items-center justify-between">
+<div class="flex items-center text-sm text-blue-700 dark:text-blue-300">
+<span class="material-icons text-base mr-2">info</span>
+<span class="font-medium mr-1">企业公告：</span>
+<span>AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉</span>
+</div>
+<button class="text-blue-400 hover:text-blue-600 dark:text-blue-500 dark:hover:text-blue-300">
+<span class="material-icons text-sm">close</span>
+</button>
+</div>
+</div>
+<div class="flex flex-1 overflow-hidden">
+<aside class="w-64 bg-sidebar-light dark:bg-sidebar-dark border-r border-gray-200 dark:border-gray-800 flex-none hidden lg:block overflow-y-auto">
+<nav class="p-4 space-y-1">
+<a class="flex items-center px-3 py-2.5 text-sm font-medium rounded-md bg-white dark:bg-slate-800 text-gray-900 dark:text-white shadow-sm border border-gray-100 dark:border-gray-700" href="#">
+<span class="w-1.5 h-1.5 rounded-full bg-red-500 mr-3"></span>
+<span>账单总览</span>
+</a>
+<a class="flex items-center px-3 py-2.5 text-sm font-medium rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white group" href="#">
+<span class="material-icons-outlined text-lg mr-3 text-gray-400 group-hover:text-gray-500">receipt</span>
+<span>付费记录</span>
+</a>
+<a class="flex items-center px-3 py-2.5 text-sm font-medium rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 hover:text-gray-900 dark:hover:text-white group" href="#">
+<span class="material-icons-outlined text-lg mr-3 text-gray-400 group-hover:text-gray-500">description</span>
+<span>发票管理</span>
+</a>
+</nav>
+</aside>
+<main class="flex-1 bg-surface-light dark:bg-surface-dark overflow-y-auto p-8">
+<div class="max-w-6xl mx-auto space-y-8">
+<div class="relative bg-slate-900 dark:bg-black rounded-xl p-8 text-white overflow-hidden shadow-lg">
+<div class="absolute right-0 bottom-0 opacity-10 pointer-events-none transform translate-x-1/4 translate-y-1/4">
+<span class="material-icons" style="font-size: 300px;">account_balance_wallet</span>
+</div>
+<div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center">
+<div>
+<div class="flex items-center space-x-3 mb-2">
+<h2 class="text-sm font-medium text-slate-300">本期应结账单 (2023年10月)</h2>
+</div>
+<div class="flex items-baseline space-x-3 mb-4">
+<span class="text-4xl font-bold tracking-tight">¥ 12,450.00</span>
+<span class="px-2 py-0.5 rounded text-xs font-medium bg-red-900/50 text-red-200 border border-red-800">待支付</span>
+</div>
+<div class="text-xs text-slate-400 flex flex-col sm:flex-row sm:space-x-6 space-y-1 sm:space-y-0">
+<span>账单周期: 2023/10/01 - 2023/10/31</span>
+<span>最后还款日: 2023/11/10</span>
+</div>
+</div>
+<div class="mt-6 md:mt-0">
+<button class="bg-primary hover:bg-blue-600 text-white px-6 py-2.5 rounded-lg text-sm font-medium shadow-lg shadow-blue-500/30 flex items-center transition-all transform active:scale-95">
+                                立即结算
+                                <span class="material-icons text-sm ml-1">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white">月度账单列表</h3>
+<div class="relative">
+<select class="appearance-none bg-white dark:bg-slate-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-1.5 pl-3 pr-8 rounded text-sm focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer shadow-sm">
+<option>2023年</option>
+<option>2022年</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+<span class="material-icons text-sm">expand_more</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-lg border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
+<table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+<thead class="bg-gray-50 dark:bg-slate-900/50">
+<tr>
+<th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider" scope="col">
+                                        账单月份
+                                    </th>
+<th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider" scope="col">
+                                        总金额
+                                    </th>
+<th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider" scope="col">
+                                        支付状态
+                                    </th>
+<th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider" scope="col">
+                                        开票状态
+                                    </th>
+<th class="px-6 py-4 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider" scope="col">
+                                        操作
+                                    </th>
+</tr>
+</thead>
+<tbody class="bg-white dark:bg-slate-800 divide-y divide-gray-200 dark:divide-gray-700">
+<tr class="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                                        2023年10月
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 dark:text-white">
+                                        ¥ 12,450.00
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm">
+<div class="flex items-center text-red-500 dark:text-red-400">
+<span class="material-icons text-sm mr-1.5">schedule</span>
+<span>待支付</span>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                        -
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+<a class="text-primary hover:text-blue-700 dark:hover:text-blue-300" href="#">账单详情</a>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                                        2023年09月
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 dark:text-white">
+                                        ¥ 11,800.00
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm">
+<span class="px-2.5 py-1 inline-flex text-xs leading-4 font-semibold rounded bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                            已结清
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm">
+<span class="px-2.5 py-1 inline-flex text-xs leading-4 font-semibold rounded bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                                            已开票
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
+<a class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white" href="#">详情</a>
+<a class="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white inline-flex items-center" href="#">
+<span class="material-icons-outlined text-sm mr-0.5">download</span>
+                                            下载
+                                        </a>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                                        2023年08月
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900 dark:text-white">
+                                        ¥ 10,500.00
+                                    </td>
+<td class="px-6 py-4 whitespace-nowrap text-sm">
+<span class="px-2.5 py-1 inline-flex text-xs leading-4 font-semibold rounded bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                            已结清
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-sm">
+<span class="px-2.5 py-1 inline-flex text-xs leading-4 font-semibold rounded bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                                            未开票
+                                        </span>
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
+<a class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white" href="#">详情</a>
+<a class="text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white inline-flex items-center" href="#">
+<span class="material-icons-outlined text-sm mr-0.5">download</span>
+                                            下载
+                                        </a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

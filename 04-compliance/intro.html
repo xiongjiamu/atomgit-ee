@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>安全与合规 - 能力引擎</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#D92D20", // Reddish color from the active dot/logo
+                        "primary-hover": "#B91C1C",
+                        "background-light": "#F7F8FA",
+                        "background-dark": "#0F172A",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E293B",
+                        "border-light": "#E2E8F0",
+                        "border-dark": "#334155",
+                        "text-main-light": "#1F2937",
+                        "text-main-dark": "#F3F4F6",
+                        "text-sub-light": "#6B7280",
+                        "text-sub-dark": "#9CA3AF",
+                        "banner-yellow-bg": "#FFFBE6",
+                        "banner-yellow-text": "#D97706",
+                        "banner-yellow-border": "#FEF3C7",
+                        "banner-blue-bg": "#EBF4FF",
+                        "banner-blue-text": "#2563EB",
+                        "banner-blue-border": "#DBEAFE",
+                        "navy-card-start": "#0f172a", // Dark navy
+                        "navy-card-end": "#1e293b",
+                    },
+                    fontFamily: {
+                        display: ['"Noto Sans SC"', '"Inter"', 'sans-serif'],
+                        body: ['"Noto Sans SC"', '"Inter"', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.375rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body {
+            font-family: 'Noto Sans SC', 'Inter', sans-serif;
+        }::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #2563EB;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #2563EB;
+        }
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark transition-colors duration-200">
+<header class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark fixed w-full top-0 z-50 h-14 flex items-center justify-between px-4 shadow-sm">
+<div class="flex items-center space-x-4">
+<button class="text-text-sub-light dark:text-text-sub-dark hover:text-primary transition-colors">
+<span class="material-icons-outlined">menu</span>
+</button>
+<div class="flex items-center space-x-2">
+<div class="w-8 h-8 rounded-full bg-red-400 overflow-hidden flex items-center justify-center">
+<div class="w-full h-full bg-gradient-to-br from-red-500 to-pink-600"></div>
+</div>
+<span class="font-medium text-sm text-text-main-light dark:text-text-main-dark">这是一个企业名称</span>
+<span class="px-2 py-0.5 text-xs border border-gray-300 dark:border-gray-600 rounded text-gray-500 dark:text-gray-400 flex items-center gap-1 bg-gray-50 dark:bg-gray-800">
+<span class="material-icons-outlined text-[10px]">business</span> 企业版
+                </span>
+</div>
+</div>
+<div class="flex-1 max-w-xl mx-8 hidden md:block">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-gray-400 text-lg">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-1.5 border border-gray-200 dark:border-gray-700 rounded-md leading-5 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition-colors" placeholder="按 / 快速开启搜索" type="text"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="border border-gray-300 dark:border-gray-600 rounded px-1.5 py-0.5 text-xs text-gray-400">/</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<button class="bg-black dark:bg-white text-white dark:text-black px-3 py-1.5 rounded-md text-sm font-medium flex items-center space-x-1 hover:opacity-90 transition-opacity">
+<span class="material-icons-outlined text-sm">add</span>
+<span>新建</span>
+</button>
+<button class="text-text-sub-light dark:text-text-sub-dark hover:text-primary transition-colors relative">
+<span class="material-icons-outlined">notifications</span>
+<span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-surface-dark"></span>
+</button>
+<div class="h-8 w-8 rounded-full bg-pink-100 dark:bg-pink-900 flex items-center justify-center text-pink-500 dark:text-pink-200">
+<span class="material-icons-outlined text-lg">face</span>
+</div>
+</div>
+</header>
+<div class="fixed top-14 left-0 w-full z-40 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark h-10 flex items-center px-4 space-x-6 text-sm overflow-x-auto">
+<a class="flex items-center space-x-1 text-text-sub-light dark:text-text-sub-dark hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-icons-outlined text-base">home</span>
+<span>概览</span>
+</a>
+<a class="flex items-center space-x-1 text-text-sub-light dark:text-text-sub-dark hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-icons-outlined text-base">data_usage</span>
+<span>资源中心</span>
+</a>
+<a class="flex items-center space-x-1 text-text-sub-light dark:text-text-sub-dark hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-icons-outlined text-base">dashboard</span>
+<span>社区运营</span>
+</a>
+<a class="flex items-center space-x-1 text-text-sub-light dark:text-text-sub-dark hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-icons-outlined text-base">alt_route</span>
+<span>流水线</span>
+</a>
+<a class="flex items-center space-x-1 text-primary font-medium border-b-2 border-primary h-full px-1" href="#">
+<span class="material-icons-outlined text-base">security</span>
+<span>安全与合规</span>
+</a>
+<a class="flex items-center space-x-1 text-text-sub-light dark:text-text-sub-dark hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-icons-outlined text-base">folder_open</span>
+<span>数据看板</span>
+</a>
+<a class="flex items-center space-x-1 text-text-sub-light dark:text-text-sub-dark hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-icons-outlined text-base">receipt_long</span>
+<span>账单管理</span>
+</a>
+<a class="flex items-center space-x-1 text-text-sub-light dark:text-text-sub-dark hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-icons-outlined text-base">settings</span>
+<span>企业管理</span>
+</a>
+</div>
+<div class="pt-24 flex min-h-screen">
+<aside class="w-64 fixed left-0 top-24 bottom-0 bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark overflow-y-auto hidden lg:block z-30">
+<div class="p-4 space-y-6">
+<div>
+<a class="flex items-center space-x-3 px-3 py-2 text-text-sub-light dark:text-text-sub-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors" href="#">
+<span class="material-icons-outlined text-gray-400">verified_user</span>
+<span class="text-sm font-medium">安全总览</span>
+</a>
+</div>
+<div>
+<h3 class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">能力引擎</h3>
+<div class="space-y-1">
+<a class="flex items-center space-x-3 px-3 py-2 bg-red-50 dark:bg-red-900/20 text-primary dark:text-red-400 rounded-md transition-colors" href="#">
+<span class="material-icons-outlined text-sm">radio_button_checked</span>
+<span class="text-sm font-medium">开源可信治理服务</span>
+</a>
+</div>
+</div>
+<div>
+<h3 class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">治理结果</h3>
+<div class="space-y-1">
+<a class="flex items-center space-x-3 px-3 py-2 text-text-sub-light dark:text-text-sub-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors group" href="#">
+<span class="material-icons-outlined text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">pie_chart</span>
+<span class="text-sm">成分分析 (SBOM)</span>
+</a>
+<a class="flex items-center space-x-3 px-3 py-2 text-text-sub-light dark:text-text-sub-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors group" href="#">
+<span class="material-icons-outlined text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">bug_report</span>
+<span class="text-sm">漏洞管理 (CVE)</span>
+</a>
+<a class="flex items-center space-x-3 px-3 py-2 text-text-sub-light dark:text-text-sub-dark hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md transition-colors group" href="#">
+<span class="material-icons-outlined text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300">gavel</span>
+<span class="text-sm">合规 (CLA/DCO)</span>
+</a>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 lg:ml-64 bg-background-light dark:bg-background-dark">
+<div class="space-y-2 px-6 py-4">
+<div class="flex items-center justify-between bg-banner-yellow-bg dark:bg-yellow-900/30 border border-banner-yellow-border dark:border-yellow-700/50 rounded-md p-3 text-sm text-banner-yellow-text dark:text-yellow-400">
+<div class="flex items-center space-x-2">
+<span class="material-icons-outlined text-base">info</span>
+<span class="font-bold">资源预警：</span>
+<span>您企业当前的存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容</span>
+</div>
+<button class="hover:bg-yellow-100 dark:hover:bg-yellow-800/50 rounded p-1 transition-colors">
+<span class="material-icons-outlined text-base">close</span>
+</button>
+</div>
+<div class="flex items-center justify-between bg-banner-blue-bg dark:bg-blue-900/30 border border-banner-blue-border dark:border-blue-700/50 rounded-md p-3 text-sm text-banner-blue-text dark:text-blue-400">
+<div class="flex items-center space-x-2">
+<span class="material-icons-outlined text-base">info</span>
+<span class="font-bold">企业公告：</span>
+<span>AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉</span>
+</div>
+<button class="hover:bg-blue-100 dark:hover:bg-blue-800/50 rounded p-1 transition-colors">
+<span class="material-icons-outlined text-base">close</span>
+</button>
+</div>
+</div>
+<div class="px-6 pb-12">
+<div class="mb-6">
+<h1 class="text-2xl font-bold text-text-main-light dark:text-text-main-dark mb-2">平台可信治理能力</h1>
+<p class="text-text-sub-light dark:text-text-sub-dark text-sm">配置并监控 AtomGit 底层安全引擎，为企业代码资产提供全链路防护。</p>
+</div>
+<div class="bg-gradient-to-r from-slate-900 to-slate-800 dark:from-black dark:to-slate-900 rounded-xl p-8 mb-8 text-white relative overflow-hidden shadow-lg border border-slate-700/50">
+<div class="absolute inset-0 grid-bg opacity-30 pointer-events-none"></div>
+<div class="relative z-10 flex flex-col justify-center h-full">
+<div class="flex items-center space-x-3 mb-4">
+<div class="p-2 bg-blue-500/20 rounded-lg border border-blue-400/30">
+<span class="material-icons-outlined text-blue-400">hub</span>
+</div>
+<h2 class="text-xl font-bold tracking-wide">全球开源治理知识库</h2>
+</div>
+<p class="text-slate-300 text-sm mb-8 max-w-3xl">
+                            AtomGit 治理引擎已覆盖全球主流开源生态。开启治理能力后，系统将自动对企业代码库进行深度的供应链分析与恶意检测。
+                        </p>
+<div class="flex space-x-12">
+<div>
+<div class="text-3xl font-bold text-blue-400 mb-1 font-display">5,800+</div>
+<div class="text-xs text-slate-400">主流开源软件</div>
+</div>
+<div>
+<div class="text-3xl font-bold text-green-400 mb-1 font-display">230k+</div>
+<div class="text-xs text-slate-400">依赖组件治理</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-sm border border-border-light dark:border-border-dark">
+<div class="flex items-center space-x-2 mb-6 border-l-4 border-blue-500 pl-3">
+<h3 class="text-lg font-semibold text-text-main-light dark:text-text-main-dark">软件供应链分析系统</h3>
+</div>
+<div class="space-y-4">
+<div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 flex items-center justify-between border border-gray-100 dark:border-gray-700">
+<div>
+<div class="font-medium text-text-main-light dark:text-text-main-dark mb-1">知识图谱构建</div>
+<div class="text-xs text-text-sub-light dark:text-text-sub-dark">绘制依赖关系网，识别间接风险。</div>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-blue-600 transition-all duration-300" id="toggle1" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-blue-600 cursor-pointer transition-colors duration-300" for="toggle1"></label>
+</div>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 flex items-center justify-between border border-gray-100 dark:border-gray-700">
+<div>
+<div class="font-medium text-text-main-light dark:text-text-main-dark mb-1">深度 SBOM 分析</div>
+<div class="text-xs text-text-sub-light dark:text-text-sub-dark">二进制与源码双重解析。</div>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-blue-600 transition-all duration-300" id="toggle2" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-blue-600 cursor-pointer transition-colors duration-300" for="toggle2"></label>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-sm border border-border-light dark:border-border-dark">
+<div class="flex items-center space-x-2 mb-6 border-l-4 border-blue-500 pl-3">
+<h3 class="text-lg font-semibold text-text-main-light dark:text-text-main-dark">可信检测与修复系统</h3>
+</div>
+<div class="space-y-4">
+<div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 flex items-center justify-between border border-gray-100 dark:border-gray-700">
+<div>
+<div class="font-medium text-text-main-light dark:text-text-main-dark mb-1">大模型漏洞修复</div>
+<div class="text-xs text-text-sub-light dark:text-text-sub-dark">基于 LLM 自动生成 PR 修复建议。</div>
+</div>
+<button class="px-3 py-1 text-xs border border-blue-200 text-blue-600 hover:bg-blue-50 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-900/30 rounded transition-colors">
+                                    配置模型
+                                </button>
+</div>
+<div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 flex items-center justify-between border border-gray-100 dark:border-gray-700">
+<div>
+<div class="font-medium text-red-600 dark:text-red-400 mb-1">恶意代码投毒检测</div>
+<div class="text-xs text-text-sub-light dark:text-text-sub-dark">识别挖矿、后门等恶意脚本。</div>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 border-gray-300 dark:border-gray-500 appearance-none cursor-pointer transition-all duration-300 left-0" id="toggle4" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-300 dark:bg-gray-600 cursor-pointer transition-colors duration-300" for="toggle4"></label>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

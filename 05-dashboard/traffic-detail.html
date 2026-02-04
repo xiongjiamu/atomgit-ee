@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>流量趋势下钻详情页 - AtomGit</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#D92D20", 
+                        "background-light": "#F9FAFB",
+                        "background-dark": "#111827",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1F2937",
+                        "border-light": "#E5E7EB",
+                        "border-dark": "#374151",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "Noto Sans SC", "sans-serif"],
+                        body: ["Inter", "Noto Sans SC", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.375rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body { font-family: 'Inter', 'Noto Sans SC', sans-serif; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .chart-tooltip {
+            animation: fadeIn 0.2s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }.custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #D1D5DB;
+            border-radius: 4px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #4B5563;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 antialiased min-h-screen flex flex-col">
+<header class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark px-4 h-14 flex items-center justify-between shrink-0 sticky top-0 z-20">
+<div class="flex items-center gap-4">
+<button class="p-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-gradient-to-tr from-red-800 to-red-500"></div>
+<span class="font-semibold text-gray-900 dark:text-white tracking-tight">AtomGit 企业版</span>
+<span class="px-1.5 py-0.5 rounded text-xs font-medium border border-gray-200 text-gray-500 dark:border-gray-600 dark:text-gray-400 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">domain</span>
+                企业版
+            </span>
+</div>
+</div>
+<div class="flex-1 max-w-xl px-8 hidden md:block">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-gray-400 text-sm">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-1.5 border border-gray-200 dark:border-gray-600 rounded-md leading-5 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition duration-150 ease-in-out" placeholder="按 / 快速开启搜索" type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-black dark:bg-white text-white dark:text-black px-3 py-1.5 rounded-full text-sm font-medium flex items-center gap-1 hover:opacity-90 transition">
+<span class="material-symbols-outlined text-sm">add</span>
+            新建
+        </button>
+<button class="text-gray-500 hover:text-gray-700 dark:text-gray-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-primary font-bold overflow-hidden border border-gray-200 dark:border-gray-600">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3LyWPI3kyyghx9ZoJdmu1aCATtQA9wSml4Nx7hlPl5LVKD_rMwZ1OBNZ3VhwvmN2i4v-b6njAfwwiVe2dFWisUCtw9lCk8RnqAtVh2kc7U1-sbYpf-0r64AExzazxIjTYK98E06-g8pIUbr0TeHV492PUc1TYGj76F_HxHP6ykQvsnWBT3uzczDSeE_NjZqNiZsao8F__bHaH0uGw3DbE6FxOnODFFBaYfk6V1cXkKv8Lit4t7RHGQyguwTnfkJMujR_5Z_DnXVk0"/>
+</div>
+</div>
+</header>
+<nav class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark px-4 h-12 flex items-center gap-6 overflow-x-auto shrink-0 shadow-sm z-10">
+<a class="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white px-1 py-3 border-b-2 border-transparent" href="#">
+<span class="material-symbols-outlined text-[18px]">dashboard</span>
+        概览
+    </a>
+<a class="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white px-1 py-3 border-b-2 border-transparent" href="#">
+<span class="material-symbols-outlined text-[18px]">cloud</span>
+        资源中心
+    </a>
+<a class="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white px-1 py-3 border-b-2 border-transparent" href="#">
+<span class="material-symbols-outlined text-[18px]">diversity_3</span>
+        社区运营
+    </a>
+<a class="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white px-1 py-3 border-b-2 border-transparent" href="#">
+<span class="material-symbols-outlined text-[18px]">account_tree</span>
+        流水线
+    </a>
+<a class="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white px-1 py-3 border-b-2 border-transparent" href="#">
+<span class="material-symbols-outlined text-[18px]">security</span>
+        安全与合规
+    </a>
+<a class="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-white px-1 py-3 border-b-2 border-primary relative" href="#">
+<span class="material-symbols-outlined text-[18px] text-primary">bar_chart</span>
+        数据看板
+    </a>
+<a class="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white px-1 py-3 border-b-2 border-transparent" href="#">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+        账单管理
+    </a>
+<a class="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white px-1 py-3 border-b-2 border-transparent" href="#">
+<span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
+        企业管理
+    </a>
+</nav>
+<div class="flex flex-1 overflow-hidden">
+<aside class="w-64 bg-background-light dark:bg-gray-800 border-r border-border-light dark:border-border-dark flex-shrink-0 hidden lg:block overflow-y-auto">
+<div class="py-6 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300" href="#">
+<span class="w-5 h-5 flex items-center justify-center rounded bg-red-100 dark:bg-red-800 text-red-600 dark:text-red-200">
+<span class="material-symbols-outlined text-[16px]">monitoring</span>
+</span>
+                流量与用户
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700" href="#">
+<span class="w-5 h-5 flex items-center justify-center rounded text-gray-400">
+<span class="material-symbols-outlined text-[16px]">precision_manufacturing</span>
+</span>
+                生产与效能
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700" href="#">
+<span class="w-5 h-5 flex items-center justify-center rounded text-gray-400">
+<span class="material-symbols-outlined text-[16px]">handshake</span>
+</span>
+                贡献与生态
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700" href="#">
+<span class="w-5 h-5 flex items-center justify-center rounded text-gray-400">
+<span class="material-symbols-outlined text-[16px]">savings</span>
+</span>
+                资源与成本
+            </a>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto bg-white dark:bg-gray-900 pb-12">
+<div class="px-8 pt-6 pb-2">
+<nav aria-label="Breadcrumb" class="flex text-sm text-gray-500 dark:text-gray-400">
+<ol class="inline-flex items-center space-x-1 md:space-x-2">
+<li class="inline-flex items-center">
+<a class="inline-flex items-center hover:text-gray-700 dark:hover:text-white" href="#">
+                            数据看板
+                        </a>
+</li>
+<li>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-base mx-1 text-gray-400">chevron_right</span>
+<a class="hover:text-gray-700 dark:hover:text-white" href="#">流量与用户</a>
+</div>
+</li>
+<li>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-base mx-1 text-gray-400">chevron_right</span>
+<span class="font-medium text-gray-900 dark:text-white">流量趋势下钻</span>
+</div>
+</li>
+</ol>
+</nav>
+</div>
+<div class="px-8 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+<div>
+<h1 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">流量趋势下钻分析</h1>
+<p class="mt-1 text-gray-500 dark:text-gray-400 text-sm">查看详细的 PV、UV 及 DAU 变化趋势与每日明细数据。</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<button class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-sm shadow-sm flex items-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+<span class="material-symbols-outlined text-lg text-gray-500">calendar_month</span>
+                        最近 30 天
+                        <span class="material-symbols-outlined text-sm text-gray-400">expand_more</span>
+</button>
+</div>
+<button class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-sm shadow-sm flex items-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+<span class="material-symbols-outlined text-lg">download</span>
+                    导出数据
+                </button>
+</div>
+</div>
+<div class="px-8 space-y-6">
+<div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 shadow-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+<h3 class="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                        流量趋势分析 
+                        <span class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-xs font-normal text-gray-500 dark:text-gray-300">2023-10-01 ~ 2023-10-30</span>
+</h3>
+<div class="flex items-center gap-6 bg-gray-50 dark:bg-gray-700/50 px-4 py-2 rounded-lg border border-gray-100 dark:border-gray-700">
+<div class="flex items-center gap-2 text-sm cursor-pointer hover:opacity-80 transition">
+<span class="w-3 h-3 rounded-full bg-blue-500"></span>
+<span class="font-medium text-gray-700 dark:text-gray-200">浏览量 (PV)</span>
+</div>
+<div class="flex items-center gap-2 text-sm cursor-pointer hover:opacity-80 transition">
+<span class="w-8 h-0.5 border-t-2 border-sky-400 border-dashed"></span>
+<span class="font-medium text-gray-700 dark:text-gray-200">独立访客 (UV)</span>
+</div>
+<div class="flex items-center gap-2 text-sm cursor-pointer hover:opacity-80 transition">
+<span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+<span class="font-medium text-gray-700 dark:text-gray-200">日活 (DAU)</span>
+</div>
+</div>
+</div>
+<div class="relative h-[400px] w-full select-none" id="chart-container">
+<div class="absolute left-[68%] top-16 z-10 chart-tooltip pointer-events-none">
+<div class="bg-white/95 dark:bg-gray-800/95 backdrop-blur shadow-xl rounded-lg border border-gray-200 dark:border-gray-600 p-4 text-xs w-56 ring-1 ring-black/5">
+<div class="text-gray-500 dark:text-gray-400 mb-3 font-medium border-b border-gray-100 dark:border-gray-700 pb-2 flex justify-between items-center">
+<span>2023-10-24 (周二)</span>
+<span class="text-[10px] bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-gray-500">工作日</span>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-blue-500 shadow-sm shadow-blue-500/50"></span>
+<span class="text-gray-600 dark:text-gray-300">PV (浏览量)</span>
+</div>
+<span class="font-bold text-gray-900 dark:text-white tabular-nums">42,538</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-sky-400 shadow-sm shadow-sky-400/50"></span>
+<span class="text-gray-600 dark:text-gray-300">UV (访客)</span>
+</div>
+<span class="font-bold text-gray-900 dark:text-white tabular-nums">5,102</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50"></span>
+<span class="text-gray-600 dark:text-gray-300">DAU (日活)</span>
+</div>
+<span class="font-bold text-gray-900 dark:text-white tabular-nums">1,890</span>
+</div>
+</div>
+</div>
+<div class="absolute left-0 top-[140px] h-[220px] w-0.5 bg-indigo-500/20 dark:bg-indigo-400/20 mx-auto -ml-px"></div>
+<div class="absolute left-[-5px] top-[182px] w-3 h-3 bg-blue-500 border-2 border-white dark:border-gray-800 rounded-full shadow-md z-20"></div>
+<div class="absolute left-[-5px] top-[265px] w-3 h-3 bg-sky-400 border-2 border-white dark:border-gray-800 rounded-full shadow-md z-20"></div>
+<div class="absolute left-[-5px] top-[320px] w-3 h-3 bg-emerald-500 border-2 border-white dark:border-gray-800 rounded-full shadow-md z-20"></div>
+</div>
+<svg class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 1200 400">
+<g class="stroke-gray-100 dark:stroke-gray-700/50" stroke-dasharray="4 4" stroke-width="1">
+<line x1="0" x2="1200" y1="50" y2="50"></line>
+<line x1="0" x2="1200" y1="125" y2="125"></line>
+<line x1="0" x2="1200" y1="200" y2="200"></line>
+<line x1="0" x2="1200" y1="275" y2="275"></line>
+<line x1="0" x2="1200" y1="350" y2="350"></line>
+</g>
+<g class="text-xs fill-gray-400 dark:fill-gray-500 font-sans select-none" text-anchor="start">
+<text x="0" y="45">60k</text>
+<text x="0" y="120">45k</text>
+<text x="0" y="195">30k</text>
+<text x="0" y="270">15k</text>
+<text x="0" y="345">0</text>
+</g>
+<defs>
+<linearGradient id="grad-blue-chart" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#3B82F6;stop-opacity:0.2"></stop>
+<stop offset="100%" style="stop-color:#3B82F6;stop-opacity:0"></stop>
+</linearGradient>
+</defs>
+<path class="opacity-100" d="M0 250 C150 220, 300 100, 450 120 C600 140, 750 80, 816 190 C900 240, 1050 100, 1200 80 V 380 H 0 Z" fill="url(#grad-blue-chart)"></path>
+<path d="M0 250 C150 220, 300 100, 450 120 C600 140, 750 80, 816 190 C900 240, 1050 100, 1200 80" fill="none" stroke="#3B82F6" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<path d="M0 300 C150 290, 300 220, 450 240 C600 260, 750 220, 816 270 C900 300, 1050 200, 1200 180" fill="none" stroke="#38BDF8" stroke-dasharray="8 6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<path d="M0 340 C150 335, 300 280, 450 300 C600 320, 750 290, 816 325 C900 340, 1050 280, 1200 260" fill="none" stroke="#10B981" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<div class="flex justify-between mt-4 text-xs text-gray-400 dark:text-gray-500 font-sans px-2 border-t border-gray-100 dark:border-gray-700 pt-2">
+<span>10-01</span>
+<span>10-05</span>
+<span>10-10</span>
+<span>10-15</span>
+<span>10-20</span>
+<span class="font-bold text-gray-900 dark:text-gray-300">10-24</span>
+<span>10-30</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm flex flex-col">
+<div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+<h3 class="font-bold text-gray-900 dark:text-white">每日数据明细</h3>
+<div class="flex gap-2">
+<button class="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+</button>
+<button class="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-lg">settings</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto custom-scrollbar rounded-b-lg">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-gray-50 dark:bg-gray-700/50 text-xs uppercase text-gray-500 dark:text-gray-400 font-medium border-b border-gray-200 dark:border-gray-700">
+<th class="px-6 py-4 whitespace-nowrap">日期</th>
+<th class="px-6 py-4 whitespace-nowrap text-right">浏览量 (PV)</th>
+<th class="px-6 py-4 whitespace-nowrap text-right">独立访客 (UV)</th>
+<th class="px-6 py-4 whitespace-nowrap text-right">日活 (DAU)</th>
+<th class="px-6 py-4 whitespace-nowrap text-right">周环比 (WoW)</th>
+<th class="px-6 py-4 whitespace-nowrap text-right">月同比 (MoM)</th>
+<th class="px-6 py-4 whitespace-nowrap text-center">操作</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-gray-700 text-sm">
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">2023-10-24 <span class="text-xs text-gray-400 font-normal ml-1">(周二)</span></td>
+<td class="px-6 py-4 text-right tabular-nums text-gray-700 dark:text-gray-300">42,538</td>
+<td class="px-6 py-4 text-right tabular-nums text-gray-700 dark:text-gray-300">5,102</td>
+<td class="px-6 py-4 text-right tabular-nums text-gray-700 dark:text-gray-300">1,890</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded text-xs font-medium">
+<span class="material-symbols-outlined text-[12px] mr-0.5">trending_up</span>
+                                        12.5%
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded text-xs font-medium">
+<span class="material-symbols-outlined text-[12px] mr-0.5">trending_up</span>
+                                        5.3%
+                                    </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 text-xs font-medium">详情</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">2023-10-23 <span class="text-xs text-gray-400 font-normal ml-1">(周一)</span></td>
+<td class="px-6 py-4 text-right tabular-nums text-gray-700 dark:text-gray-300">40,120</td>
+<td class="px-6 py-4 text-right tabular-nums text-gray-700 dark:text-gray-300">4,980</td>
+<td class="px-6 py-4 text-right tabular-nums text-gray-700 dark:text-gray-300">1,750</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded text-xs font-medium">
+<span class="material-symbols-outlined text-[12px] mr-0.5">trending_up</span>
+                                        8.2%
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded text-xs font-medium">
+<span class="material-symbols-outlined text-[12px] mr-0.5">trending_down</span>
+                                        -1.2%
+                                    </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 text-xs font-medium">详情</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">2023-10-22 <span class="text-xs text-gray-400 font-normal ml-1">(周日)</span></td>
+<td class="px-6 py-4 text-right tabular-nums text-gray-700 dark:text-gray-300">28,500</td>
+<td class="px-6 py-4 text-right tabular-nums text-gray-700 dark:text-gray-300">3,200</td>
+<td class="px-6 py-4 text-right tabular-nums text-gray-700 dark:text-gray-300">1,100</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded text-xs font-medium">
+<span class="material-symbols-outlined text-[12px] mr-0.5">trending_down</span>
+                                        -5.5%
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded text-xs font-medium">
+<span class="material-symbols-outlined text-[12px] mr-0.5">trending_up</span>
+                                        2.1%
+                                    </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 text-xs font-medium">详情</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">2023-10-21 <span class="text-xs text-gray-400 font-normal ml-1">(周六)</span></td>
+<td class="px-6 py-4 text-right tabular-nums text-gray-700 dark:text-gray-300">30,100</td>
+<td class="px-6 py-4 text-right tabular-nums text-gray-700 dark:text-gray-300">3,450</td>
+<td class="px-6 py-4 text-right tabular-nums text-gray-700 dark:text-gray-300">1,250</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-xs font-medium">
+<span class="material-symbols-outlined text-[12px] mr-0.5">remove</span>
+                                        0.0%
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded text-xs font-medium">
+<span class="material-symbols-outlined text-[12px] mr-0.5">trending_up</span>
+                                        3.4%
+                                    </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 text-xs font-medium">详情</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">2023-10-20 <span class="text-xs text-gray-400 font-normal ml-1">(周五)</span></td>
+<td class="px-6 py-4 text-right tabular-nums text-gray-700 dark:text-gray-300">45,600</td>
+<td class="px-6 py-4 text-right tabular-nums text-gray-700 dark:text-gray-300">5,800</td>
+<td class="px-6 py-4 text-right tabular-nums text-gray-700 dark:text-gray-300">2,100</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded text-xs font-medium">
+<span class="material-symbols-outlined text-[12px] mr-0.5">trending_up</span>
+                                        15.2%
+                                    </span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="inline-flex items-center text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded text-xs font-medium">
+<span class="material-symbols-outlined text-[12px] mr-0.5">trending_up</span>
+                                        8.9%
+                                    </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 text-xs font-medium">详情</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-b-lg flex justify-between items-center">
+<span class="text-sm text-gray-500 dark:text-gray-400">
+                        显示第 <span class="font-medium">1</span> 到 <span class="font-medium">5</span> 条，共 <span class="font-medium">30</span> 条
+                    </span>
+<div class="flex gap-2">
+<button class="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded text-sm text-gray-500 dark:text-gray-400 disabled:opacity-50" disabled="">
+                            上一页
+                        </button>
+<button class="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded text-sm text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            下一页
+                        </button>
+</div>
+</div>
+</div>
+<div class="h-8"></div> 
+</div>
+</main>
+</div>
+
+</body></html>

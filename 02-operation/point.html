@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>社区运营 - 积分规则 (全宽优化版)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#D92D20",
+              secondary: "#2563eb",
+              "background-light": "#F9FAFB",
+              "background-dark": "#111827",
+              "surface-light": "#FFFFFF",
+              "surface-dark": "#1F2937",
+              "border-light": "#E5E7EB",
+              "border-dark": "#374151",
+              "text-main-light": "#111827",
+              "text-main-dark": "#F3F4F6",
+              "text-sub-light": "#6B7280",
+              "text-sub-dark": "#9CA3AF",
+            },
+            fontFamily: {
+              display: ['"Noto Sans SC"', '"Inter"', "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.375rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+            },
+          },
+        },
+      };
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+        }
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #10B981;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #10B981;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main-light dark:text-text-main-dark transition-colors duration-200">
+<header class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark h-14 flex items-center justify-between px-6 sticky top-0 z-50">
+<div class="flex items-center space-x-4">
+<button class="text-text-sub-light dark:text-text-sub-dark hover:text-text-main-light dark:hover:text-text-main-dark">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<div class="flex items-center space-x-2">
+<div class="w-8 h-8 rounded-full bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center text-white text-xs font-bold"></div>
+<span class="font-medium text-sm text-text-main-light dark:text-text-main-dark">这是一个企业名称</span>
+<span class="text-xs border border-border-light dark:border-border-dark text-text-sub-light dark:text-text-sub-dark px-1.5 py-0.5 rounded bg-gray-50 dark:bg-gray-800">企业版</span>
+</div>
+</div>
+<div class="flex-1 max-w-2xl mx-12 hidden md:block">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-gray-400 text-[20px]">search</span>
+</span>
+<input class="block w-full pl-10 pr-3 py-1.5 border border-border-light dark:border-border-dark rounded-full leading-5 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm" placeholder="按 / 快速开启搜索" type="text"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="text-gray-400 text-xs border border-gray-200 dark:border-gray-600 rounded px-1 hidden lg:inline-block">/</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<button class="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 px-4 py-1.5 rounded text-sm font-medium flex items-center shadow-sm">
+<span class="material-symbols-outlined text-[18px] mr-1">add</span>
+            新建
+        </button>
+<button class="text-text-sub-light dark:text-text-sub-dark hover:text-text-main-light dark:hover:text-text-main-dark relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0.5 right-0.5 block h-2 w-2 rounded-full bg-red-500"></span>
+</button>
+<div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center overflow-hidden border border-red-200">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjsN08uI4BuBArUfsvowEYvKM6cS9mvO3HIycJHMRFHRtx6OlkpYWjGc8lvTy6SzRa47OW9AALJtW4spTWBoS73H1wdPIUfW-vShIAntjiMdd16o4AATDrSZLpJhVe_O3LK69BHIXDseYH4yI5bgkVoQq25DQiZ81yIgu3l-ynICo1PU8RzkMQnCkcrk1xhspVdQyNfR7-kVx7QV5-Of_hpjl6JkMnZMtXDBqBljlUSQEoYbHa4Natt4boDeVjEWkpyt9dxIAd6mmx"/>
+</div>
+</div>
+</header>
+<nav class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark h-12 flex items-center px-6 overflow-x-auto">
+<div class="flex space-x-8 text-sm whitespace-nowrap">
+<a class="flex items-center text-text-sub-light dark:text-text-sub-dark hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-symbols-outlined text-[18px] mr-1.5">home</span>概览
+        </a>
+<a class="flex items-center text-text-sub-light dark:text-text-sub-dark hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-symbols-outlined text-[18px] mr-1.5">extension</span>资源中心
+        </a>
+<a class="flex items-center text-primary font-medium border-b-2 border-primary h-12" href="#">
+<span class="material-symbols-outlined text-[18px] mr-1.5">campaign</span>社区运营
+        </a>
+<a class="flex items-center text-text-sub-light dark:text-text-sub-dark hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-symbols-outlined text-[18px] mr-1.5">account_tree</span>流水线
+        </a>
+<a class="flex items-center text-text-sub-light dark:text-text-sub-dark hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-symbols-outlined text-[18px] mr-1.5">shield</span>安全与合规
+        </a>
+<a class="flex items-center text-text-sub-light dark:text-text-sub-dark hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-symbols-outlined text-[18px] mr-1.5">monitoring</span>数据看板
+        </a>
+<a class="flex items-center text-text-sub-light dark:text-text-sub-dark hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-symbols-outlined text-[18px] mr-1.5">receipt_long</span>账单管理
+        </a>
+<a class="flex items-center text-text-sub-light dark:text-text-sub-dark hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-symbols-outlined text-[18px] mr-1.5">business</span>企业管理
+        </a>
+</div>
+</nav>
+<div class="flex h-[calc(100vh-6.5rem)]">
+<aside class="w-64 bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark flex-shrink-0 overflow-y-auto py-6 px-4 hidden lg:block">
+<div class="mb-6">
+<h3 class="px-3 text-xs font-semibold text-text-sub-light dark:text-text-sub-dark uppercase tracking-wider mb-2">激励体系</h3>
+<nav class="space-y-1">
+<a class="group flex items-center px-3 py-2 text-sm font-medium bg-red-50 dark:bg-red-900/20 text-primary rounded-md" href="#">
+<span class="material-symbols-outlined text-primary mr-3 text-[20px] fill-current">flag</span>
+                    积分规则
+                    <span class="ml-auto bg-gray-200 dark:bg-gray-700 py-0.5 px-2 rounded-full text-xs font-medium text-gray-600 dark:text-gray-300">121</span>
+</a>
+<a class="group flex items-center px-3 py-2 text-sm font-medium text-text-sub-light dark:text-text-sub-dark rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-gray-500 mr-3 text-[20px]">people</span>
+                    用户积分管理
+                </a>
+<a class="group flex items-center px-3 py-2 text-sm font-medium text-text-sub-light dark:text-text-sub-dark rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-gray-500 mr-3 text-[20px]">inventory_2</span>
+                    兑换履约管理
+                </a>
+</nav>
+</div>
+<div>
+<h3 class="px-3 text-xs font-semibold text-text-sub-light dark:text-text-sub-dark uppercase tracking-wider mb-2">荣誉体系</h3>
+<nav class="space-y-1">
+<a class="group flex items-center px-3 py-2 text-sm font-medium text-text-sub-light dark:text-text-sub-dark rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-text-main-light dark:hover:text-text-main-dark" href="#">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-gray-500 mr-3 text-[20px]">emoji_events</span>
+                    勋章与任务
+                </a>
+</nav>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+<div class="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-md p-4 flex items-start">
+<span class="material-symbols-outlined text-orange-500 text-[20px] mr-3">info</span>
+<div class="flex-1 text-sm text-orange-800 dark:text-orange-200">
+<span class="font-bold">资源预警：</span> 您企业当前的存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容
+                </div>
+<button class="text-orange-400 hover:text-orange-600 dark:hover:text-orange-100 ml-2"><span class="material-symbols-outlined text-[18px]">close</span></button>
+</div>
+<div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-md p-4 flex items-start">
+<span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-[20px] mr-3">info</span>
+<div class="flex-1 text-sm text-blue-700 dark:text-blue-200">
+<span class="font-bold">企业公告：</span> AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉
+                </div>
+<button class="text-blue-400 hover:text-blue-600 dark:hover:text-blue-100 ml-2"><span class="material-symbols-outlined text-[18px]">close</span></button>
+</div>
+</div>
+<div class="w-full">
+<div class="mb-8">
+<h1 class="text-2xl font-bold text-text-main-light dark:text-text-main-dark">积分规则引擎</h1>
+<p class="mt-1 text-sm text-text-sub-light dark:text-text-sub-dark">配置“贡献即收益”逻辑及第三方兑换接入。</p>
+</div>
+<div class="flex flex-col xl:flex-row gap-8">
+<div class="flex-1 min-w-0">
+<div class="bg-surface-light dark:bg-surface-dark shadow-sm border border-border-light dark:border-border-dark rounded-lg overflow-hidden h-full">
+<div class="px-6 py-5 border-b border-border-light dark:border-border-dark flex justify-between items-center bg-gray-50/50 dark:bg-gray-800/50">
+<h2 class="text-base font-semibold text-text-main-light dark:text-text-main-dark flex items-center">
+<span class="material-symbols-outlined text-orange-500 mr-2">bolt</span>
+                                行为激励规则 (Earning)
+                            </h2>
+<button class="inline-flex items-center px-4 py-2 border border-border-light dark:border-border-dark shadow-sm text-sm font-medium rounded-md text-text-main-light dark:text-text-main-dark bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+<span class="material-symbols-outlined text-[18px] mr-1.5">add</span>
+                                新增规则
+                            </button>
+</div>
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-border-light dark:divide-border-dark">
+<thead class="bg-gray-50 dark:bg-gray-800">
+<tr>
+<th class="px-6 py-4 text-left text-xs font-medium text-text-sub-light dark:text-text-sub-dark uppercase tracking-wider w-1/4" scope="col">触发事件</th>
+<th class="px-6 py-4 text-left text-xs font-medium text-text-sub-light dark:text-text-sub-dark uppercase tracking-wider" scope="col">奖励数值</th>
+<th class="px-6 py-4 text-left text-xs font-medium text-text-sub-light dark:text-text-sub-dark uppercase tracking-wider" scope="col">风控限制</th>
+<th class="px-6 py-4 text-right text-xs font-medium text-text-sub-light dark:text-text-sub-dark uppercase tracking-wider" scope="col">状态</th>
+</tr>
+</thead>
+<tbody class="bg-white dark:bg-surface-dark divide-y divide-border-light dark:divide-border-dark">
+<tr class="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-6 whitespace-nowrap">
+<div class="text-sm font-medium text-text-main-light dark:text-text-main-dark">合并 Pull Request</div>
+<div class="text-xs text-text-sub-light dark:text-text-sub-dark font-mono mt-1">code.merged</div>
+</td>
+<td class="px-6 py-6 whitespace-nowrap">
+<div class="text-sm font-semibold text-emerald-600 dark:text-emerald-400">+50 积分</div>
+</td>
+<td class="px-6 py-6 whitespace-nowrap">
+<div class="text-xs text-text-sub-light dark:text-text-sub-dark">每日上限 5 次</div>
+<div class="text-xs text-text-sub-light dark:text-text-sub-dark mt-0.5">同仓库冷却 10min</div>
+</td>
+<td class="px-6 py-6 whitespace-nowrap text-right">
+<div class="relative inline-block w-10 h-5 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 border-gray-200 appearance-none cursor-pointer focus:outline-none transition-all duration-300" id="toggle1" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-emerald-500 cursor-pointer" for="toggle1"></label>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors">
+<td class="px-6 py-6 whitespace-nowrap">
+<div class="text-sm font-medium text-text-main-light dark:text-text-main-dark">提交 Issue (有效)</div>
+<div class="text-xs text-text-sub-light dark:text-text-sub-dark font-mono mt-1">issue.created</div>
+</td>
+<td class="px-6 py-6 whitespace-nowrap">
+<div class="text-sm font-semibold text-blue-600 dark:text-blue-400">+10 积分</div>
+</td>
+<td class="px-6 py-6 whitespace-nowrap">
+<div class="text-xs text-text-sub-light dark:text-text-sub-dark">每日上限 10 次</div>
+</td>
+<td class="px-6 py-6 whitespace-nowrap text-right">
+<div class="relative inline-block w-10 h-5 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 border-gray-200 appearance-none cursor-pointer focus:outline-none transition-all duration-300" id="toggle2" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-emerald-500 cursor-pointer" for="toggle2"></label>
+</div>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-20 text-center" colspan="4">
+<div class="flex flex-col items-center justify-center text-text-sub-light dark:text-text-sub-dark">
+<span class="material-symbols-outlined text-4xl mb-2 opacity-20">rule</span>
+<p class="text-sm">配置更多自动化激励规则以激活社区开发者</p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="w-full xl:w-[420px] space-y-8 flex-shrink-0">
+<div class="bg-gray-900 dark:bg-gray-800 rounded-xl p-8 text-white relative overflow-hidden shadow-xl min-h-[320px] flex flex-col justify-between">
+<div class="absolute -top-10 -right-10 w-48 h-48 bg-white opacity-5 rounded-full z-0"></div>
+<div class="absolute top-16 -right-8 w-32 h-32 bg-white opacity-5 rounded-full z-0"></div>
+<span class="material-symbols-outlined absolute top-6 right-6 text-gray-700 text-6xl opacity-30 z-0">hub</span>
+<div class="relative z-10">
+<h3 class="text-xl font-semibold mb-2">第三方兑换接入</h3>
+<p class="text-gray-400 text-sm mb-8 leading-relaxed">配置外部服务 API，实现积分兑换虚拟商品或调用物流接口。支持标准 Webhook 及自定义鉴权。</p>
+<div class="bg-gray-800/50 dark:bg-gray-900/50 rounded-xl p-4 mb-6 border border-gray-700/50">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center text-sm font-medium">
+<span class="material-symbols-outlined text-gray-400 mr-2 text-[18px]">webhook</span>
+                                        通用 Webhook (生产环境)
+                                    </div>
+<div class="flex items-center">
+<span class="text-[10px] text-emerald-500 font-medium mr-2">ACTIVE</span>
+<div class="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]"></div>
+</div>
+</div>
+<div class="text-xs font-mono text-gray-500 bg-black/30 p-2 rounded border border-white/5 truncate">
+                                    https://api.partner.com/v1/redeem/callback
+                                </div>
+</div>
+</div>
+<button class="relative z-10 w-full bg-secondary hover:bg-blue-600 text-white font-medium py-3 rounded-lg text-sm transition-all flex items-center justify-center shadow-lg shadow-blue-500/20 active:scale-[0.98]">
+<span class="material-symbols-outlined text-[18px] mr-1.5">add</span>
+                            添加服务提供商
+                        </button>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-xl p-8 shadow-sm">
+<div class="flex items-center mb-6">
+<span class="material-symbols-outlined text-blue-500 mr-3">verified_user</span>
+<h3 class="text-base font-semibold text-text-main-light dark:text-text-main-dark">交易一致性保障</h3>
+</div>
+<div class="space-y-4">
+<div class="flex items-start p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-colors">
+<div class="flex items-center h-6">
+<input checked="" class="focus:ring-primary h-5 w-5 text-secondary border-gray-300 rounded" id="consistency" name="consistency" type="checkbox"/>
+</div>
+<div class="ml-4 text-sm">
+<label class="font-semibold text-text-main-light dark:text-text-main-dark" for="consistency">开启两阶段提交 (2PC) 模拟</label>
+<p class="text-text-sub-light dark:text-text-sub-dark mt-1.5 text-xs leading-relaxed">
+                                        在扣除用户积分前，系统将预先向第三方服务发送资源锁定请求。若三方库存不足，积分事务将自动回滚，确保数据零偏差。
+                                    </p>
+</div>
+</div>
+<div class="px-4 py-2 flex items-center text-xs text-text-sub-light dark:text-text-sub-dark">
+<span class="material-symbols-outlined text-[14px] mr-1.5">help_outline</span>
+                                建议在高并发兑换场景下保持开启
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

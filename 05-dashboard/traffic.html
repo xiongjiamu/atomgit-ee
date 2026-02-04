@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Enterprise Data Dashboard - AtomGit</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#D92D20", // Deep Red/Vermilion seen in screenshot
+                        "background-light": "#F9FAFB",
+                        "background-dark": "#111827",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1F2937",
+                        "border-light": "#E5E7EB",
+                        "border-dark": "#374151",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "Noto Sans SC", "sans-serif"],
+                        body: ["Inter", "Noto Sans SC", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.375rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body { font-family: 'Inter', 'Noto Sans SC', sans-serif; }.scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-gray-100 antialiased min-h-screen flex flex-col">
+<header class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark px-4 h-14 flex items-center justify-between shrink-0 sticky top-0 z-20">
+<div class="flex items-center gap-4">
+<button class="p-1 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-gradient-to-tr from-red-800 to-red-500"></div> 
+<span class="font-semibold text-gray-900 dark:text-white tracking-tight">这是一个企业名称</span>
+<span class="px-1.5 py-0.5 rounded text-xs font-medium border border-gray-200 text-gray-500 dark:border-gray-600 dark:text-gray-400 flex items-center gap-1">
+<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                    企业版
+                </span>
+</div>
+</div>
+<div class="flex-1 max-w-xl px-8 hidden md:block">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<input class="block w-full pl-10 pr-3 py-1.5 border border-gray-200 dark:border-gray-600 rounded-md leading-5 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm transition duration-150 ease-in-out" placeholder="按 / 快速开启搜索" type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-black dark:bg-white text-white dark:text-black px-3 py-1.5 rounded-full text-sm font-medium flex items-center gap-1 hover:opacity-90 transition">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                新建
+            </button>
+<button class="text-gray-500 hover:text-gray-700 dark:text-gray-400">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-primary font-bold overflow-hidden border border-gray-200 dark:border-gray-600">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3LyWPI3kyyghx9ZoJdmu1aCATtQA9wSml4Nx7hlPl5LVKD_rMwZ1OBNZ3VhwvmN2i4v-b6njAfwwiVe2dFWisUCtw9lCk8RnqAtVh2kc7U1-sbYpf-0r64AExzazxIjTYK98E06-g8pIUbr0TeHV492PUc1TYGj76F_HxHP6ykQvsnWBT3uzczDSeE_NjZqNiZsao8F__bHaH0uGw3DbE6FxOnODFFBaYfk6V1cXkKv8Lit4t7RHGQyguwTnfkJMujR_5Z_DnXVk0"/>
+</div>
+</div>
+</header>
+<nav class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark px-4 h-12 flex items-center gap-6 overflow-x-auto shrink-0 shadow-sm z-10">
+<a class="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white px-1 py-3 border-b-2 border-transparent" href="#">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            概览
+        </a>
+<a class="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white px-1 py-3 border-b-2 border-transparent" href="#">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            资源中心
+        </a>
+<a class="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white px-1 py-3 border-b-2 border-transparent" href="#">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            社区运营
+        </a>
+<a class="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white px-1 py-3 border-b-2 border-transparent" href="#">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            流水线
+        </a>
+<a class="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white px-1 py-3 border-b-2 border-transparent" href="#">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            安全与合规
+        </a>
+<a class="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-white px-1 py-3 border-b-2 border-primary relative" href="#">
+<svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4h4v16H4V4zm6 6h4v10h-4V10zm6-4h4v14h-4V6z"></path></svg>
+            数据看板
+        </a>
+<a class="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white px-1 py-3 border-b-2 border-transparent" href="#">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            账单管理
+        </a>
+<a class="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white px-1 py-3 border-b-2 border-transparent" href="#">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+            企业管理
+        </a>
+</nav>
+<div class="flex flex-1 overflow-hidden">
+<aside class="w-64 bg-background-light dark:bg-gray-800 border-r border-border-light dark:border-border-dark flex-shrink-0 hidden lg:block overflow-y-auto">
+<div class="py-6 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300" href="#">
+<span class="w-5 h-5 flex items-center justify-center rounded bg-red-100 dark:bg-red-800 text-red-600 dark:text-red-200">
+<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path clip-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" fill-rule="evenodd"></path></svg>
+</span>
+                    流量与用户
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700" href="#">
+<span class="w-5 h-5 flex items-center justify-center rounded text-gray-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+                    生产与效能
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700" href="#">
+<span class="w-5 h-5 flex items-center justify-center rounded text-gray-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+                    贡献与生态
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700" href="#">
+<span class="w-5 h-5 flex items-center justify-center rounded text-gray-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</span>
+                    资源与成本
+                </a>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto bg-white dark:bg-gray-900 pb-12">
+<div class="flex flex-col">
+<div class="bg-orange-50 dark:bg-orange-900/20 border-b border-orange-100 dark:border-orange-800/50 px-6 py-3 flex items-center justify-between text-sm text-orange-800 dark:text-orange-200">
+<div class="flex items-center gap-2">
+<svg class="w-5 h-5 text-orange-600 dark:text-orange-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path clip-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" fill-rule="evenodd"></path></svg>
+<span><span class="font-bold mr-1">资源预警:</span> 您企业当前的存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容</span>
+</div>
+<button class="text-orange-400 hover:text-orange-600 dark:hover:text-orange-300">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<div class="bg-blue-50 dark:bg-blue-900/20 border-b border-blue-100 dark:border-blue-800/50 px-6 py-3 flex items-center justify-between text-sm text-blue-800 dark:text-blue-200">
+<div class="flex items-center gap-2">
+<svg class="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path clip-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" fill-rule="evenodd"></path></svg>
+<span><span class="font-bold mr-1">企业公告:</span> AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉</span>
+</div>
+<button class="text-blue-400 hover:text-blue-600 dark:hover:text-blue-300">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+<div class="px-8 pt-8 pb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+<div>
+<h1 class="text-2xl font-bold text-gray-900 dark:text-white">流量与用户数据</h1>
+<p class="mt-1 text-gray-500 dark:text-gray-400 text-sm">监控社区访问趋势、用户留存及画像分布。</p>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative">
+<button class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 px-3 py-1.5 rounded-md text-sm shadow-sm flex items-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            最近 30 天
+                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<button class="p-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+<div class="px-8 space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-medium text-gray-500 dark:text-gray-400">浏览量 (PV)</span>
+<svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="text-3xl font-bold text-gray-900 dark:text-white mb-4">1.2M</div>
+<div class="h-12 w-full relative">
+<svg class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 24">
+<defs>
+<linearGradient id="grad-blue" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#E0F2FE;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0"></stop>
+</linearGradient>
+</defs>
+<path d="M0 24 L0 18 C10 18 15 12 25 15 C35 18 40 8 50 10 C60 12 65 20 75 16 C85 12 90 14 100 12 V24 Z" fill="url(#grad-blue)"></path>
+<path d="M0 18 C10 18 15 12 25 15 C35 18 40 8 50 10 C60 12 65 20 75 16 C85 12 90 14 100 12" fill="none" stroke="#BAE6FD" stroke-width="2"></path>
+</svg>
+</div>
+<div class="flex items-center justify-between mt-3 text-xs">
+<div class="flex items-center text-emerald-600 dark:text-emerald-400 font-medium">
+<svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20"><path clip-rule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11.586 10l3.293-3.293H12z" fill-rule="evenodd"></path></svg>
+                                12.5%
+                             </div>
+<span class="text-gray-400">点击查看详情</span>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-medium text-gray-500 dark:text-gray-400">独立访客 (UV)</span>
+<svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="text-3xl font-bold text-gray-900 dark:text-white mb-4">85.4K</div>
+<div class="h-12 w-full relative">
+<svg class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 24">
+<defs>
+<linearGradient id="grad-green" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#DCFCE7;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0"></stop>
+</linearGradient>
+</defs>
+<path d="M0 24 L0 20 C10 20 15 16 25 18 C35 20 40 10 50 8 C60 6 65 14 75 14 C85 14 90 14 100 14 V24 Z" fill="url(#grad-green)"></path>
+</svg>
+</div>
+<div class="mt-3 text-xs opacity-0">.</div>
+</div>
+<div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-md transition">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm font-medium text-gray-500 dark:text-gray-400">日活跃用户 (DAU)</span>
+<svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="text-3xl font-bold text-gray-900 dark:text-white mb-4">12.8K</div>
+<div class="h-12 w-full relative">
+<svg class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 24">
+<defs>
+<linearGradient id="grad-yellow" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#FEF9C3;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#FFFFFF;stop-opacity:0"></stop>
+</linearGradient>
+</defs>
+<path d="M0 24 L0 16 C10 18 15 20 25 18 C35 16 40 10 50 14 C60 18 65 22 75 22 C85 22 90 22 100 22 V24 Z" fill="url(#grad-yellow)"></path>
+</svg>
+</div>
+<div class="mt-3 text-xs opacity-0">.</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-8 shadow-sm">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-2">
+<svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0121 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<h3 class="font-medium text-gray-900 dark:text-white">用户地域分布</h3>
+</div>
+<a class="text-sm text-blue-600 dark:text-blue-400 font-medium hover:underline" href="#">查看完整报告</a>
+</div>
+<div class="space-y-6">
+<div class="flex items-center gap-4 text-sm">
+<span class="w-20 text-gray-600 dark:text-gray-300">Beijing</span>
+<div class="flex-1 h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+<div class="h-full bg-blue-600 rounded-full" style="width: 32%"></div>
+</div>
+<span class="w-10 text-right font-medium text-gray-900 dark:text-white">32%</span>
+</div>
+<div class="flex items-center gap-4 text-sm">
+<span class="w-20 text-gray-600 dark:text-gray-300">Shenzhen</span>
+<div class="flex-1 h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+<div class="h-full bg-blue-600 rounded-full" style="width: 21%"></div>
+</div>
+<span class="w-10 text-right font-medium text-gray-900 dark:text-white">21%</span>
+</div>
+<div class="flex items-center gap-4 text-sm">
+<span class="w-20 text-gray-600 dark:text-gray-300">Shanghai</span>
+<div class="flex-1 h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+<div class="h-full bg-blue-500 rounded-full" style="width: 18%"></div>
+</div>
+<span class="w-10 text-right font-medium text-gray-900 dark:text-white">18%</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-8 shadow-sm">
+<div class="flex items-center gap-2 mb-8">
+<svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<h3 class="font-medium text-gray-900 dark:text-white">技术栈偏好</h3>
+</div>
+<div class="flex items-center justify-center gap-10">
+<div class="relative w-40 h-40">
+<svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+<circle class="dark:stroke-gray-700" cx="50" cy="50" fill="none" r="40" stroke="#F3F4F6" stroke-width="12"></circle>
+<circle class="dark:stroke-gray-600" cx="50" cy="50" fill="none" r="40" stroke="#E5E7EB" stroke-dasharray="251.2" stroke-dashoffset="0" stroke-width="12"></circle>
+<circle cx="50" cy="50" fill="none" r="40" stroke="#3B82F6" stroke-dasharray="113.04 1000" stroke-dashoffset="0" stroke-linecap="butt" stroke-width="12"></circle>
+<circle cx="50" cy="50" fill="none" r="40" stroke="#F59E0B" stroke-dasharray="75.36 1000" stroke-dashoffset="-113.04" stroke-linecap="butt" stroke-width="12"></circle>
+<circle class="dark:stroke-gray-600" cx="50" cy="50" fill="none" r="40" stroke="#E5E7EB" stroke-dasharray="62.8 1000" stroke-dashoffset="-188.4" stroke-linecap="butt" stroke-width="12"></circle>
+</svg>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+<span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+<span>Java (45%)</span>
+</div>
+<div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+<span>Go (30%)</span>
+</div>
+<div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+<span class="w-2.5 h-2.5 rounded-full bg-gray-200 dark:bg-gray-600"></span>
+<span>Other (25%)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

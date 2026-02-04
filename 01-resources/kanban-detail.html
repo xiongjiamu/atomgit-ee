@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>企业看板 - AtomGit 详情页</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1f2937", // Slate-800 for strong brand elements
+                        "primary-hover": "#111827",
+                        "accent": "#3b82f6", // Blue-500 for links/active states
+                        "background-light": "#ffffff",
+                        "background-dark": "#0f172a", // Slate-900
+                        "surface-light": "#f9fafb", // Gray-50
+                        "surface-dark": "#1e293b", // Slate-800
+                        "border-light": "#e5e7eb", // Gray-200
+                        "border-dark": "#334155", // Slate-700
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.375rem",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+        .dark ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="bg-surface-light dark:bg-background-dark text-gray-900 dark:text-gray-100 min-h-screen flex flex-col font-body text-sm">
+<nav class="bg-background-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark h-14 flex items-center justify-between px-4 sticky top-0 z-50">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center text-white font-bold">A</div>
+<span class="font-semibold text-lg tracking-tight hidden md:block">AtomGit</span>
+</div>
+<div class="hidden md:flex items-center bg-gray-100 dark:bg-slate-700 rounded px-3 py-1.5 w-64">
+<span class="material-icons-outlined text-gray-400 text-sm">search</span>
+<input class="bg-transparent border-none text-xs w-full focus:ring-0 text-gray-700 dark:text-gray-200 placeholder-gray-400" placeholder="搜索..." type="text"/>
+</div>
+<div class="hidden md:flex gap-6 text-gray-600 dark:text-gray-400 text-sm font-medium">
+<a class="hover:text-primary dark:hover:text-white" href="#">工作台</a>
+<a class="hover:text-primary dark:hover:text-white" href="#">项目</a>
+<a class="hover:text-primary dark:hover:text-white" href="#">代码</a>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="bg-primary hover:bg-primary-hover text-white text-xs px-3 py-1.5 rounded flex items-center gap-1 transition-colors">
+<span class="material-icons-outlined text-sm">add</span> 新建
+            </button>
+<button class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white relative">
+<span class="material-icons-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-800"></span>
+</button>
+<div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-400 to-purple-500 border border-white dark:border-slate-700"></div>
+</div>
+</nav>
+<div class="bg-background-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark px-4 py-0 overflow-x-auto">
+<div class="flex gap-6 text-sm">
+<a class="py-3 border-b-2 border-transparent hover:text-accent dark:hover:text-blue-400 text-gray-600 dark:text-gray-400" href="#">概览</a>
+<a class="py-3 border-b-2 border-transparent hover:text-accent dark:hover:text-blue-400 text-gray-600 dark:text-gray-400" href="#">资源中心</a>
+<a class="py-3 border-b-2 border-transparent hover:text-accent dark:hover:text-blue-400 text-gray-600 dark:text-gray-400" href="#">社区运营</a>
+<a class="py-3 border-b-2 border-transparent hover:text-accent dark:hover:text-blue-400 text-gray-600 dark:text-gray-400" href="#">流水线</a>
+<a class="py-3 border-b-2 border-transparent hover:text-accent dark:hover:text-blue-400 text-gray-600 dark:text-gray-400" href="#">安全与合规</a>
+<a class="py-3 border-b-2 border-primary dark:border-blue-500 font-medium text-primary dark:text-white" href="#">数据看板</a>
+<a class="py-3 border-b-2 border-transparent hover:text-accent dark:hover:text-blue-400 text-gray-600 dark:text-gray-400" href="#">账单管理</a>
+<a class="py-3 border-b-2 border-transparent hover:text-accent dark:hover:text-blue-400 text-gray-600 dark:text-gray-400" href="#">企业管理</a>
+</div>
+</div>
+<div class="bg-yellow-50 dark:bg-yellow-900/20 border-b border-yellow-100 dark:border-yellow-800/30 px-4 py-2 flex items-start gap-2 text-xs text-yellow-800 dark:text-yellow-200">
+<span class="material-icons-outlined text-sm text-yellow-600 dark:text-yellow-400">warning</span>
+<span><span class="font-semibold">资源报警：</span>您企业当前的存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容。</span>
+<button class="ml-auto text-yellow-600 dark:text-yellow-400 hover:text-yellow-800 dark:hover:text-yellow-200">
+<span class="material-icons-outlined text-sm">close</span>
+</button>
+</div>
+<div class="bg-blue-50 dark:bg-blue-900/20 border-b border-blue-100 dark:border-blue-800/30 px-4 py-2 flex items-start gap-2 text-xs text-blue-800 dark:text-blue-200">
+<span class="material-icons-outlined text-sm text-blue-600 dark:text-blue-400">info</span>
+<span><span class="font-semibold">企业公告：</span>AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉。</span>
+<button class="ml-auto text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200">
+<span class="material-icons-outlined text-sm">close</span>
+</button>
+</div>
+<main class="flex-1 flex flex-col p-4 md:px-6 md:py-4 gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<button class="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300">
+<span class="material-icons-outlined text-lg">arrow_back</span>
+</button>
+<div class="h-6 w-6 rounded bg-red-100 dark:bg-red-900/50 flex items-center justify-center text-red-600 dark:text-red-400 text-xs font-bold">看板</div>
+<h1 class="text-lg font-semibold text-gray-900 dark:text-white">这是一个企业看板名称</h1>
+<span class="text-gray-400 text-xs px-2 py-0.5 border border-gray-200 dark:border-gray-700 rounded-full bg-gray-50 dark:bg-slate-800">企业级</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-gray-400 text-sm">search</span>
+</span>
+<input class="pl-8 pr-4 py-1.5 text-xs bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded shadow-sm focus:ring-1 focus:ring-accent dark:text-gray-300 w-64" placeholder="搜下 / 快速开启搜索" type="text"/>
+<div class="absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none">
+<span class="text-[10px] bg-gray-100 dark:bg-gray-700 text-gray-400 px-1 rounded border border-gray-200 dark:border-gray-600">/</span>
+</div>
+</div>
+<button class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white flex items-center gap-1 text-xs border border-gray-200 dark:border-gray-700 rounded px-3 py-1.5 bg-white dark:bg-slate-800 shadow-sm transition-all hover:bg-gray-50 dark:hover:bg-slate-700">
+<span class="material-icons-outlined text-sm">settings</span> 看板设置
+                </button>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<div class="flex items-center justify-between border-b border-border-light dark:border-border-dark pb-3">
+<div class="flex items-center gap-1">
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-accent bg-blue-50 dark:bg-blue-900/30 rounded border border-blue-200 dark:border-blue-800 transition-colors">
+<span class="material-icons-outlined text-sm">table_chart</span> 数据表格视图
+                    </button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 rounded transition-colors">
+<span class="material-icons-outlined text-sm">bar_chart</span> 数据分布统计视图
+                    </button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 rounded transition-colors">
+<span class="material-icons-outlined text-sm">people</span> 用户视图
+                    </button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 rounded transition-colors">
+<span class="material-icons-outlined text-sm">label</span> 标签分组
+                    </button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-800 rounded transition-colors">
+<span class="material-icons-outlined text-sm">description</span> 文本视图
+                    </button>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="relative">
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded shadow-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700">
+                            全部事项 <span class="material-icons-outlined text-sm">expand_more</span>
+</button>
+</div>
+<div class="relative">
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded shadow-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700">
+                            我的项目 <span class="material-icons-outlined text-sm">expand_more</span>
+</button>
+</div>
+<div class="relative ml-2">
+<span class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+<span class="material-icons-outlined text-gray-400 text-sm">filter_alt</span>
+</span>
+<input class="pl-8 pr-4 py-1.5 text-xs bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-gray-700 rounded focus:ring-1 focus:ring-accent dark:text-gray-300 w-64 placeholder-gray-500" placeholder="输入关键词筛选表格" type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white rounded hover:bg-gray-100 dark:hover:bg-slate-700">
+<span class="material-icons-outlined text-lg">filter_list</span>
+</button>
+<button class="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white rounded hover:bg-gray-100 dark:hover:bg-slate-700">
+<span class="material-icons-outlined text-lg">swap_vert</span>
+</button>
+<button class="p-1.5 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-white rounded hover:bg-gray-100 dark:hover:bg-slate-700">
+<span class="material-icons-outlined text-lg">more_horiz</span>
+</button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 border border-border-light dark:border-border-dark rounded-lg shadow-sm overflow-visible flex-1 flex flex-col relative z-0">
+<div class="grid grid-cols-[40px_minmax(300px,3fr)_120px_200px_200px_150px_1fr] bg-gray-50 dark:bg-slate-900/50 border-b border-border-light dark:border-border-dark text-xs font-semibold text-gray-500 dark:text-gray-400 sticky top-0 z-10">
+<div class="p-3 flex items-center justify-center">
+<input class="rounded border-gray-300 text-accent focus:ring-accent bg-transparent" type="checkbox"/>
+</div>
+<div class="p-3 flex items-center">标题</div>
+<div class="p-3 flex items-center cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">负责人 <span class="material-icons-outlined text-sm ml-1 text-gray-400">unfold_more</span></div>
+<div class="p-3 flex items-center cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">标签 <span class="material-icons-outlined text-sm ml-1 text-gray-400">unfold_more</span></div>
+<div class="relative p-3 flex items-center cursor-pointer bg-white dark:bg-slate-800 shadow-inner text-accent dark:text-blue-400 border-x border-gray-200 dark:border-slate-700">
+                    创建时间 
+                    <span class="material-icons-outlined text-sm ml-1 text-accent">filter_alt</span>
+<div class="absolute top-full left-0 mt-2 w-[480px] bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-gray-200 dark:border-slate-700 z-50 flex flex-col">
+<div class="flex border-b border-gray-100 dark:border-slate-700">
+<button class="flex-1 py-2.5 text-center text-xs font-medium text-accent border-b-2 border-accent">创建时间</button>
+<button class="flex-1 py-2.5 text-center text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700">更新时间</button>
+<button class="flex-1 py-2.5 text-center text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700">截止时间</button>
+</div>
+<div class="p-4 flex gap-4">
+<div class="w-24 flex flex-col gap-1 border-r border-gray-100 dark:border-slate-700 pr-2">
+<button class="text-left px-2 py-1.5 text-xs text-accent bg-blue-50 dark:bg-blue-900/30 rounded">今天</button>
+<button class="text-left px-2 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-700 rounded">昨天</button>
+<button class="text-left px-2 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-700 rounded">近7天</button>
+<button class="text-left px-2 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-700 rounded">近30天</button>
+<button class="text-left px-2 py-1.5 text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-700 rounded">自定义范围</button>
+</div>
+<div class="flex-1 flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<div class="flex-1">
+<label class="block text-[10px] text-gray-400 mb-1">开始日期</label>
+<input class="w-full text-xs border border-gray-200 dark:border-slate-600 rounded p-1.5 dark:bg-slate-700 dark:text-white" type="date" value="2024-05-01"/>
+</div>
+<span class="text-gray-400 mt-4">-</span>
+<div class="flex-1">
+<label class="block text-[10px] text-gray-400 mb-1">结束日期</label>
+<input class="w-full text-xs border border-gray-200 dark:border-slate-600 rounded p-1.5 dark:bg-slate-700 dark:text-white" type="date"/>
+</div>
+</div>
+<div class="text-[10px] text-gray-400">
+                                    筛选 2024-05-01 之后的创建记录
+                                </div>
+</div>
+</div>
+<div class="p-3 bg-gray-50 dark:bg-slate-900/50 border-t border-gray-100 dark:border-slate-700 flex justify-between rounded-b-lg">
+<button class="px-3 py-1.5 text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">重置</button>
+<button class="px-4 py-1.5 text-xs bg-primary hover:bg-primary-hover text-white rounded shadow-sm">查询确认</button>
+</div>
+</div>
+</div>
+<div class="p-3 flex items-center cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">所属项目 <span class="material-icons-outlined text-sm ml-1 text-gray-400">unfold_more</span></div>
+<div class="p-3 flex items-center cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">筛选条件</div>
+</div>
+<div class="overflow-y-auto flex-1 text-xs">
+<div class="grid grid-cols-[40px_minmax(300px,3fr)_120px_200px_200px_150px_1fr] border-b border-border-light dark:border-border-dark hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="p-3 flex items-start justify-center pt-4">
+<input class="rounded border-gray-300 text-accent focus:ring-accent bg-transparent" type="checkbox"/>
+</div>
+<div class="p-3 pr-6">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-icons-outlined text-green-500 text-base">check_circle_outline</span>
+<span class="text-gray-400">#223</span>
+</div>
+<a class="text-gray-900 dark:text-gray-100 font-medium hover:text-accent dark:hover:text-blue-400 line-clamp-2" href="#">
+                             第一版 UI 设计界面列表 - 需要跟进设计稿的复核工作
+                        </a>
+<div class="mt-1 flex items-center gap-2 text-gray-400">
+<span class="material-icons-outlined text-[10px]">subdirectory_arrow_right</span>
+<span class="text-[10px]">子任务: 3/5 完成</span>
+</div>
+</div>
+<div class="p-3 flex items-start pt-4">
+<div class="flex -space-x-2">
+<img alt="User" class="w-6 h-6 rounded-full border-2 border-white dark:border-slate-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQx2Va1PVoek9btg-BJURsWBQ5zUz_oGT5s0xTdTKGUAOPUL0XFBluqx5QrJddYtasjmBoLbzObQf4zn8FBfYP7rcNNXJPFGKxdLsfxr1R1WSKbMJtDjCoJuQK5ObX_zHF-7hxW00fFNpd_0pQG54su5DyQCOSXYKVUdhblS7mZuc_oUbxrroqxDho8KH_62duPy1CIkcnpu4B2-AiFzjUQu-vG5S3oNEgKjfoSK5awmcK7zCCnrYuYp75pEL3jCf9zeR5zrdu1qLd" title="负责人 A"/>
+<div class="w-6 h-6 rounded-full border-2 border-white dark:border-slate-800 bg-gray-200 dark:bg-slate-600 flex items-center justify-center text-[10px] text-gray-500 dark:text-gray-300 font-bold">+2</div>
+</div>
+</div>
+<div class="p-3 flex flex-wrap gap-1.5 items-start pt-4 content-start">
+<span class="px-2 py-0.5 rounded-full bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 text-[10px] border border-red-200 dark:border-red-800">bug</span>
+<span class="px-2 py-0.5 rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 text-[10px] border border-orange-200 dark:border-orange-800">high priority</span>
+</div>
+<div class="p-3 text-gray-500 dark:text-gray-400 pt-4">
+                        24/04/05
+                        <div class="text-[10px] text-gray-400">14:20</div>
+</div>
+<div class="p-3 flex items-start pt-4 gap-1 text-gray-600 dark:text-gray-400">
+<span class="material-icons-outlined text-sm">folder</span>
+<span class="truncate">gitoc/design-sys</span>
+</div>
+<div class="p-3 pt-4 flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800 text-[10px]">完成</span>
+<button class="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+<span class="material-icons-outlined text-base">edit</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-[40px_minmax(300px,3fr)_120px_200px_200px_150px_1fr] border-b border-border-light dark:border-border-dark hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="p-3 flex items-start justify-center pt-4">
+<input class="rounded border-gray-300 text-accent focus:ring-accent bg-transparent" type="checkbox"/>
+</div>
+<div class="p-3 pr-6">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-icons-outlined text-blue-500 text-base">radio_button_checked</span>
+<span class="text-gray-400">#224</span>
+</div>
+<a class="text-gray-900 dark:text-gray-100 font-medium hover:text-accent dark:hover:text-blue-400 line-clamp-2" href="#">
+                             项目进度看板组件开发 #223
+                        </a>
+</div>
+<div class="p-3 flex items-start pt-4">
+<img alt="User" class="w-6 h-6 rounded-full border border-gray-200 dark:border-slate-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDWGsrN6O7Sc5B1uD4yWFueZaXADUl6grk2hLjsccOD7e7Nk_6iifQF3_mTeu2_-mIx1EEsav4NzdnNX3YqEHXy-kl8MkjTPYHzeIsnDXrs_8erTNz-V-Q5GGIgtU3T_RU1YtX5yyLkabngdeYMHoP-NiwadcufZYiMJa4NAZo93-BnjaCMN-01_DmBXCqB_jzstq40Tqq9Xw3uxJwBc4KjHWJhOj7ZeWeg50iHIqGiSEo5g6W72-SrihoN1LbbDhzt-63EVuGvnTe" title="负责人 B"/>
+</div>
+<div class="p-3 flex flex-wrap gap-1.5 items-start pt-4 content-start">
+<span class="px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-[10px] border border-blue-200 dark:border-blue-800">feature</span>
+<span class="px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-[10px] border border-purple-200 dark:border-purple-800">assigned</span>
+</div>
+<div class="p-3 text-gray-500 dark:text-gray-400 pt-4">
+                        24/04/05
+                        <div class="text-[10px] text-gray-400">11:00</div>
+</div>
+<div class="p-3 flex items-start pt-4 gap-1 text-gray-600 dark:text-gray-400">
+<span class="material-icons-outlined text-sm">folder</span>
+<span class="truncate">gitoc/frontend</span>
+</div>
+<div class="p-3 pt-4 flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800 text-[10px]">进行中</span>
+<button class="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+<span class="material-icons-outlined text-base">edit</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-[40px_minmax(300px,3fr)_120px_200px_200px_150px_1fr] border-b border-border-light dark:border-border-dark hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="p-3 flex items-start justify-center pt-4">
+<input class="rounded border-gray-300 text-accent focus:ring-accent bg-transparent" type="checkbox"/>
+</div>
+<div class="p-3 pr-6">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-icons-outlined text-gray-400 text-base">remove_circle_outline</span>
+<span class="text-gray-400">#225</span>
+</div>
+<a class="text-gray-900 dark:text-gray-100 font-medium hover:text-accent dark:hover:text-blue-400 line-clamp-2" href="#">
+                             通用项目卡片组件 #225
+                        </a>
+</div>
+<div class="p-3 flex items-start pt-4">
+<div class="w-6 h-6 rounded-full bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-300 flex items-center justify-center text-[10px] font-bold border border-pink-200 dark:border-pink-800">T</div>
+</div>
+<div class="p-3 flex flex-wrap gap-1.5 items-start pt-4 content-start">
+<span class="px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-[10px] border border-gray-200 dark:border-gray-600">duplicate</span>
+<span class="px-2 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-[10px] border border-green-200 dark:border-green-800">help wanted</span>
+</div>
+<div class="p-3 text-gray-500 dark:text-gray-400 pt-4">
+                        24/04/05
+                         <div class="text-[10px] text-gray-400">09:15</div>
+</div>
+<div class="p-3 flex items-start pt-4 gap-1 text-gray-600 dark:text-gray-400">
+<span class="material-icons-outlined text-sm">folder</span>
+<span class="truncate">gitoc/common-ui</span>
+</div>
+<div class="p-3 pt-4 flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-600 text-[10px]">已取消</span>
+<button class="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+<span class="material-icons-outlined text-base">edit</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-[40px_minmax(300px,3fr)_120px_200px_200px_150px_1fr] border-b border-border-light dark:border-border-dark hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="p-3 flex items-start justify-center pt-4">
+<input class="rounded border-gray-300 text-accent focus:ring-accent bg-transparent" type="checkbox"/>
+</div>
+<div class="p-3 pr-6">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-icons-outlined text-green-500 text-base">check_circle_outline</span>
+<span class="text-gray-400">#226</span>
+</div>
+<a class="text-gray-900 dark:text-gray-100 font-medium hover:text-accent dark:hover:text-blue-400 line-clamp-2" href="#">
+                             新建资源警告逻辑 #226
+                        </a>
+</div>
+<div class="p-3 flex items-start pt-4">
+<img alt="User" class="w-6 h-6 rounded-full border border-gray-200 dark:border-slate-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaYI-r7pQqUbRizMLvSmm1JB-HFwJdrwK06udYUlznOeFDbyHuE8oyky-kqGrGu4nG5QF7qoFkZi0Zxw-XJdGAqmVvFIhIfdIAQ0jSyDYENFOiAnwcVV1yOl04NcVNfzro6fVwYHhc1WVGzBRPjjn2tPxuZ987Ke4l2C1Y1dxgw0qyURmJvT-3Ff_7joSgyiNyqpcgwdObJO2C1Rlj1BBE7dNo-8n94ACcGvY6O5B6RgOP9k03V-_0WqCCCT1dCeN8a5jV9HJvIjzx"/>
+</div>
+<div class="p-3 flex flex-wrap gap-1.5 items-start pt-4 content-start">
+<span class="px-2 py-0.5 rounded-full bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300 text-[10px] border border-cyan-200 dark:border-cyan-800">backend</span>
+</div>
+<div class="p-3 text-gray-500 dark:text-gray-400 pt-4">
+                        24/04/04
+                        <div class="text-[10px] text-gray-400">18:00</div>
+</div>
+<div class="p-3 flex items-start pt-4 gap-1 text-gray-600 dark:text-gray-400">
+<span class="material-icons-outlined text-sm">folder</span>
+<span class="truncate">gitoc/backend-api</span>
+</div>
+<div class="p-3 pt-4 flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800 text-[10px]">完成</span>
+<button class="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+<span class="material-icons-outlined text-base">edit</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-[40px_minmax(300px,3fr)_120px_200px_200px_150px_1fr] border-b border-border-light dark:border-border-dark hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="p-3 flex items-start justify-center pt-4">
+<input class="rounded border-gray-300 text-accent focus:ring-accent bg-transparent" type="checkbox"/>
+</div>
+<div class="p-3 pr-6">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-icons-outlined text-gray-400 text-base">radio_button_unchecked</span>
+<span class="text-gray-400">#227</span>
+</div>
+<a class="text-gray-900 dark:text-gray-100 font-medium hover:text-accent dark:hover:text-blue-400 line-clamp-2" href="#">
+                             Issue 详情头部描述组件 #227
+                        </a>
+</div>
+<div class="p-3 flex items-start pt-4">
+<div class="flex items-center gap-1 bg-gray-100 dark:bg-slate-700 rounded px-1.5 py-0.5 text-[10px] text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-slate-600">
+<span class="material-icons-outlined text-[10px]">group</span> Team
+                        </div>
+</div>
+<div class="p-3 flex flex-wrap gap-1.5 items-start pt-4 content-start">
+<span class="px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-[10px] border border-indigo-200 dark:border-indigo-800">discussion</span>
+</div>
+<div class="p-3 text-gray-500 dark:text-gray-400 pt-4">
+                        24/04/04
+                        <div class="text-[10px] text-gray-400">16:30</div>
+</div>
+<div class="p-3 flex items-start pt-4 gap-1 text-gray-600 dark:text-gray-400">
+<span class="material-icons-outlined text-sm">folder</span>
+<span class="truncate">gitoc/frontend</span>
+</div>
+<div class="p-3 pt-4 flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-600 text-[10px]">待处理</span>
+<button class="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+<span class="material-icons-outlined text-base">edit</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-[40px_minmax(300px,3fr)_120px_200px_200px_150px_1fr] border-b border-border-light dark:border-border-dark hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="p-3 flex items-start justify-center pt-4">
+<input class="rounded border-gray-300 text-accent focus:ring-accent bg-transparent" type="checkbox"/>
+</div>
+<div class="p-3 pr-6">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-icons-outlined text-green-500 text-base">check_circle_outline</span>
+<span class="text-gray-400">#228</span>
+</div>
+<a class="text-gray-900 dark:text-gray-100 font-medium hover:text-accent dark:hover:text-blue-400 line-clamp-2" href="#">
+                             通用 commit 信息卡片 (Commit) #228
+                        </a>
+</div>
+<div class="p-3 flex items-start pt-4">
+<img alt="User" class="w-6 h-6 rounded-full border border-gray-200 dark:border-slate-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHH8d3kqlg7VVoj3H7jVF17CJR7Jx1ts8Gu0p51zDG10iS2rxQ4TK28krDUs7F5LMjc_i1D3NuPK87O9yHDMb53Kmv8SrPym5US0CDTt-UB3mcVGVVZL2uQk0qCjqreVZFno16SxYaLj9j5zqCS3U37HXafh5lBS5OIp5CgBdhMA_bndR3blIrS4Z4MsqZTSGK6-X_9rQBweRPoXaBtDxxMPlv1luU5ZN3Jkb6EAIayyQm8XdHRA1NNTLgZS5OmMRvwUlsSoSL6PmQ"/>
+</div>
+<div class="p-3 flex flex-wrap gap-1.5 items-start pt-4 content-start">
+<span class="px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 text-[10px] border border-teal-200 dark:border-teal-800">documentation</span>
+</div>
+<div class="p-3 text-gray-500 dark:text-gray-400 pt-4">
+                        24/04/04
+                        <div class="text-[10px] text-gray-400">12:00</div>
+</div>
+<div class="p-3 flex items-start pt-4 gap-1 text-gray-600 dark:text-gray-400">
+<span class="material-icons-outlined text-sm">folder</span>
+<span class="truncate">gitoc/docs</span>
+</div>
+<div class="p-3 pt-4 flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800 text-[10px]">完成</span>
+<button class="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+<span class="material-icons-outlined text-base">edit</span>
+</button>
+</div>
+</div>
+</div>
+<div class="border-t border-border-light dark:border-border-dark p-3 flex items-center justify-center bg-white dark:bg-slate-800 rounded-b-lg">
+<nav class="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
+<button class="px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-slate-700 disabled:opacity-50">
+<span class="material-icons-outlined text-sm">chevron_left</span> 上一页
+                    </button>
+<button class="w-6 h-6 flex items-center justify-center rounded bg-primary text-white font-medium">1</button>
+<button class="w-6 h-6 flex items-center justify-center rounded hover:bg-gray-100 dark:hover:bg-slate-700">2</button>
+<button class="w-6 h-6 flex items-center justify-center rounded hover:bg-gray-100 dark:hover:bg-slate-700">3</button>
+<span class="px-1">...</span>
+<button class="w-6 h-6 flex items-center justify-center rounded hover:bg-gray-100 dark:hover:bg-slate-700">100</button>
+<button class="px-2 py-1 rounded hover:bg-gray-100 dark:hover:bg-slate-700">
+                        下一页 <span class="material-icons-outlined text-sm align-middle">chevron_right</span>
+</button>
+</nav>
+</div>
+</div>
+</main>
+
+</body></html>

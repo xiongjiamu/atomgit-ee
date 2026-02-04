@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html class="" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>资源中心 - 企业 LFS 管理</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#607AFB",
+                        secondary: "#e53935",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#0f1323",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e1e1e",
+                        "border-light": "#e0e0e0",
+                        "border-dark": "#333333",
+                        "text-primary-light": "#212121",
+                        "text-primary-dark": "#eeeeee",
+                        "text-secondary-light": "#757575",
+                        "text-secondary-dark": "#bdbdbd"
+                    },
+                    fontFamily: {
+                        display: "Inter",
+                        body: ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    }
+                }
+            }
+        };
+    </script>
+<style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #bdbdbd;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9e9e9e;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-body text-text-primary-light dark:text-text-primary-dark antialiased transition-colors duration-200">
+<header class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark h-14 flex items-center justify-between px-4 sticky top-0 z-20">
+<div class="flex items-center space-x-4">
+<div class="flex items-center gap-2 cursor-pointer">
+<span class="material-icons text-primary text-xl">menu</span>
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold">A</div>
+<span class="font-medium text-sm hidden md:block">这是一个企业名称</span>
+<span class="material-icons text-text-secondary-light text-sm">swap_horiz</span>
+<span class="text-xs text-text-secondary-light hidden md:block">企业版</span>
+</div>
+</div>
+<div class="flex-1 max-w-xl mx-4">
+<div class="relative group">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3">
+<span class="material-icons text-text-secondary-light text-lg">search</span>
+</span>
+<input class="w-full bg-gray-100 dark:bg-gray-800 text-sm rounded-md py-1.5 pl-9 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-text-primary-light dark:text-text-primary-dark transition-all" placeholder="按 ' / ' 快速开始搜索" type="text"/>
+<div class="absolute inset-y-0 right-0 flex items-center pr-2">
+<span class="border border-gray-300 dark:border-gray-600 rounded px-1.5 py-0.5 text-xs text-text-secondary-light bg-white dark:bg-gray-700">/</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-3">
+<button class="bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 text-xs px-3 py-1.5 rounded-md flex items-center transition-colors font-medium">
+<span class="material-icons text-sm mr-1">add</span> 新建
+            </button>
+<button class="p-1.5 text-text-secondary-light hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors relative">
+<span class="material-icons text-lg">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-surface-light dark:border-surface-dark"></span>
+</button>
+<button class="p-1.5 text-text-secondary-light hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+<span class="material-icons text-lg">help_outline</span>
+</button>
+<div class="w-7 h-7 bg-primary/10 text-primary rounded-full flex items-center justify-center text-xs font-bold cursor-pointer hover:ring-2 ring-primary ring-offset-2 dark:ring-offset-surface-dark transition-all">
+                U
+            </div>
+</div>
+</header>
+<nav class="bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark h-10 flex items-center px-4 overflow-x-auto whitespace-nowrap">
+<div class="flex space-x-6 text-sm">
+<a class="flex items-center text-text-secondary-light hover:text-primary transition-colors py-2" href="#">
+<span class="material-icons text-base mr-1.5">dashboard</span> 概览
+            </a>
+<a class="flex items-center text-primary font-medium border-b-2 border-primary py-2" href="#">
+<span class="material-icons text-base mr-1.5">folder</span> 资源中心
+            </a>
+<a class="flex items-center text-text-secondary-light hover:text-primary transition-colors py-2" href="#">
+<span class="material-icons text-base mr-1.5">people</span> 社区运营
+            </a>
+<a class="flex items-center text-text-secondary-light hover:text-primary transition-colors py-2" href="#">
+<span class="material-icons text-base mr-1.5">waves</span> 流水线
+            </a>
+<a class="flex items-center text-text-secondary-light hover:text-primary transition-colors py-2" href="#">
+<span class="material-icons text-base mr-1.5">verified_user</span> 安全与合规
+            </a>
+<a class="flex items-center text-text-secondary-light hover:text-primary transition-colors py-2" href="#">
+<span class="material-icons text-base mr-1.5">analytics</span> 数据看板
+            </a>
+<a class="flex items-center text-text-secondary-light hover:text-primary transition-colors py-2" href="#">
+<span class="material-icons text-base mr-1.5">receipt_long</span> 账单管理
+            </a>
+<a class="flex items-center text-text-secondary-light hover:text-primary transition-colors py-2" href="#">
+<span class="material-icons text-base mr-1.5">settings</span> 企业管理
+            </a>
+</div>
+</nav>
+<main class="flex flex-col min-h-[calc(100vh-6rem)] relative">
+<div class="px-4 py-2 space-y-2">
+<div class="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800/50 rounded-md p-2.5 flex items-start justify-between">
+<div class="flex items-center gap-2">
+<span class="material-icons text-orange-600 text-sm">error</span>
+<span class="text-xs text-orange-800 dark:text-orange-200 font-medium">资源预警：</span>
+<span class="text-xs text-orange-700 dark:text-orange-300">您企业当前的存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容</span>
+</div>
+<button class="text-orange-400 hover:text-orange-600 dark:text-orange-500">
+<span class="material-icons text-sm">close</span>
+</button>
+</div>
+<div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/50 rounded-md p-2.5 flex items-start justify-between">
+<div class="flex items-center gap-2">
+<span class="material-icons text-blue-600 text-sm">info</span>
+<span class="text-xs text-blue-800 dark:text-blue-200 font-medium">企业公告：</span>
+<a class="text-xs text-blue-600 dark:text-blue-400 hover:underline" href="#">AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短暂闪断，请知悉</a>
+</div>
+<button class="text-blue-400 hover:text-blue-600 dark:text-blue-500">
+<span class="material-icons text-sm">close</span>
+</button>
+</div>
+</div>
+<div class="flex flex-1 px-4 py-4 gap-6">
+<aside class="w-64 flex-shrink-0 hidden lg:block">
+<div class="mb-6">
+<h3 class="text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider mb-2 px-2">资源中心</h3>
+<nav class="space-y-1">
+<a class="flex items-center justify-between px-2 py-2 text-sm text-text-primary-light dark:text-text-primary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-icons text-text-secondary-light text-lg mr-3 group-hover:text-primary">radio_button_checked</span>
+                                企业 Issues
+                            </div>
+<span class="bg-gray-100 dark:bg-gray-700 text-text-secondary-light text-xs py-0.5 px-2 rounded-full">121</span>
+</a>
+<a class="flex items-center justify-between px-2 py-2 text-sm text-text-primary-light dark:text-text-primary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-icons text-text-secondary-light text-lg mr-3 group-hover:text-primary">view_kanban</span>
+                                企业看板
+                            </div>
+<span class="bg-gray-100 dark:bg-gray-700 text-text-secondary-light text-xs py-0.5 px-2 rounded-full">32</span>
+</a>
+<a class="flex items-center justify-between px-2 py-2 text-sm text-text-primary-light dark:text-text-primary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-icons text-text-secondary-light text-lg mr-3 group-hover:text-primary">merge_type</span>
+                                Pull Requests
+                            </div>
+<span class="bg-gray-100 dark:bg-gray-700 text-text-secondary-light text-xs py-0.5 px-2 rounded-full">132</span>
+</a>
+<a class="flex items-center justify-between px-2 py-2 text-sm text-text-primary-light dark:text-text-primary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-icons text-text-secondary-light text-lg mr-3 group-hover:text-primary">folder_open</span>
+                                企业项目
+                            </div>
+<span class="bg-gray-100 dark:bg-gray-700 text-text-secondary-light text-xs py-0.5 px-2 rounded-full">65</span>
+</a>
+<a class="flex items-center justify-between px-2 py-2 text-sm text-text-primary-light dark:text-text-primary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group transition-colors" href="#">
+<div class="flex items-center">
+<span class="material-icons text-text-secondary-light text-lg mr-3 group-hover:text-primary">account_tree</span>
+                                企业里程碑
+                            </div>
+<span class="bg-gray-100 dark:bg-gray-700 text-text-secondary-light text-xs py-0.5 px-2 rounded-full">321</span>
+</a>
+</nav>
+</div>
+<div>
+<h3 class="text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider mb-2 px-2">预警与治理</h3>
+<nav class="space-y-1">
+<a class="flex items-center px-2 py-2 text-sm text-primary font-medium bg-red-50 dark:bg-red-900/10 rounded-md" href="#">
+<span class="material-icons text-primary text-lg mr-3">storage</span>
+                            企业 LFS
+                        </a>
+<a class="flex items-center px-2 py-2 text-sm text-text-primary-light dark:text-text-primary-dark rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 group transition-colors" href="#">
+<span class="material-icons text-text-secondary-light text-lg mr-3 group-hover:text-primary">warning</span>
+                            资源使用预警
+                        </a>
+</nav>
+</div>
+</aside>
+<div class="flex-1 bg-surface-light dark:bg-surface-dark rounded-lg shadow-sm border border-border-light dark:border-border-dark flex flex-col h-full relative">
+<div class="p-4 border-b border-border-light dark:border-border-dark flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex items-center gap-2 w-full sm:w-auto">
+<span class="text-sm font-semibold">企业 LFS 库</span>
+<span class="text-xs text-text-secondary-light bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full">281</span>
+</div>
+<div class="flex items-center gap-2 w-full sm:w-auto">
+<div class="relative flex-1 sm:flex-none">
+<span class="absolute inset-y-0 left-0 flex items-center pl-2">
+<span class="material-icons text-gray-400 text-sm">search</span>
+</span>
+<input class="pl-8 pr-3 py-1.5 text-xs w-full sm:w-64 border border-border-light dark:border-border-dark rounded bg-white dark:bg-black focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all dark:text-gray-200" placeholder="搜索 LFS SHA256" type="text"/>
+</div>
+<div class="flex border border-border-light dark:border-border-dark rounded overflow-hidden">
+<button class="px-3 py-1.5 text-xs bg-white dark:bg-surface-dark border-r border-border-light dark:border-border-dark hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-1">
+                                全部组织 <span class="material-icons text-xs">arrow_drop_down</span>
+</button>
+<button class="px-3 py-1.5 text-xs bg-white dark:bg-surface-dark hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-1">
+                                全部项目 <span class="material-icons text-xs">arrow_drop_down</span>
+</button>
+</div>
+<button class="text-text-secondary-light hover:text-text-primary-light dark:hover:text-text-primary-dark p-1.5">
+<span class="material-icons text-lg">sort</span>
+</button>
+</div>
+</div>
+<div class="absolute bottom-16 left-0 right-0 mx-auto w-fit z-10 flex animate-bounce-short">
+<div class="bg-surface-dark text-white dark:bg-white dark:text-black rounded-full shadow-lg px-4 py-2 flex items-center gap-4 text-sm border border-border-dark dark:border-border-light">
+<span class="font-medium whitespace-nowrap">已选中 3 项</span>
+<div class="h-4 w-px bg-white/20 dark:bg-black/20"></div>
+<button class="text-red-400 hover:text-red-300 dark:text-red-600 dark:hover:text-red-500 font-medium flex items-center gap-1 transition-colors">
+<span class="material-icons text-sm">delete</span>
+                                批量删除
+                            </button>
+<button class="text-gray-300 hover:text-white dark:text-gray-600 dark:hover:text-black hover:bg-white/10 dark:hover:bg-black/10 rounded-full p-1 transition-colors">
+<span class="material-icons text-sm">close</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-4 px-6 py-3 bg-gray-50 dark:bg-gray-800/50 text-xs font-medium text-text-secondary-light border-b border-border-light dark:border-border-dark">
+<div class="col-span-3 flex items-center gap-3">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4 bg-white dark:bg-surface-dark dark:border-gray-600 cursor-pointer" type="checkbox"/>
+<span>文件名称</span>
+</div>
+<div class="col-span-2">大小</div>
+<div class="col-span-3">所属项目</div>
+<div class="col-span-3">SHA256 / 更新时间</div>
+<div class="col-span-1 text-right">操作</div>
+</div>
+<div class="flex-1 overflow-y-auto">
+<div class="group grid grid-cols-12 gap-4 px-6 py-4 border-b border-border-light dark:border-border-dark bg-blue-50/30 dark:bg-blue-900/20 hover:bg-blue-50/50 dark:hover:bg-blue-900/30 transition-colors items-center">
+<div class="col-span-3 flex items-center gap-3 overflow-hidden">
+<input checked="" class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4 bg-white dark:bg-surface-dark dark:border-gray-600 cursor-pointer flex-shrink-0" type="checkbox"/>
+<div class="text-sm font-medium text-text-primary-light dark:text-text-primary-dark truncate" title="training_model_v5.bin">
+                            training_model_v5.bin
+                        </div>
+</div>
+<div class="col-span-2 text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                            18.5 GB
+                        </div>
+<div class="col-span-3 text-sm text-text-primary-light dark:text-text-primary-dark flex items-center gap-1 truncate">
+<span class="material-icons text-gray-400 text-sm">folder</span>
+                            csdn / jupyter-notebook
+                        </div>
+<div class="col-span-3">
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark font-mono truncate" title="90abe0d075755853145c96906a1300f57c167fcc9aad7221239b448abf54933c">
+                                SHA256: 90abe0d075...f54933c
+                            </div>
+<div class="text-xs text-text-secondary-light mt-0.5 flex items-center gap-1">
+<span class="material-icons text-[10px]">schedule</span> 2024/01/26 11:15:58
+                            </div>
+</div>
+<div class="col-span-1 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-red-500 hover:text-red-700 text-xs font-medium px-2 py-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20">
+                                删除 LFS 文件
+                            </button>
+</div>
+</div>
+<div class="group grid grid-cols-12 gap-4 px-6 py-4 border-b border-border-light dark:border-border-dark bg-blue-50/30 dark:bg-blue-900/20 hover:bg-blue-50/50 dark:hover:bg-blue-900/30 transition-colors items-center">
+<div class="col-span-3 flex items-center gap-3 overflow-hidden">
+<input checked="" class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4 bg-white dark:bg-surface-dark dark:border-gray-600 cursor-pointer flex-shrink-0" type="checkbox"/>
+<div class="text-sm font-medium text-text-primary-light dark:text-text-primary-dark truncate" title="training_model_v5.bin">
+                            training_model_v5.bin
+                        </div>
+</div>
+<div class="col-span-2 text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                            18.5 GB
+                        </div>
+<div class="col-span-3 text-sm text-text-primary-light dark:text-text-primary-dark flex items-center gap-1 truncate">
+<span class="material-icons text-gray-400 text-sm">folder</span>
+                            csdn / jupyter-notebook
+                        </div>
+<div class="col-span-3">
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark font-mono truncate" title="90abe0d075755853145c96906a1300f57c167fcc9aad7221239b448abf54933c">
+                                SHA256: 90abe0d075...f54933c
+                            </div>
+<div class="text-xs text-text-secondary-light mt-0.5 flex items-center gap-1">
+<span class="material-icons text-[10px]">schedule</span> 2024/01/26 11:15:58
+                            </div>
+</div>
+<div class="col-span-1 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-red-500 hover:text-red-700 text-xs font-medium px-2 py-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20">
+                                删除 LFS 文件
+                            </button>
+</div>
+</div>
+<div class="group grid grid-cols-12 gap-4 px-6 py-4 border-b border-border-light dark:border-border-dark bg-blue-50/30 dark:bg-blue-900/20 hover:bg-blue-50/50 dark:hover:bg-blue-900/30 transition-colors items-center">
+<div class="col-span-3 flex items-center gap-3 overflow-hidden">
+<input checked="" class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4 bg-white dark:bg-surface-dark dark:border-gray-600 cursor-pointer flex-shrink-0" type="checkbox"/>
+<div class="text-sm font-medium text-text-primary-light dark:text-text-primary-dark truncate" title="training_model_v5.bin">
+                            training_model_v5.bin
+                        </div>
+</div>
+<div class="col-span-2 text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                            18.5 GB
+                        </div>
+<div class="col-span-3 text-sm text-text-primary-light dark:text-text-primary-dark flex items-center gap-1 truncate">
+<span class="material-icons text-gray-400 text-sm">folder</span>
+                            csdn / jupyter-notebook
+                        </div>
+<div class="col-span-3">
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark font-mono truncate" title="90abe0d075755853145c96906a1300f57c167fcc9aad7221239b448abf54933c">
+                                SHA256: 90abe0d075...f54933c
+                            </div>
+<div class="text-xs text-text-secondary-light mt-0.5 flex items-center gap-1">
+<span class="material-icons text-[10px]">schedule</span> 2024/01/26 11:15:58
+                            </div>
+</div>
+<div class="col-span-1 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-red-500 hover:text-red-700 text-xs font-medium px-2 py-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20">
+                                删除 LFS 文件
+                            </button>
+</div>
+</div>
+<div class="group grid grid-cols-12 gap-4 px-6 py-4 border-b border-border-light dark:border-border-dark hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors items-center">
+<div class="col-span-3 flex items-center gap-3 overflow-hidden">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4 bg-white dark:bg-surface-dark dark:border-gray-600 cursor-pointer flex-shrink-0" type="checkbox"/>
+<div class="text-sm font-medium text-text-primary-light dark:text-text-primary-dark truncate" title="training_model_v5.bin">
+                            training_model_v5.bin
+                        </div>
+</div>
+<div class="col-span-2 text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                            18.5 GB
+                        </div>
+<div class="col-span-3 text-sm text-text-primary-light dark:text-text-primary-dark flex items-center gap-1 truncate">
+<span class="material-icons text-gray-400 text-sm">folder</span>
+                            csdn / jupyter-notebook
+                        </div>
+<div class="col-span-3">
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark font-mono truncate" title="90abe0d075755853145c96906a1300f57c167fcc9aad7221239b448abf54933c">
+                                SHA256: 90abe0d075...f54933c
+                            </div>
+<div class="text-xs text-text-secondary-light mt-0.5 flex items-center gap-1">
+<span class="material-icons text-[10px]">schedule</span> 2024/01/26 11:15:58
+                            </div>
+</div>
+<div class="col-span-1 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-red-500 hover:text-red-700 text-xs font-medium px-2 py-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20">
+                                删除 LFS 文件
+                            </button>
+</div>
+</div>
+<div class="group grid grid-cols-12 gap-4 px-6 py-4 border-b border-border-light dark:border-border-dark hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors items-center">
+<div class="col-span-3 flex items-center gap-3 overflow-hidden">
+<input class="rounded border-gray-300 text-primary focus:ring-primary h-4 w-4 bg-white dark:bg-surface-dark dark:border-gray-600 cursor-pointer flex-shrink-0" type="checkbox"/>
+<div class="text-sm font-medium text-text-primary-light dark:text-text-primary-dark truncate" title="training_model_v5.bin">
+                            training_model_v5.bin
+                        </div>
+</div>
+<div class="col-span-2 text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                            18.5 GB
+                        </div>
+<div class="col-span-3 text-sm text-text-primary-light dark:text-text-primary-dark flex items-center gap-1 truncate">
+<span class="material-icons text-gray-400 text-sm">folder</span>
+                            csdn / jupyter-notebook
+                        </div>
+<div class="col-span-3">
+<div class="text-xs text-text-secondary-light dark:text-text-secondary-dark font-mono truncate" title="90abe0d075755853145c96906a1300f57c167fcc9aad7221239b448abf54933c">
+                                SHA256: 90abe0d075...f54933c
+                            </div>
+<div class="text-xs text-text-secondary-light mt-0.5 flex items-center gap-1">
+<span class="material-icons text-[10px]">schedule</span> 2024/01/26 11:15:58
+                            </div>
+</div>
+<div class="col-span-1 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-red-500 hover:text-red-700 text-xs font-medium px-2 py-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20">
+                                删除 LFS 文件
+                            </button>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-border-light dark:border-border-dark flex items-center justify-center">
+<div class="flex items-center space-x-1">
+<button class="p-1 rounded text-text-secondary-light hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 text-xs">
+<span class="material-icons text-sm">chevron_left</span> 上一页
+                        </button>
+<button class="w-7 h-7 flex items-center justify-center rounded bg-black dark:bg-white text-white dark:text-black text-xs font-medium">1</button>
+<button class="w-7 h-7 flex items-center justify-center rounded text-text-secondary-light hover:bg-gray-100 dark:hover:bg-gray-800 text-xs font-medium">2</button>
+<button class="w-7 h-7 flex items-center justify-center rounded text-text-secondary-light hover:bg-gray-100 dark:hover:bg-gray-800 text-xs font-medium">3</button>
+<button class="w-7 h-7 flex items-center justify-center rounded text-text-secondary-light hover:bg-gray-100 dark:hover:bg-gray-800 text-xs font-medium">4</button>
+<span class="text-text-secondary-light text-xs">...</span>
+<button class="w-7 h-7 flex items-center justify-center rounded text-text-secondary-light hover:bg-gray-100 dark:hover:bg-gray-800 text-xs font-medium">100</button>
+<button class="p-1 rounded text-text-secondary-light hover:bg-gray-100 dark:hover:bg-gray-800 text-xs">
+                            下一页 <span class="material-icons text-sm align-middle">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

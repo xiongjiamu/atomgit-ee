@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>社区运营 - 用户积分管理</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1d4ed8",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#0f172a",
+                        "sidebar-light": "#f1f5f9",
+                        "sidebar-dark": "#1e293b"
+                    },
+                    fontFamily: {
+                        display: ["Inter", "Noto Sans SC", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "8px",
+                    },
+                },
+            },
+        };
+    </script>
+<style>
+        body { font-family: 'Inter', 'Noto Sans SC', sans-serif; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<header class="h-14 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-between px-4 sticky top-0 z-50">
+<div class="flex items-center space-x-6">
+<div class="flex items-center space-x-2">
+<div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center text-white font-bold">A</div>
+<span class="font-bold text-lg">这是一个企业名称</span>
+<span class="text-xs bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-500 border border-slate-200 dark:border-slate-700 flex items-center">
+<span class="material-icons text-xs mr-1">business</span>企业版
+                </span>
+</div>
+<div class="relative group">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+<span class="material-icons text-slate-400 text-sm">search</span>
+</span>
+<input class="block w-64 pl-9 pr-12 py-1.5 text-sm bg-slate-50 dark:bg-slate-800 border-none rounded-md focus:ring-2 focus:ring-primary" placeholder="按下 / 快速开启搜索" type="text"/>
+<span class="absolute inset-y-0 right-0 flex items-center pr-3">
+<kbd class="hidden sm:inline-block px-1.5 py-0.5 text-xs font-semibold text-slate-400 border border-slate-300 dark:border-slate-600 rounded"> / </kbd>
+</span>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<button class="bg-black dark:bg-slate-700 text-white px-4 py-1.5 rounded-md text-sm font-medium flex items-center">
+<span class="material-icons text-sm mr-1">add</span>
+                新建
+            </button>
+<button class="text-slate-500 hover:text-slate-700 dark:hover:text-slate-300">
+<span class="material-icons">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center border border-red-200 overflow-hidden">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB16la51RzrLog0UWJAaiK0iAx7Zd_D6OuWjEA_7wduLnPO2SV5HxdB8aGuKF39LwE6n7LdjiESygULl8Wqq8gAGRigXCtHFC20UAxP_Mkcih2lYWtCNroSfxR-Qn57ZGlaWRyNcCZgwaHoaQNqOIF20WtQF9Xu940_bCKUJYk3-Zp-B6DsnxoC4D1cn0GVUTfVNFZ_Ym6dwMqDnh5e-W1ePNtHTUS4wtY8_a7l2w_l-WJu0gAGGmXpJ2pTe3JMuZ859ru-MCtHXmXs"/>
+</div>
+</div>
+</header>
+<nav class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 flex items-center space-x-8 h-12">
+<a class="flex items-center space-x-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm" href="#">
+<span class="material-icons text-lg">home</span><span>概览</span>
+</a>
+<a class="flex items-center space-x-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm" href="#">
+<span class="material-icons text-lg">settings_input_component</span><span>资源中心</span>
+</a>
+<a class="flex items-center space-x-1 text-primary border-b-2 border-primary h-full px-1 text-sm font-medium" href="#">
+<span class="material-icons text-lg">groups</span><span>社区运营</span>
+</a>
+<a class="flex items-center space-x-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm" href="#">
+<span class="material-icons text-lg">account_tree</span><span>流水线</span>
+</a>
+<a class="flex items-center space-x-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm" href="#">
+<span class="material-icons text-lg">security</span><span>安全与合规</span>
+</a>
+<a class="flex items-center space-x-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm" href="#">
+<span class="material-icons text-lg">dashboard</span><span>数据看板</span>
+</a>
+<a class="flex items-center space-x-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm" href="#">
+<span class="material-icons text-lg">receipt_long</span><span>账单管理</span>
+</a>
+<a class="flex items-center space-x-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm" href="#">
+<span class="material-icons text-lg">corporate_fare</span><span>企业管理</span>
+</a>
+</nav>
+<div class="flex flex-1 overflow-hidden">
+<aside class="w-64 bg-sidebar-light dark:bg-sidebar-dark border-r border-slate-200 dark:border-slate-800 overflow-y-auto p-4 flex flex-col space-y-6">
+<div>
+<h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">激励体系</h3>
+<nav class="space-y-1">
+<a class="group flex items-center justify-between px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 rounded-md hover:bg-white dark:hover:bg-slate-700" href="#">
+<span class="flex items-center"><span class="material-icons text-sm mr-3 opacity-60">rule</span> 积分规则</span>
+<span class="bg-slate-200 dark:bg-slate-600 text-slate-600 dark:text-slate-300 py-0.5 px-2 rounded-full text-[10px]">121</span>
+</a>
+<a class="group flex items-center px-3 py-2 text-sm font-medium text-primary bg-blue-50 dark:bg-blue-900/20 rounded-md" href="#">
+<span class="material-icons text-sm mr-3">person</span> 用户积分管理
+                    </a>
+<a class="group flex items-center px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 rounded-md hover:bg-white dark:hover:bg-slate-700" href="#">
+<span class="material-icons text-sm mr-3 opacity-60">assignment_turned_in</span> 兑换履约管理
+                    </a>
+</nav>
+</div>
+<div>
+<h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">荣誉体系</h3>
+<nav class="space-y-1">
+<a class="group flex items-center px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 rounded-md hover:bg-white dark:hover:bg-slate-700" href="#">
+<span class="material-icons text-sm mr-3 opacity-60">military_tech</span> 勋章与任务
+                    </a>
+</nav>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto bg-white dark:bg-slate-900">
+<div class="px-6 py-4 space-y-2">
+<div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-100 dark:border-amber-800/50 rounded-lg p-3 flex items-center justify-between">
+<div class="flex items-center text-sm text-amber-800 dark:text-amber-400">
+<span class="material-icons text-lg mr-2">info</span>
+<span>资源预警：您企业当前存储空间已使用 856GB (85%)，接近包年套餐上限，请关注资源消耗或及时扩容</span>
+</div>
+<button class="text-amber-600 hover:text-amber-800"><span class="material-icons text-lg">close</span></button>
+</div>
+<div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/50 rounded-lg p-3 flex items-center justify-between">
+<div class="flex items-center text-sm text-blue-800 dark:text-blue-400">
+<span class="material-icons text-lg mr-2">campaign</span>
+<span>企业公告：AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉</span>
+</div>
+<button class="text-blue-600 hover:text-blue-800"><span class="material-icons text-lg">close</span></button>
+</div>
+</div>
+<div class="px-6 pt-2 pb-6">
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white">用户积分管理</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-1">查看、调整社区活跃用户的积分资产</p>
+</div>
+<div class="px-6 grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+<div class="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 p-6 rounded-xl">
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-2">全社区总积分</p>
+<p class="text-2xl font-bold">2,485,900</p>
+</div>
+<div class="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 p-6 rounded-xl">
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-2">今日发放</p>
+<p class="text-2xl font-bold text-blue-600">+12,450</p>
+</div>
+<div class="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 p-6 rounded-xl">
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-2">今日兑换</p>
+<p class="text-2xl font-bold text-red-500">-3,200</p>
+</div>
+<div class="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-700 p-6 rounded-xl">
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-2">高净值用户</p>
+<p class="text-2xl font-bold">156</p>
+</div>
+</div>
+<div class="px-6">
+<div class="flex items-center space-x-2 mb-4">
+<div class="relative flex-1">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+<span class="material-icons text-slate-400 text-sm">search</span>
+</span>
+<input class="block w-full pl-9 pr-4 py-2 text-sm bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-md focus:ring-primary focus:border-primary" placeholder="搜索用户名或用户 ID..." type="text"/>
+</div>
+<button class="bg-slate-900 dark:bg-slate-700 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-slate-800">
+                        筛选
+                    </button>
+</div>
+<div class="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden mb-10">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">用户详情</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">当前余额</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">累计获取</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">最近活跃</th>
+<th class="px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">操作</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-primary font-bold">D</div>
+<div>
+<p class="text-sm font-medium">Developer_Alpha</p>
+<p class="text-xs text-slate-400">uid: 889201</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap font-medium text-slate-900 dark:text-white">12,450</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-400">45,000</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400 text-sm">15 分钟前</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<button class="text-sm border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 font-medium">调整积分</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-sm">
+<img alt="User" class="rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAM3VLjidOwxKVJUCCEfKrqDNfWgnGxolnBpFqRfUV8dTp2C3sSXRVY0oxitGFLBP7BKkJq9b-seT80sAgxJt1o64lUVp7y-E5qLC2H_UvoDqdB8aJT6fBKJ1a8HLdW8ylK0XNjbCgQF5lPMsnFKQjyiCTinsWT32l2MgHDbygAC64Yv3KanjONifiRrqKWOkWsHKqkXOK-ACYIGYQ65BvEx7WfBYHySzsjnFaJMXvqlkRHoPNvsAGs0jAWzJWQAkL1gJX9qUILy4lt"/>
+</div>
+<div>
+<p class="text-sm font-medium">CodeWizard_88</p>
+<p class="text-xs text-slate-400">uid: 912042</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap font-medium text-slate-900 dark:text-white">8,920</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-400">22,400</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400 text-sm">2 小时前</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<button class="text-sm border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 font-medium">调整积分</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 whitespace-nowrap">
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold">L</div>
+<div>
+<p class="text-sm font-medium">LinuxMaster</p>
+<p class="text-xs text-slate-400">uid: 772109</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 whitespace-nowrap font-medium text-slate-900 dark:text-white">5,100</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-400">5,100</td>
+<td class="px-6 py-4 whitespace-nowrap text-slate-500 dark:text-slate-400 text-sm">昨天 18:32</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+<button class="text-sm border border-slate-200 dark:border-slate-700 px-3 py-1.5 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700 font-medium">调整积分</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>
