@@ -141,7 +141,7 @@
     
     <!-- Add Rule Modal -->
     <div v-if="showAddRuleModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300" @click="closeModal"></div>
+      <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300" @click="closeModal"></div>
       <div class="bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-border-light dark:border-border-dark w-full max-w-lg overflow-hidden relative z-10 animate-in zoom-in-95 duration-200">
         <div class="px-6 py-4 border-b border-border-light dark:border-border-dark flex items-center justify-between bg-slate-50 dark:bg-slate-800/50">
           <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">

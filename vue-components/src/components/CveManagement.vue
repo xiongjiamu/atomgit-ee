@@ -138,7 +138,7 @@
       leave-to-class="opacity-0 scale-95"
     >
       <div v-if="showProjectsModal" class="fixed inset-0 z-[200] flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-md" @click="showProjectsModal = false"></div>
+        <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-md" @click="showProjectsModal = false"></div>
         <div class="relative w-full max-w-md bg-white dark:bg-surface-dark rounded-3xl shadow-high-end border border-slate-200 dark:border-slate-800 overflow-hidden transform-gpu flex flex-col max-h-[70vh]">
           <!-- Modal Header -->
           <div class="p-8 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between shrink-0 bg-slate-50/30 dark:bg-slate-900/30">

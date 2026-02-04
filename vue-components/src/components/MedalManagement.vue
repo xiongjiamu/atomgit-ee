@@ -80,9 +80,11 @@
       </button>
     </div>
 
+
     <!-- Create Medal Modal -->
-    <div v-if="showCreateModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-in fade-in duration-300">
-      <div class="bg-white dark:bg-surface-dark w-full max-w-4xl rounded-xl shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300 max-h-[90vh]">
+    <div v-if="showCreateModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 animate-in fade-in duration-300">
+      <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" @click="closeModal"></div>
+      <div class="bg-white dark:bg-surface-dark w-full max-w-4xl rounded-xl shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-300 max-h-[90vh] relative z-10">
         <!-- Modal Header -->
         <div class="px-10 py-8 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
           <div>

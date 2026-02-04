@@ -163,7 +163,7 @@
     
     <!-- Delete Confirmation Modal -->
     <div v-if="showDeleteModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300" @click="showDeleteModal = false"></div>
+      <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300" @click="showDeleteModal = false"></div>
       <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-border-light dark:border-border-dark w-full max-w-md overflow-hidden relative z-10 animate-in zoom-in-95 duration-200">
         <div class="p-6">
           <div class="flex items-center gap-3 mb-4 text-rose-500">
