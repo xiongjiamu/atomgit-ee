@@ -24,13 +24,22 @@
       <!-- Alert Banners -->
       <div class="grid grid-cols-2 gap-8">
         <AlertBanner
-          v-for="(alert, index) in alerts"
-          :key="index"
-          :type="alert.type"
-          :title="alert.title"
-          :message="alert.message"
-          @dismiss="handleAlertDismiss(index)"
-        />
+          v-model="showResourceAlert"
+          type="warning"
+          title="资源告警"
+          icon="info"
+        >
+          您当前的存储使用量为 856GB (85%), 接近套餐限额。建议您尽快清理冗余数据或进行服务扩容。
+        </AlertBanner>
+
+        <AlertBanner
+          v-model="showMaintenanceAlert"
+          type="info"
+          title="系统维护公告"
+          icon="info"
+        >
+          AtomGit 将于本周五 22:00 进行例行更新维护, 预计耗时 30 分钟。期间 CI/CD 服务可能会出现短暂中断, 请提前安排任务。
+        </AlertBanner>
       </div>
 
       <!-- Seat Usage -->
@@ -146,18 +155,9 @@ export default {
       dataView: null,
       resourceCategory: 'issues',
       pipelineCategory: 'logs',
-      alerts: [
-        {
-          type: 'warning',
-          title: '资源告警',
-          message: '您当前的存储使用量为 856GB (85%),接近套餐限额。建议您尽快清理冗余数据或进行服务扩容。'
-        },
-        {
-          type: 'info',
-          title: '系统维护公告',
-          message: 'AtomGit 将于本周五 22:00 进行例行更新维护,预计耗时 30 分钟。期间 CI/CD 服务可能会出现短暂中断,请提前安排任务。'
-        }
-      ],
+      showResourceAlert: true,
+      showMaintenanceAlert: true,
+
       seatData: {
         used: 428,
         total: 500,
@@ -281,9 +281,7 @@ export default {
       this.activeNav = navId
       console.log('Nav changed to:', navId)
     },
-    handleAlertDismiss(index) {
-      this.alerts.splice(index, 1)
-    },
+
     handleManageSeats() {
       console.log('Manage seats')
     },

@@ -10,6 +10,7 @@
     <div
       v-if="show"
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm"
+      style="min-height: 100vh; min-height: 100dvh; margin: 0 !important;"
       @click.self="$emit('close')"
     >
       <Transition
@@ -51,7 +52,7 @@
                 <input
                   v-model="form.identifier"
                   type="text"
-                  placeholder="输入 GitCode 用户名或邮箱地址"
+                  placeholder="输入 AtomGit 用户名或邮箱地址"
                   class="w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-bold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                 />
               </div>

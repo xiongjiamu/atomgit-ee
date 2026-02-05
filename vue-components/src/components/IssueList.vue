@@ -11,7 +11,6 @@
         placeholder="搜索 Issues..."
       />
     </div>
-
     <!-- Filter Toolbar -->
     <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4 border-b border-border-light dark:border-border-dark pb-4">
       <!-- Status Tabs -->
@@ -152,10 +151,16 @@
 </template>
 
 <script>
+import AlertBanner from './AlertBanner.vue'
+
 export default {
   name: 'IssueList',
+  components: {
+    AlertBanner
+  },
   data() {
     return {
+      showAlert: true,
       activeTab: 'open',
       tabs: [
         { id: 'open', label: '开启中', count: 65 },

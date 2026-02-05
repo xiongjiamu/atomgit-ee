@@ -180,7 +180,7 @@ export default {
         },
         {
           id: 3,
-          owner: 'gitcode-dev',
+          owner: 'AtomGit-dev',
           name: 'oh-my-zsh',
           description: 'A delightful community-driven (with 2,100+ contributors) framework for managing your zsh configuration.',
           visibility: 'private',
@@ -195,7 +195,7 @@ export default {
         },
         {
           id: 4,
-          owner: 'gitcode-dev',
+          owner: 'AtomGit-dev',
           name: 'CVE-2024-21413-Microsoft-Outlook-Remote-Code-Execution-Vulnerability',
           description: 'Microsoft Outlook 远程代码执行漏洞分析与复现环境。',
           visibility: 'private',
@@ -210,7 +210,7 @@ export default {
         },
         {
           id: 5,
-          owner: 'gitcode-dev',
+          owner: 'AtomGit-dev',
           name: 'UI设计',
           description: 'AtomGit 企业版设计方案与 UI 规范。',
           visibility: 'private',

@@ -185,15 +185,16 @@
             </ul>
           </div>
 
-          <div class="bg-amber-50 dark:bg-amber-900/20 rounded-xl p-4 border border-amber-100 dark:border-amber-900/30 mb-6">
-            <h4 class="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-              <span class="material-icons-round text-sm">security</span>
-              重要安全提示 (Repo Filter)
-            </h4>
-            <p class="text-xs text-amber-800 dark:text-amber-200 leading-relaxed">
-              直接删除 LFS 指针文件可能会导致该项目在后续拉取历史版本时报错。为了确保仓库健康，建议在删除后使用 <span class="font-bold">Repo Filter</span> 或 <span class="font-bold">BFG Repo-Cleaner</span> 清理所有分支的历史提交记录。
-            </p>
-          </div>
+          <AlertBanner
+            v-model="showSecurityAlert"
+            type="warning"
+            title="重要安全提示 (Repo Filter)"
+            icon="security"
+            :dismissible="false"
+            class="mb-6"
+          >
+             <p class="text-xs leading-relaxed">直接删除 LFS 指针文件可能会导致该项目在后续拉取历史版本时报错。为了确保仓库健康，建议在删除后使用 <span class="font-bold">Repo Filter</span> 或 <span class="font-bold">BFG Repo-Cleaner</span> 清理所有分支的历史提交记录。</p>
+          </AlertBanner>
 
           <div class="flex gap-3">
             <button 
@@ -218,10 +219,16 @@
 </template>
 
 <script>
+import AlertBanner from './AlertBanner.vue'
+
 export default {
   name: 'LfsList',
+  components: {
+    AlertBanner
+  },
   data() {
     return {
+      showSecurityAlert: true,
       searchQuery: '',
       dimensionFilters: ['全部组织', '全部项目'],
       selectedIds: [],

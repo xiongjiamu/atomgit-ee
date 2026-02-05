@@ -15,18 +15,14 @@
     </div>
 
     <!-- Alert Banners (Optional, keeping consistent with design) -->
-    <div class="grid grid-cols-1 gap-4">
-      <div class="bg-amber-50/50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20 rounded-xl p-4 flex items-center justify-between">
-        <div class="flex items-center text-sm text-amber-700 dark:text-amber-400">
-          <div class="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center mr-3">
-            <span class="material-icons-round text-sm">warning</span>
-          </div>
-          <span class="font-bold mr-2">异常提醒：</span>
-          <span class="font-medium">当前有 3 条兑换记录第三方接口返回异常，请及时处理。</span>
-        </div>
-        <button class="text-amber-400 hover:text-amber-600 transition-colors"><span class="material-icons-round">close</span></button>
-      </div>
-    </div>
+    <AlertBanner
+      v-model="showErrorAlert"
+      type="warning"
+      title="异常提醒"
+      icon="warning"
+    >
+      当前有 3 条兑换记录第三方接口返回异常，请及时处理。
+    </AlertBanner>
 
     <!-- Filter Bar -->
     <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm">
@@ -130,10 +126,16 @@
 </template>
 
 <script>
+import AlertBanner from './AlertBanner.vue'
+
 export default {
   name: 'FulfillmentManagement',
+  components: {
+    AlertBanner
+  },
   data() {
     return {
+      showErrorAlert: true,
       orders: [
         {
           id: 'REDEEM_99012',

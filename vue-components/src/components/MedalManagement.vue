@@ -18,18 +18,14 @@
     </div>
 
     <!-- Alert Banners -->
-    <div class="grid grid-cols-1 gap-4">
-      <div class="bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/20 rounded-xl p-4 flex items-center justify-between">
-        <div class="flex items-center text-sm text-blue-700 dark:text-blue-400">
-          <div class="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mr-3">
-            <span class="material-icons-round text-sm">info</span>
-          </div>
-          <span class="font-bold mr-2">公告：</span>
-          <span class="font-medium">AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断。</span>
-        </div>
-        <button class="text-blue-400 hover:text-blue-600 transition-colors"><span class="material-icons-round">close</span></button>
-      </div>
-    </div>
+    <AlertBanner
+      v-model="showAlert"
+      type="info"
+      title="公告"
+      icon="info"
+    >
+      AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断。
+    </AlertBanner>
 
     <!-- Medal Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -38,8 +34,18 @@
         :key="medal.id"
         class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all relative group overflow-hidden"
       >
-        <div class="absolute top-4 right-4 z-10">
+        <div class="absolute top-4 right-4 z-10 flex items-center gap-2">
           <span v-if="medal.auto" class="px-2 py-0.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-[10px] font-black rounded-lg border border-blue-100 dark:border-blue-800 uppercase tracking-wider">Auto</span>
+          <span 
+            :class="[
+              'px-2 py-0.5 text-[10px] font-black rounded-lg uppercase tracking-wider',
+              medal.status === 'online' 
+                ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800' 
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700'
+            ]"
+          >
+            {{ medal.status === 'online' ? '已上线' : '已下线' }}
+          </span>
         </div>
         
         <!-- Background Decoration -->
@@ -52,7 +58,7 @@
           <h3 class="text-lg font-black text-slate-900 dark:text-white mb-1 tracking-tight">{{ medal.name }}</h3>
           <p class="text-slate-400 dark:text-slate-500 text-xs mb-6 font-medium leading-relaxed">{{ medal.description }}</p>
           
-          <div class="w-full space-y-2">
+          <div class="w-full space-y-2 mb-4">
             <div class="flex justify-between items-center text-[11px] font-bold">
               <span class="text-slate-400 dark:text-slate-500">获取人数</span>
               <span class="text-slate-900 dark:text-white">{{ medal.count }}</span>
@@ -64,6 +70,31 @@
                 :style="{ width: medal.progress + '%' }"
               ></div>
             </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="w-full flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <button 
+              @click="editMedal(medal)"
+              class="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-all"
+              title="编辑勋章"
+            >
+              <span class="material-icons-round text-sm">edit</span>
+              <span>编辑</span>
+            </button>
+            <button 
+              @click="toggleMedalStatus(medal)"
+              :class="[
+                'flex-1 flex items-center justify-center gap-1 px-3 py-2 text-xs font-bold rounded-lg transition-all',
+                medal.status === 'online'
+                  ? 'text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700'
+                  : 'text-white bg-emerald-500 hover:bg-emerald-600'
+              ]"
+              :title="medal.status === 'online' ? '下线勋章' : '上线勋章'"
+            >
+              <span class="material-icons-round text-sm">{{ medal.status === 'online' ? 'visibility_off' : 'visibility' }}</span>
+              <span>{{ medal.status === 'online' ? '下线' : '上线' }}</span>
+            </button>
           </div>
         </div>
       </div>
@@ -330,10 +361,16 @@
 </template>
 
 <script>
+import AlertBanner from './AlertBanner.vue'
+
 export default {
   name: 'MedalManagement',
+  components: {
+    AlertBanner
+  },
   data() {
     return {
+      showAlert: true,
       showCreateModal: false,
       currentStep: 1,
       newMedal: {
@@ -351,7 +388,8 @@ export default {
           progressColor: 'bg-emerald-500',
           bgColor: 'bg-emerald-500',
           glowColor: 'bg-emerald-500',
-          auto: true
+          auto: true,
+          status: 'online'
         },
         {
           id: 2,
@@ -363,7 +401,8 @@ export default {
           progressColor: 'bg-blue-500',
           bgColor: 'bg-blue-500',
           glowColor: 'bg-blue-500',
-          auto: true
+          auto: true,
+          status: 'online'
         },
         {
           id: 3,
@@ -375,7 +414,8 @@ export default {
           progressColor: 'bg-purple-500',
           bgColor: 'bg-purple-500',
           glowColor: 'bg-purple-500',
-          auto: false
+          auto: false,
+          status: 'offline'
         },
         {
           id: 4,
@@ -387,7 +427,8 @@ export default {
           progressColor: 'bg-amber-500',
           bgColor: 'bg-amber-500',
           glowColor: 'bg-amber-500',
-          auto: true
+          auto: true,
+          status: 'online'
         }
       ]
     }
@@ -405,6 +446,23 @@ export default {
       this.showCreateModal = false
       this.currentStep = 1
       this.newMedal = { name: '', description: '' }
+    },
+    editMedal(medal) {
+      // Open edit modal with medal data
+      console.log('Editing medal:', medal.name)
+      this.newMedal = {
+        name: medal.name,
+        description: medal.description
+      }
+      this.showCreateModal = true
+      // In a real app, you would set an editing mode and populate all fields
+    },
+    toggleMedalStatus(medal) {
+      const newStatus = medal.status === 'online' ? 'offline' : 'online'
+      medal.status = newStatus
+      const action = newStatus === 'online' ? '上线' : '下线'
+      console.log(`勋章 "${medal.name}" 已${action}`)
+      // In a real app, this would call an API to update the status
     }
   }
 }

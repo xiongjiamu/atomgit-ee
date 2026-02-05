@@ -15,17 +15,14 @@
     </div>
 
     <!-- Alert Banners -->
-    <div class="space-y-3">
-      <div class="bg-amber-50/50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20 rounded-xl p-4 flex items-start">
-        <span class="material-icons-round text-amber-500 text-lg mt-0.5 mr-3">info</span>
-        <div class="flex-1 text-sm text-amber-800 dark:text-amber-200">
-          <span class="font-bold mr-1">资源预警:</span> 您企业当前的存储空间已使用 856GB (85%), 接近包年套餐上限，请关注资源消耗或及时扩容
-        </div>
-        <button class="text-amber-400 hover:text-amber-600 transition-colors">
-          <span class="material-icons-round text-lg">close</span>
-        </button>
-      </div>
-    </div>
+    <AlertBanner
+      v-model="showWarningAlert"
+      type="warning"
+      title="资源预警"
+      icon="info"
+    >
+      您企业当前的存储空间已使用 856GB (85%), 接近包年套餐上限，请关注资源消耗或及时扩容
+    </AlertBanner>
 
     <!-- Hero Section: Knowledge Base -->
     <div class="bg-gradient-to-r from-slate-900 to-slate-800 dark:from-black dark:to-slate-900 rounded-xl p-10 text-white relative overflow-hidden shadow-2xl border border-slate-700/50 group hover:scale-[1.005] transition-transform">
@@ -295,11 +292,13 @@
 
 <script>
 import ViewSelector from './ViewSelector.vue'
+import AlertBanner from './AlertBanner.vue'
 
 export default {
   name: 'TrustedGovernance',
   components: {
-    ViewSelector
+    ViewSelector,
+    AlertBanner
   },
   props: {
     selectedView: {
@@ -309,6 +308,7 @@ export default {
   },
   data() {
     return {
+      showWarningAlert: true,
       showLLMModal: false,
       showKey: false,
       selectedModel: 'atomgpt',

@@ -12,24 +12,25 @@
 
     <!-- Alert Banners -->
     <div class="space-y-3">
-      <div class="bg-amber-50/50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20 rounded-xl p-4 flex items-start">
-        <span class="material-icons-round text-amber-500 text-lg mt-0.5 mr-3">info</span>
-        <div class="flex-1 text-sm text-amber-800 dark:text-amber-200">
-          <span class="font-bold mr-1">资源预警:</span> 您企业当前的存储空间已使用 856GB (85%), 接近包年套餐上限，请关注资源消耗或及时扩容
-        </div>
-        <button class="text-amber-400 hover:text-amber-600 transition-colors">
-          <span class="material-icons-round text-lg">close</span>
-        </button>
-      </div>
-      <div class="bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/20 rounded-xl p-4 flex items-start">
-        <span class="material-icons-round text-blue-600 dark:text-blue-400 text-lg mt-0.5 mr-3">campaign</span>
-        <div class="flex-1 text-sm text-blue-800 dark:text-blue-200">
-          <span class="font-bold mr-1">企业公告:</span> AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉
-        </div>
-        <button class="text-blue-400 hover:text-blue-600 transition-colors">
-          <span class="material-icons-round text-lg">close</span>
-        </button>
-      </div>
+      <!-- Info Banner -->
+      <AlertBanner
+        v-model="showInfoBanner"
+        type="info"
+        title="数据说明"
+        icon="info"
+        :dismissible="false"
+      >
+        以下展示近 30 天内所有 CI/CD 流水线的执行记录，包括成功、失败、取消等状态。
+      </AlertBanner>
+      
+      <AlertBanner
+        v-model="showAnnouncementAlert"
+        type="info"
+        title="企业公告"
+        icon="campaign"
+      >
+        AtomGit 将于本周五 22:00 进行版本升级，届时 CI/CD 服务可能会有短时闪断，请知悉
+      </AlertBanner>
     </div>
 
     <!-- Stats Grid -->
@@ -140,11 +141,13 @@
 
 <script>
 import ViewSelector from './ViewSelector.vue'
+import AlertBanner from './AlertBanner.vue'
 
 export default {
   name: 'ExecutionRecord',
   components: {
-    ViewSelector
+    ViewSelector,
+    AlertBanner
   },
   props: {
     selectedView: {
@@ -154,6 +157,8 @@ export default {
   },
   data() {
     return {
+      showInfoBanner: true,
+      showAnnouncementAlert: true,
       stats: [
         { 
           label: '今日成功', 

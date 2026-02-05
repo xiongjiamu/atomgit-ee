@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-10 animate-in fade-in slide-in-from-bottom-2 duration-500">
+  <div class="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
     <!-- Global Alerts -->
     <GlobalAlerts page-name="member-management" />
 
@@ -27,44 +27,40 @@
     </div>
 
     <!-- Search and Filter Section -->
-    <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
-      <div class="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
-        <!-- Search Input -->
-        <div class="flex-1 w-full lg:w-auto">
-          <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-              <span class="material-icons-round text-slate-400 text-xl">search</span>
-            </div>
-            <input
-              v-model="searchQuery"
-              type="text"
-              class="focus:ring-primary focus:border-primary block w-full pl-10 pr-4 py-3 sm:text-sm border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-white rounded-lg transition-all shadow-sm placeholder-slate-400"
-              placeholder="搜索用户名、昵称或企业别名..."
-            />
-            <button
-              v-if="searchQuery"
-              @click="searchQuery = ''"
-              class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
-            >
-              <span class="material-icons-round text-lg">close</span>
-            </button>
-          </div>
-        </div>
+    <div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 shadow-sm flex flex-col md:flex-row gap-3 items-center">
+      <!-- Search Input -->
+      <div class="relative flex-1 group w-full">
+        <span class="material-icons-round absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+        <input 
+          v-model="searchQuery"
+          type="text" 
+          class="w-full pl-12 pr-10 py-2.5 bg-slate-50 dark:bg-slate-800/50 border-none rounded-xl text-sm font-bold text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 transition-all placeholder-slate-400"
+          placeholder="搜索用户名、昵称或企业别名..."
+        />
+        <button
+          v-if="searchQuery"
+          @click="searchQuery = ''"
+          class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+        >
+          <span class="material-icons-round text-lg">close</span>
+        </button>
+      </div>
 
-        <!-- Role Filter -->
-        <div class="flex items-center gap-3">
-          <span class="text-sm font-bold text-slate-500 dark:text-slate-400 whitespace-nowrap">角色筛选：</span>
-          <div class="relative group">
-            <select
-              v-model="selectedRole"
-              class="appearance-none bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white py-3 pl-4 pr-10 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all shadow-sm cursor-pointer min-w-[160px]"
-            >
-              <option value="">全部角色</option>
-              <option v-for="role in availableRoles" :key="role" :value="role">{{ role }}</option>
-            </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-400">
-              <span class="material-icons-round text-lg">expand_more</span>
-            </div>
+      <!-- Role Filter -->
+      <div class="flex items-center gap-2">
+        <div class="relative group">
+          <select
+            v-model="selectedRole"
+            class="appearance-none bg-slate-50 dark:bg-slate-800/50 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 text-slate-900 dark:text-white py-2.5 pl-10 pr-10 rounded-xl text-[10px] font-black uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all shadow-sm cursor-pointer min-w-[160px]"
+          >
+            <option value="">全部角色 · All Roles</option>
+            <option v-for="role in availableRoles" :key="role" :value="role">{{ role }}</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 left-4 flex items-center text-slate-400 group-hover:text-primary transition-colors">
+            <span class="material-icons-round text-lg">filter_list</span>
+          </div>
+          <div class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-slate-400">
+            <span class="material-icons-round text-lg">expand_more</span>
           </div>
         </div>
       </div>

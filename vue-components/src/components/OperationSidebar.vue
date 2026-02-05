@@ -83,6 +83,7 @@ export default {
       activeItems: [
         { id: 'points', name: '积分规则', icon: 'flag', count: 121 },
         { id: 'user_points', name: '用户积分管理', icon: 'person_outline' },
+        { id: 'gift_management', name: '兑换礼品管理', icon: 'redeem', count: 38 },
         { id: 'fulfillment', name: '兑换履约管理', icon: 'inventory_2' }
       ],
       honorItems: [

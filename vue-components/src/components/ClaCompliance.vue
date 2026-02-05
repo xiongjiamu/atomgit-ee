@@ -20,14 +20,15 @@
     </div>
 
     <!-- Info Banner -->
-    <div class="bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/20 rounded-xl p-4 flex items-start group relative overflow-hidden">
-      <div class="absolute -right-4 -top-4 w-24 h-24 bg-blue-500/5 blur-2xl rounded-full"></div>
-      <span class="material-icons-round text-blue-500 text-lg mt-0.5 mr-3">gpp_good</span>
-      <div class="flex-1 text-sm text-blue-800 dark:text-blue-200 relative z-10">
-        <span class="font-black mr-1 uppercase tracking-tighter">合规提示:</span> 
-        管理企业内部及开源项目的 CLA 签署与 DCO 认证，有效降低知识产权合规法律风险。
-      </div>
-    </div>
+    <AlertBanner
+      v-model="showInfoBanner"
+      type="info"
+      title="合规提示"
+      icon="gpp_good"
+      :dismissible="false"
+    >
+      管理企业内部及开源项目的 CLA 签署与 DCO 认证，有效降低知识产权合规法律风险。
+    </AlertBanner>
 
     <!-- Toggle Cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -150,11 +151,13 @@
 
 <script>
 import ViewSelector from './ViewSelector.vue'
+import AlertBanner from './AlertBanner.vue'
 
 export default {
   name: 'ClaCompliance',
   components: {
-    ViewSelector
+    ViewSelector,
+    AlertBanner
   },
   props: {
     selectedView: {
@@ -164,6 +167,7 @@ export default {
   },
   data() {
     return {
+      showInfoBanner: true,
       claEnabled: true,
       dcoEnabled: false,
       internalSelectedView: this.selectedView || { id: 'enterprise', label: '全企业视图 (Enterprise)', orgId: 'enterprise' },

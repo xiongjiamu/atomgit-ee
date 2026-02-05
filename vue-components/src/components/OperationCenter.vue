@@ -16,6 +16,9 @@
         <template v-else-if="currentCategory === 'user_points'">
           <UserPoints />
         </template>
+        <template v-else-if="currentCategory === 'gift_management'">
+          <GiftManagement />
+        </template>
         <template v-else-if="currentCategory === 'fulfillment'">
           <FulfillmentManagement />
         </template>
@@ -54,6 +57,7 @@
 import OperationSidebar from './OperationSidebar.vue'
 import PointRules from './PointRules.vue'
 import UserPoints from './UserPoints.vue'
+import GiftManagement from './GiftManagement.vue'
 import FulfillmentManagement from './FulfillmentManagement.vue'
 import MedalManagement from './MedalManagement.vue'
 
@@ -63,6 +67,7 @@ export default {
     OperationSidebar,
     PointRules,
     UserPoints,
+    GiftManagement,
     FulfillmentManagement,
     MedalManagement
   },
