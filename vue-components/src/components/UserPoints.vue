@@ -3,7 +3,7 @@
     <!-- Header Area -->
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
       <div>
-        <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">用户积分管理</h1>
+        <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">用户积分管理</h1>
         <p class="text-slate-500 dark:text-slate-400 mt-2 font-medium">查看、调整社区活跃用户的积分资产，激励企业内部开源贡献。</p>
       </div>
       <div class="flex items-center gap-3">

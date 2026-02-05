@@ -3,7 +3,7 @@
     <!-- Header Actions -->
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div>
-        <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">兑换礼品管理</h1>
+        <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">兑换礼品管理</h1>
         <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">管理第三方服务商礼品和自定义礼品的兑换配置</p>
       </div>
       <div class="flex items-center gap-3">

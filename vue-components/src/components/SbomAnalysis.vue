@@ -6,7 +6,7 @@
         <div class="flex items-center gap-4">
           <ViewSelector :selected-view="selectedView" @change="$emit('view-change', $event)" />
           <div class="w-px h-8 bg-slate-200 dark:bg-slate-800"></div>
-          <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight" style="margin-bottom:0">软件成分分析 (SBOM)</h1>
+          <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight" style="margin-bottom:0">软件成分分析 (SBOM)</h1>
         </div>
         <p class="text-sm text-slate-500 dark:text-slate-400 font-medium max-w-2xl">
           基于 SPDX 标准生成的软件物料清单，透明化展现第三方依赖关系与潜在安全水位。

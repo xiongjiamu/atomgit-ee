@@ -3,7 +3,7 @@
     <!-- Header -->
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
       <div>
-        <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">兑换履约管理</h1>
+        <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">兑换履约管理</h1>
         <p class="text-slate-500 dark:text-slate-400 mt-2 font-medium">第三方履约状态监控及记录一致性对账</p>
       </div>
       <div class="flex items-center gap-3">

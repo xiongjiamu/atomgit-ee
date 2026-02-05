@@ -15,7 +15,7 @@
             <span class="material-icons-round text-[10px]">chevron_right</span>
             <span>发票管理</span>
           </nav>
-          <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">发票抬头设置</h1>
+          <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">发票抬头设置</h1>
         </div>
       </div>
       <button 

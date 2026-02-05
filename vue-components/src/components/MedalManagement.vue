@@ -3,7 +3,7 @@
     <!-- Header -->
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
       <div>
-        <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">荣誉勋章体系</h1>
+        <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">荣誉勋章体系</h1>
         <p class="text-slate-500 dark:text-slate-400 mt-2 font-medium">设计成就任务，提升开发者的社区归属感与活跃度。</p>
       </div>
       <div class="flex items-center gap-3">

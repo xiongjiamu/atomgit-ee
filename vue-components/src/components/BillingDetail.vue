@@ -16,7 +16,7 @@
     <!-- Page Header -->
     <div class="flex items-center justify-between">
       <div>
-        <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{{ billDate }}账单详情</h1>
+        <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">{{ billDate }}账单详情</h1>
         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">Billing Detail · Resource Usage Report</p>
       </div>
       <button class="bg-slate-900 dark:bg-primary text-white px-8 py-4 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl transition-all hover:-translate-y-1 active:scale-95 flex items-center gap-3">

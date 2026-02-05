@@ -6,7 +6,7 @@
     <div class="space-y-6">
       <!-- Header -->
       <div class="flex items-center justify-between">
-        <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">企业 Token 管理</h1>
+        <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">企业 Token 管理</h1>
         <button 
           class="px-5 py-2.5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-lg text-sm font-black flex items-center gap-2 hover:bg-slate-800 dark:hover:bg-slate-100 transition-all shadow-md active:scale-95"
           @click="openCreateModal"

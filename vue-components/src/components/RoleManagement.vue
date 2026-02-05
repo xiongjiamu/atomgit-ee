@@ -6,7 +6,7 @@
     <!-- Header -->
     <div class="flex items-center justify-between px-2">
       <div>
-        <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">权限与角色</h1>
+        <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">权限与角色</h1>
         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">Roles & Permissions · Access Control</p>
       </div>
       <button 

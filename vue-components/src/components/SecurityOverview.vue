@@ -8,7 +8,7 @@
           <ViewSelector :selected-view="selectedView" @change="$emit('view-change', $event)" />
           <div class="w-px h-8 bg-slate-200 dark:bg-slate-800"></div>
           <div>
-            <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight" style="margin-bottom:0">企业安全风险总览</h1>
+            <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight" style="margin-bottom:0">企业安全风险总览</h1>
           </div>
         </div>
       </div>

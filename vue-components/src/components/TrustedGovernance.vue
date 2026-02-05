@@ -6,7 +6,7 @@
         <div class="flex items-center gap-4">
           <ViewSelector :selected-view="selectedView" @change="$emit('view-change', $event)" />
           <div class="w-px h-8 bg-slate-200 dark:bg-slate-800"></div>
-          <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight" style="margin-bottom:0">开源可信治理服务</h1>
+          <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight" style="margin-bottom:0">开源可信治理服务</h1>
         </div>
         <p class="text-sm text-slate-500 dark:text-slate-400 font-medium max-w-2xl">
           配置并监控 AtomGit 底层安全引擎，通过全球开源治理知识库，为企业代码资产提供全链路供应链防护。

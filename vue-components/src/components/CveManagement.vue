@@ -7,7 +7,7 @@
           <ViewSelector :selected-view="internalSelectedView" @change="handleViewChange" />
           <div class="w-px h-8 bg-slate-200 dark:bg-slate-800"></div>
           <div>
-            <h1 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight" style="margin-bottom: 0px;">漏洞管理 (CVE)</h1>
+            <h1 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight" style="margin-bottom: 0px;">漏洞管理 (CVE)</h1>
           </div>
         </div>
       </div>

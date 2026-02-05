@@ -15,7 +15,7 @@
 
     <div class="flex flex-col xl:flex-row xl:items-end justify-between gap-6 mb-8">
       <div>
-        <h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">生产与效能指标下钻分析</h1>
+        <h1 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">生产与效能指标下钻分析</h1>
         <p class="mt-2 text-slate-500 dark:text-slate-400 max-w-2xl">
           深入分析代码提交趋势、Issue 处理效率及 PR 合并情况。数据每日更新。
         </p>

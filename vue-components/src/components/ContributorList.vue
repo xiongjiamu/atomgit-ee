@@ -13,7 +13,7 @@
       
       <div class="flex flex-col xl:flex-row xl:items-end justify-between gap-6">
       <div class="space-y-2">
-        <h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">全部核心贡献者列表</h1>
+        <h1 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">全部核心贡献者列表</h1>
         <p class="text-slate-500 dark:text-slate-400 max-w-2xl">
           查看社区贡献者的详细排名与各项指标数据，基于代码提交、Issue 处理及代码评审的综合评估。
         </p>
