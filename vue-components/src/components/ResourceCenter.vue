@@ -55,6 +55,19 @@
         <template v-else-if="currentCategory === 'warning'">
           <ResourceStats />
         </template>
+        <template v-else-if="currentCategory === 'cann_image'">
+          <DevImageList />
+        </template>
+        <template v-else-if="currentCategory === 'cann_template'">
+          <DevTemplateList @open-whitelist="handleOpenWhitelist" />
+        </template>
+        <template v-else-if="currentCategory === 'cann_whitelist'">
+          <DevWhitelistList
+            :template-name="selectedTemplate.name"
+            :template-id="selectedTemplate.tplId"
+            @back="currentCategory = 'cann_template'"
+          />
+        </template>
       </div>
     </main>
   </div>
@@ -71,6 +84,9 @@ import MilestoneList from './MilestoneList.vue'
 import LfsList from './LfsList.vue'
 import ResourceStats from './ResourceStats.vue'
 import AlertBanner from './AlertBanner.vue'
+import DevImageList from './DevImageList.vue'
+import DevTemplateList from './DevTemplateList.vue'
+import DevWhitelistList from './DevWhitelistList.vue'
 
 export default {
   name: 'ResourceCenter',
@@ -84,7 +100,10 @@ export default {
     MilestoneList,
     LfsList,
     ResourceStats,
-    AlertBanner
+    AlertBanner,
+    DevImageList,
+    DevTemplateList,
+    DevWhitelistList
   },
   props: {
     initialCategory: {
@@ -97,7 +116,8 @@ export default {
       currentCategory: this.initialCategory,
       selectedKanban: null,
       showResourceAlert: true,
-      showSystemAlert: true
+      showSystemAlert: true,
+      selectedTemplate: { name: 'AI Agent 编程实战环境模板', tplId: 'tpl-3a2b6457' }
     }
   },
   watch: {
@@ -123,6 +143,10 @@ export default {
     },
     handleSelectKanban(kanban) {
       this.selectedKanban = kanban
+    },
+    handleOpenWhitelist(template) {
+      this.selectedTemplate = { name: template.name, tplId: template.tplId }
+      this.currentCategory = 'cann_whitelist'
     }
   }
 }
