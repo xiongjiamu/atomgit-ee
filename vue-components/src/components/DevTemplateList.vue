@@ -166,46 +166,37 @@
     </div>
 
     <!-- Add / Edit Template Modal -->
-    <Teleport to="body">
-      <Transition
-        enter-active-class="transition ease-out duration-200"
-        enter-from-class="opacity-0"
-        enter-to-class="opacity-100"
-        leave-active-class="transition ease-in duration-150"
-        leave-from-class="opacity-100"
-        leave-to-class="opacity-0"
-      >
-        <div v-if="showModal" class="fixed z-[9999] inset-0 overflow-y-auto" role="dialog" aria-modal="true">
-          <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm" @click="showModal = false"></div>
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div class="inline-block align-bottom bg-white dark:bg-surface-dark rounded-xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full border border-gray-200 dark:border-gray-700 flex flex-col max-h-[90vh]">
-              <!-- Header -->
-              <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-[#161B22] shrink-0">
-                <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ editingId ? '编辑模板' : '添加模板' }}</h3>
-                <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" @click="showModal = false">
-                  <span class="material-icons-round">close</span>
-                </button>
-              </div>
+    <div v-if="showModal" class="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true">
+      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity" @click="showModal = false"></div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom bg-white dark:bg-surface-dark rounded-xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full border border-gray-200 dark:border-gray-700 flex flex-col max-h-[90vh]">
+          <!-- Header -->
+          <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-[#161B22] shrink-0">
+            <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ editingId ? '编辑模板' : '添加模板' }}</h3>
+            <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors" @click="showModal = false">
+              <span class="material-icons-round">close</span>
+            </button>
+          </div>
 
-              <!-- Stepper -->
-              <div class="px-6 pt-4 shrink-0">
-                <div class="flex items-center gap-2">
-                  <button
-                    v-for="(s, i) in steps"
-                    :key="s.key"
-                    @click="activeStep = i"
-                    class="flex items-center gap-2 text-xs font-black transition-colors"
-                  >
-                    <span
-                      class="w-6 h-6 rounded-full flex items-center justify-center text-[11px]"
-                      :class="activeStep >= i ? 'bg-primary text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-500'"
-                    >{{ i + 1 }}</span>
-                    <span :class="activeStep === i ? 'text-slate-900 dark:text-white' : 'text-slate-400'">{{ s.label }}</span>
-                    <span v-if="i < steps.length - 1" class="material-icons-round text-slate-300 text-sm mx-1">chevron_right</span>
-                  </button>
-                </div>
-              </div>
+          <!-- Stepper -->
+          <div class="px-6 pt-4 shrink-0">
+            <div class="flex items-center gap-2">
+              <button
+                v-for="(s, i) in steps"
+                :key="s.key"
+                @click="activeStep = i"
+                class="flex items-center gap-2 text-xs font-black transition-colors"
+              >
+                <span
+                  class="w-6 h-6 rounded-full flex items-center justify-center text-[11px]"
+                  :class="activeStep >= i ? 'bg-primary text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-500'"
+                >{{ i + 1 }}</span>
+                <span :class="activeStep === i ? 'text-slate-900 dark:text-white' : 'text-slate-400'">{{ s.label }}</span>
+                <span v-if="i < steps.length - 1" class="material-icons-round text-slate-300 text-sm mx-1">chevron_right</span>
+              </button>
+            </div>
+          </div>
 
               <!-- Body -->
               <div class="px-6 py-5 overflow-y-auto custom-scrollbar flex-1">
@@ -400,24 +391,13 @@
             </div>
           </div>
         </div>
-      </Transition>
-    </Teleport>
 
     <!-- Publish Precheck Modal -->
-    <Teleport to="body">
-      <Transition
-        enter-active-class="transition ease-out duration-200"
-        enter-from-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-        enter-to-class="opacity-100 translate-y-0 sm:scale-100"
-        leave-active-class="transition ease-in duration-150"
-        leave-from-class="opacity-100 translate-y-0 sm:scale-100"
-        leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-      >
-        <div v-if="showPublishModal" class="fixed z-[9999] inset-0 overflow-y-auto" role="dialog" aria-modal="true">
-          <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm" aria-hidden="true" @click="showPublishModal = false"></div>
-            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div class="inline-block align-bottom bg-white dark:bg-surface-dark rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-gray-200 dark:border-gray-700">
+    <div v-if="showPublishModal" class="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true">
+      <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity" aria-hidden="true" @click="showPublishModal = false"></div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom bg-white dark:bg-surface-dark rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-gray-200 dark:border-gray-700">
               <div class="px-6 pt-5 pb-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
                 <h3 class="text-lg leading-6 font-bold text-gray-900 dark:text-white">上架校验</h3>
                 <button class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 transition-colors" @click="showPublishModal = false">
@@ -451,22 +431,11 @@
             </div>
           </div>
         </div>
-      </Transition>
-    </Teleport>
 
     <!-- Detail Drawer -->
-    <Teleport to="body">
-      <Transition
-        enter-active-class="transition ease-out duration-200"
-        enter-from-class="opacity-0"
-        enter-to-class="opacity-100"
-        leave-active-class="transition ease-in duration-150"
-        leave-from-class="opacity-100"
-        leave-to-class="opacity-0"
-      >
-        <div v-if="detailTarget" class="fixed z-[9999] inset-0 overflow-y-auto" role="dialog" aria-modal="true">
-          <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm" @click="detailTarget = null"></div>
-          <div class="absolute right-0 top-0 bottom-0 w-full max-w-xl bg-white dark:bg-surface-dark shadow-2xl flex flex-col">
+    <div v-if="detailTarget" class="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true">
+      <div class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity" @click="detailTarget = null"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-full max-w-xl bg-white dark:bg-surface-dark shadow-2xl flex flex-col">
             <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-start justify-between">
               <div class="min-w-0 pr-4">
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white truncate">{{ detailTarget.name }}</h3>
@@ -527,8 +496,6 @@
             </div>
           </div>
         </div>
-      </Transition>
-    </Teleport>
   </div>
 </template>
 
