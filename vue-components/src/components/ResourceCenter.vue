@@ -61,6 +61,9 @@
         <template v-else-if="currentCategory === 'cann_template'">
           <DevTemplateList @open-whitelist="handleOpenWhitelist" />
         </template>
+        <template v-else-if="currentCategory === 'cann_coretime'">
+          <DevCoreTimeList />
+        </template>
         <template v-else-if="currentCategory === 'cann_whitelist'">
           <DevWhitelistList
             :template-name="selectedTemplate.name"
@@ -87,6 +90,7 @@ import AlertBanner from './AlertBanner.vue'
 import DevImageList from './DevImageList.vue'
 import DevTemplateList from './DevTemplateList.vue'
 import DevWhitelistList from './DevWhitelistList.vue'
+import DevCoreTimeList from './DevCoreTimeList.vue'
 
 export default {
   name: 'ResourceCenter',
@@ -103,7 +107,8 @@ export default {
     AlertBanner,
     DevImageList,
     DevTemplateList,
-    DevWhitelistList
+    DevWhitelistList,
+    DevCoreTimeList
   },
   props: {
     initialCategory: {

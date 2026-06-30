@@ -131,6 +131,7 @@ export default {
       cannItems: [
         { id: 'cann_image', name: '开发环境镜像管理', icon: 'dns', count: 28 },
         { id: 'cann_template', name: '模板管理', icon: 'dashboard_customize', count: 17 },
+        { id: 'cann_coretime', name: '卡时核时管理', icon: 'timelapse', count: 10 },
         { id: 'cann_whitelist', name: '用户名单管理', icon: 'verified_user', count: 12 }
       ]
     }
