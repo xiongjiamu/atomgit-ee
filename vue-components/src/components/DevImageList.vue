@@ -297,7 +297,7 @@ export default {
       editingId: null,
       isPublishedEditing: false,
       refsTarget: null,
-      form: this.emptyForm(),
+      form: { name: "", address: "", cannVersion: "CANN 9.0.0", arch: "arm", scene: "", tags: "" },
       images: [
         { id: 1, name: 'cann_9.0.0-beta.3-py3.12-a5-arm', address: 'swr.cn-east-3/cann/base:9.0.0-a5', cannVersion: 'CANN 9.0.0', arch: 'arm', scan: 'passed', published: true, refs: 2, updatedAt: '2026-06-17 19:50:44' },
         { id: 2, name: 'mindspore_base-910b', address: 'swr.cn-east-3/cann/mindspore:910b', cannVersion: 'CANN 8.0.0', arch: 'arm', scan: 'passed', published: true, refs: 1, updatedAt: '2026-06-15 10:22:36' },

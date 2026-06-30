@@ -573,8 +573,8 @@ export default {
         { value: 'inner', label: '仅对内可见', desc: '仅内部用户可见' },
         { value: 'gray', label: '灰度白名单', desc: '仅白名单账号可见 / 可申请' }
       ],
-      form: this.emptyForm(),
-      templates: [
+      form: { name: "", resType: "ASCEND", description: "", scenes: [], image: "", cpu: 8, memory: 32, npu: "Ascend 910B", poolType: "inner", pool: "", mountEnabled: false, mountPath: "/home/ma-user/work", mountSize: 50, mountKeep: true, initScript: "", startScript: "", upgradeScript: "", visibility: "gray", timeoutHours: 4 },
+	      templates: [
         { id: 1, tplId: 'tpl-3a2b6457', name: 'AI Agent 编程实战环境模板', description: '预置 cann 算子生成 skill，GLM6 模型，开箱即用', type: 'KUNPENG_SIMULATE', resType: 'KUNPENG', image: 'cann_9.0.0-beta.3-py3.12-a5-arm', spec: '8核 / 16GB', pool: '内部-KP-01', visibility: 'public', status: 'published', updatedAt: '2026-05-11 19:48:25' },
         { id: 2, tplId: 'tpl-7c1d92ef', name: '昇腾训练基础模板', description: '昇腾 910B 训练环境，预置 MindSpore 与 CANN 包升级脚本', type: 'ASCEND_INNER', resType: 'ASCEND', image: 'mindspore_base-910b', spec: '8核 / 64GB / 910B×1', pool: '内部-AS-01', visibility: 'inner', status: 'published', updatedAt: '2026-05-10 14:21:08' },
         { id: 3, tplId: 'tpl-9e4f1a3c', name: '鲲鹏推理体验模板', description: '鲲鹏 CPU 推理环境，对外开放，按规格匹配外部资源池', type: 'KUNPENG_OUTER', resType: 'KUNPENG', image: 'cann_kunpeng-arm', spec: '4核 / 8GB', pool: '外部-KP-公测', visibility: 'public', status: 'unpublished', updatedAt: '2026-05-08 09:55:30' },
