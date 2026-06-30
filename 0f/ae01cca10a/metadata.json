@@ -1,0 +1,31 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "0fae01cca10a",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".gitignore",
+    "vue-components/src/components/DevCoreTimeList.vue",
+    "vue-components/src/components/DevImageList.vue",
+    "vue-components/src/components/DevTemplateList.vue",
+    "vue-components/src/components/DevWhitelistList.vue",
+    "vue-components/src/components/ResourceCenter.vue",
+    "vue-components/src/components/ResourceSidebar.vue"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0f/ae01cca10a/0/metadata.json",
+      "transcript": "/0f/ae01cca10a/0/full.jsonl",
+      "content_hash": "/0f/ae01cca10a/0/content_hash.txt",
+      "prompt": "/0f/ae01cca10a/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 42922,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 419200,
+    "output_tokens": 2499,
+    "api_call_count": 11
+  }
+}
