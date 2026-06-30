@@ -1,0 +1,18 @@
+我尝试部署到了github pages 服务中，https://xiongjiamu.github.io/atomgit-ee/， 还是无法在模板管理中进行添加、编辑模板等操作
+
+---
+
+我尝试部署到了github pages 服务中，https://xiongjiamu.github.io/atomgit-ee/， 还是无法在模板管理中进行添加、编辑模板等操作
+
+---
+
+我尝试部署到了github pages 服务中，https://xiongjiamu.github.io/atomgit-ee/， 还是无法在模板管理中进行添加、编辑模板等操作
+
+---
+
+我尝试部署到了github pages 服务中，https://xiongjiamu.github.io/atomgit-ee/， 还是无法在模板管理中进行添加、编辑模板等操作
+
+---
+
+我尝试部署到了github pages 服务中，https://xiongjiamu.github.io/atomgit-ee/， 还是无法在模板管理中进行添加、编辑模板等操作
+目前看来无论是本地，还是云端，都无法正常运行，你重新check一下
