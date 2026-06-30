@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "1fce4339240d",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/cannlab/CANNLab后台管理页面原型.docx",
+    "docs/cannlab/CANNLab运营管理功能需求规格说明书.docx",
+    "docs/cannlab/CANNLab配置管理需求.pptx"
+  ],
+  "sessions": [
+    {
+      "metadata": "/1f/ce4339240d/0/metadata.json",
+      "transcript": "/1f/ce4339240d/0/full.jsonl",
+      "content_hash": "/1f/ce4339240d/0/content_hash.txt",
+      "prompt": ""
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 451,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 89088,
+    "output_tokens": 417,
+    "api_call_count": 2
+  }
+}

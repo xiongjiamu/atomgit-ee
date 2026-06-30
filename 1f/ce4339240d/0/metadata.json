@@ -1,0 +1,94 @@
+{
+  "cli_version": "0.7.7",
+  "checkpoint_id": "1fce4339240d",
+  "session_id": "47d7a6b8-1723-4f9c-87d5-73df1ea34856",
+  "strategy": "manual-commit",
+  "created_at": "2026-06-30T11:50:21.693572Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "docs/cannlab/CANNLab后台管理页面原型.docx",
+    "docs/cannlab/CANNLab运营管理功能需求规格说明书.docx",
+    "docs/cannlab/CANNLab配置管理需求.pptx"
+  ],
+  "agent": "Claude Code",
+  "model": "",
+  "turn_id": "aaedaf06908d",
+  "checkpoint_transcript_start": 79,
+  "transcript_lines_at_start": 79,
+  "token_usage": {
+    "input_tokens": 451,
+    "cache_creation_tokens": 0,
+    "cache_read_tokens": 89088,
+    "output_tokens": 417,
+    "api_call_count": 2
+  },
+  "skill_events_version": 1,
+  "skill_events": [
+    {
+      "id": "prompt-skill-claude-code-commit-2026-06-30T11:49:17.490021Z",
+      "event_type": "prompt_invocation",
+      "skill": {
+        "name": "commit"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "prompt_slash_command",
+        "confidence": "explicit"
+      },
+      "turn_id": "aaedaf06908d",
+      "timestamp": "2026-06-30T11:49:17.490021Z",
+      "native": {
+        "command": "/commit"
+      },
+      "collapse": {
+        "target": "user_message",
+        "label": "/commit",
+        "default_collapsed": true
+      }
+    },
+    {
+      "id": "claude-skill-call_00_QFwxMBZ3T0SBQ8oGhO4F6707",
+      "event_type": "tool_invocation",
+      "skill": {
+        "name": "commit"
+      },
+      "source": {
+        "agent": "claude-code",
+        "signal": "skill_tool_use",
+        "confidence": "explicit"
+      },
+      "turn_id": "aaedaf06908d",
+      "transcript_anchor": {
+        "unit": "line",
+        "start": 27,
+        "end": 28,
+        "entry_ids": [
+          "3872e351-69c2-4b68-b7fe-25c1223d5de6"
+        ],
+        "tool_use_id": "call_00_QFwxMBZ3T0SBQ8oGhO4F6707"
+      },
+      "native": {
+        "tool_name": "Skill",
+        "tool_use_id": "call_00_QFwxMBZ3T0SBQ8oGhO4F6707"
+      },
+      "collapse": {
+        "target": "tool_pair",
+        "label": "Skill: commit",
+        "default_collapsed": true
+      }
+    }
+  ],
+  "initial_attribution": {
+    "calculated_at": "2026-06-30T11:50:21.687782Z",
+    "agent_lines": 0,
+    "agent_removed": 0,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 0,
+    "total_lines_changed": 0,
+    "agent_percentage": 0,
+    "metric_version": 2
+  }
+}
